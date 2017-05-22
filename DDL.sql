@@ -14,6 +14,7 @@ CREATE TABLE `benutzerkonto` (
     `aid` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
     `Passwort` CHAR(8) NOT NULL DEFAULT 'New$0815',
     `email` VARCHAR(40) NOT NULL DEFAULT 'new.customer@eebf.at',
+	`createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT `a_pk` PRIMARY KEY (`aid`)
 );
 
