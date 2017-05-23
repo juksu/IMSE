@@ -1,1 +1,6 @@
-eeBF/
+build/
+bin/
+.project
+.classpath
+.settings
+Projekt/eeBF/.gitignore
