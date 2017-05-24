@@ -1,19 +1,8 @@
-DROP TABLE `zuordnung` CASCADE;
-DROP TABLE `oberkategorie` CASCADE;
-DROP TABLE `unterkategorie` CASCADE;
-DROP TABLE `bestellposition` CASCADE;
-DROP TABLE `produkt` CASCADE;
-DROP TABLE `lager` CASCADE;
-DROP TABLE `lieferung` CASCADE;
-DROP TABLE `bestellung` CASCADE;
-DROP TABLE `kunde` CASCADE;
-DROP TABLE `benutzerkonto` CASCADE;
-
-
 CREATE TABLE `benutzerkonto` (
     `aid` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `Passwort` CHAR(8) NOT NULL DEFAULT 'New$0815',
+    `Passwort` CHAR(10) NOT NULL DEFAULT 'New$0815',
     `email` VARCHAR(40) NOT NULL DEFAULT 'new.customer@eebf.at',
+    `type` CHAR(5) NOT NULL DEFAULT 'kunde',
 	`createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT `a_pk` PRIMARY KEY (`aid`)
 );
