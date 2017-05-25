@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 		//TODO teste nach userType um auf verschiedene seiten weiterzuleiten.
 		if( session.getAttribute("user")==null){
 			System.out.println("LoginServlet.doGet: if");
-			request.getRequestDispatcher("login.jsp").include(request, response);
+			request.getRequestDispatcher("Login.jsp").include(request, response);
 			session.removeAttribute("error");
 		}
 		else{ // include content if attribute login is set
