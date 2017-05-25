@@ -89,14 +89,14 @@ CREATE TABLE bestellposition (
         ON DELETE CASCADE
 );
 
-CREATE TABEL kategorie (
+CREATE TABEL produktkategorie (
 	kid TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	bezeichnung varchar(20) NOT NULL,
 	beschreibung varchar(50),
 	oberkategorie TINYINT NOT NULL,
 	CONSTRAINT k_pk PRIMARY KEY (kid),
 	CONSTRAINT k_fk FOREIGN KEY (oberkategorie)
-		REFERENCES kategorie (kid)
+		REFERENCES produktkategorie (kid)
 		ON DELETE CASCADE
 );
 
@@ -128,6 +128,6 @@ CREATE TABLE zuordnung (
         REFERENCES produkt (pid)
         ON DELETE CASCADE,
     CONSTRAINT z_fk_k FOREIGN KEY (kid)
-        REFERENCES unterkategorie (kid)
+        REFERENCES produktkategorie (kid)
         ON DELETE CASCADE
 );

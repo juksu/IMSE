@@ -10,7 +10,7 @@ class DBConnection {
 	private String dbUser;
 	private String dbPassword;
 	
-	protected Connection getConnection() throws SQLException, ClassNotFoundException
+	Connection getConnection() throws SQLException, ClassNotFoundException
 	{
 		dbPath = "jdbc:mysql://localhost:3306/eebf?useSSL=false";
 		dbUser = "eeBF_Admin";
