@@ -3,7 +3,7 @@ package DAO;
 import java.util.ArrayList;
 import Model.*;
 
-public interface produktkategorieDAO
+public interface IProduktkategorieDAO
 {
 	public void createProduktkategorie(String name, String beschreibung);
 	public int getAnzahl();

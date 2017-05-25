@@ -5,8 +5,8 @@ import DAO.*;
 
 public class KundenFunctions extends UserFunctions 
 {
-	private produktkategorieDAO produktkategorieDAO;
-	private UserDAO userDAO;
+	private IProduktkategorieDAO produktkategorieDAO;
+	private IUserDAO userDAO;
 	private Kunde user;
 
 	public KundenFunctions(Kunde user)

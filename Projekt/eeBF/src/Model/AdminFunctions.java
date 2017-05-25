@@ -5,8 +5,8 @@ import DAO.*;
 
 public class AdminFunctions extends UserFunctions 
 {
-	private produktkategorieDAO produktkategorieDAO;
-	private UserDAO userDAO;
+	private IProduktkategorieDAO produktkategorieDAO;
+	private IUserDAO userDAO;
 	private Admin user;
 	
 	public AdminFunctions(Admin user) 

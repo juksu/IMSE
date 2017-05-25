@@ -3,7 +3,7 @@ package DAO;
 import java.util.ArrayList;
 import Model.*;
 
-public interface UserDAO
+public interface IUserDAO
 {
 	public User loadUser(int id);
 	public User loginUser(String email, String password);

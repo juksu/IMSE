@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import Model.*;
 
-public class MysqlProduktkategorieDAO implements produktkategorieDAO 
+public class MysqlProduktkategorieDAO implements IProduktkategorieDAO 
 {
 	private String dbPath;
 	private String dbUser;
