@@ -3,3 +3,8 @@ Datum;Uhrzeit;Dauer (in min);Aufgabenbeschreibung;Aktion / Befehl / Kommando;Erg
 17.05.2017;16:00;10;Einrichten Github;;46af6bb;Andreas;
 23.05.2017;10:00;240;Sich mit eclipse und tomcat rumplagen;;;Andreas;
 23.05.2017;10:00;30;Altes Projekt auf dem Aufgebaut wird integriert;;8859934;Andreas;
+24.05.2017;13:00;90;Teambesprechung: Alle Entwicklungsumgebungen einrichten;;;Andreas, Roman, Olena, Daniil;
+25.05.2017;10:00;180;Teambesprechung: Alle Entwicklungsumgebungen und Datenbanken einrichten;;cd2dc1c;Andreas, Olena, Daniil;Altbekannte Probleme mit Eclipse
+25.05.2017;14:00;90;sql DDL anpassen, script zum einfachen erstellen der Datenbank entwickelt;;c0a52f6;Andreas;
+25.05.2017;15:30;210;Viele neue Klassen, großteils um den Produktbestellungs-Use-Case zu realisieren;;;Andreas;
+25.05.2017;19:00;15;Datenbankmodel (Kategorie) angepasst um besser der Documentation zu entsprechen;;20d8c14;Andreas;

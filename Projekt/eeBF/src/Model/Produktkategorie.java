@@ -1,16 +1,18 @@
 package Model;
 
-public class Produktkategorie 
+public class Produktkategorie
 {
 	int id;
 	private String titel;
 	private String beschreibung;
+	private Produktkategorie oberkategorie;		// TODO if null then root category
 
-	public Produktkategorie (int id, String titel, String beschreibung)
+	public Produktkategorie (int id, String titel, String beschreibung, Produktkategorie oberkategorie)
 	{
 		setId(id);
 		setTitel(titel);
 		setBeschreibung(beschreibung);
+		this.oberkategorie = oberkategorie;
 	}
 
 	public int getId() 
@@ -41,5 +43,13 @@ public class Produktkategorie
 	public void setBeschreibung(String beschreibung)
 	{
 		this.beschreibung = beschreibung;
+	}
+
+	public Produktkategorie getOberkategorie() {
+		return oberkategorie;
+	}
+
+	public void setOberkategorie(Produktkategorie oberkategorie) {
+		this.oberkategorie = oberkategorie;
 	}
 }

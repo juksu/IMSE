@@ -42,7 +42,8 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		int id = rs.getInt("id");
 		String titel=rs.getString("name");
 		String beschreibung = rs.getString("beschreibung");
-		Produktkategorie pK = new Produktkategorie (id, titel, beschreibung);
+		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
+		Produktkategorie pK = new Produktkategorie (id, titel, beschreibung, null);
 		return pK;
 	}	
 

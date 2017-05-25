@@ -1,3 +1,5 @@
+// TODO There is no reason for this class to exist
+
 package Model;
 
 import java.util.Calendar;
