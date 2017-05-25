@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import Model.*;
 
-public class MysqlUserDAO implements UserDAO
+public class MysqlUserDAO implements IUserDAO
 {
 	private String dbPath;
 	private String dbUser;

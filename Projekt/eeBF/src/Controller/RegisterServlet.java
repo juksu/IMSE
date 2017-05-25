@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet
 				!land.isEmpty()) {
 			if (password.equals(pwcheck)) {
 				System.out.println("pwcheck passed");
-				UserDAO userDAO = new MysqlUserDAO();
+				IUserDAO userDAO = new MysqlUserDAO();
 				Kunde user = new Kunde(0,email, password, nachname, vorname, land, plz, ort, strasse, hausnummer, null);
 				System.out.println(user);
 				userDAO.saveKunde(user);
@@ -64,8 +64,8 @@ public class RegisterServlet extends HttpServlet
 				System.out.println("pwcheck failed");
 			}
 		} else {
-			//TODO ausgabe an user, felder dürfen nicht leer sein
-			System.out.println("felder dürfen nicht leer sein");
+			//TODO ausgabe an user, felder dï¿½rfen nicht leer sein
+			System.out.println("felder dï¿½rfen nicht leer sein");
 		}
 
 

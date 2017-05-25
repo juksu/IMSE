@@ -5,8 +5,8 @@ import DAO.*;
 public abstract class UserFunctions 
 {
 	private User user;
-	private produktkategorieDAO produktkategorieDAO;
-	private UserDAO userDAO;
+	private IProduktkategorieDAO produktkategorieDAO;
+	private IUserDAO userDAO;
 	
 	public UserFunctions(User user)
 	{
@@ -46,22 +46,22 @@ public abstract class UserFunctions
 	}
 
 	
-	public produktkategorieDAO getProduktkategorieDAO() 
+	public IProduktkategorieDAO getProduktkategorieDAO() 
 	{
 		return produktkategorieDAO;
 	}
 
-	public void setProduktkategorieDAO(produktkategorieDAO produktkategorieDAO)
+	public void setProduktkategorieDAO(IProduktkategorieDAO produktkategorieDAO)
 	{
 		this.produktkategorieDAO = produktkategorieDAO;
 	}
 
-	public UserDAO getUserDAO()
+	public IUserDAO getUserDAO()
 	{
 		return userDAO;
 	}
 
-	public void setUserDAO(UserDAO userDAO)
+	public void setUserDAO(IUserDAO userDAO)
 	{
 		this.userDAO = userDAO;
 	}
