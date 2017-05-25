@@ -6,6 +6,13 @@ CREATE SCHEMA eebf;
 
 CREATE USER 'eeBF_Admin'@'localhost' IDENTIFIED BY 'Tombstone';
 GRANT SELECT,INSERT,UPDATE,DELETE ON eebf.* TO 'eeBF_Admin'@'localhost';
+
+CREATE USER 'eeBF_Kunde'@'localhost' IDENTIFIED BY 'Silverado';
+GRANT SELECT,INSERT,UPDATE ON eebf.* TO 'eeBF_Kunde'@'localhost';
+
+CREATE USER 'eeBF_Benutzer'@'localhost' IDENTIFIED BY 'Unforgiven';
+GRANT SELECT ON eebf.* TO 'eeBF_Benutzer'@'localhost';
+
 -- show grants for 'eeBF_Admin'@'localhost';
 
 -- You can create everything in the schema by executing the following commands

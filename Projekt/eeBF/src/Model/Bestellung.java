@@ -7,11 +7,20 @@ public class Bestellung {
 //		OFFEN, BEZAHLT, LIEFERND, GELIEFERT, ABGESCHLOSSEN
 //	};
 	public class OrderState{
-		private boolean open;
-		private boolean paid;
-		private boolean sending;
-		private boolean sent;
-		private boolean complete;
+		private boolean ordered = false;  // if not ordered than only in shopping cart 
+		private boolean open = false;  // TODO what is open?
+		private boolean paid = false;
+		private boolean sending = false;
+		private boolean sent = false;
+		private boolean complete = false;
+		
+		public boolean isOrdered() {
+			return ordered;
+		}
+		
+		public void setOrdered(boolean ordered) {
+			this.ordered = ordered;
+		}
 		
 		public boolean isOpen() {
 			return open;
@@ -59,6 +68,7 @@ public class Bestellung {
 		public boolean checkComplete(){
 			if( complete || (sent && paid) )
 			{
+				ordered = true;
 				open = false;
 				paid = true;
 				sending = false;
