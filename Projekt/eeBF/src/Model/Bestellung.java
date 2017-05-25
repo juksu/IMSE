@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Bestellung {
@@ -83,14 +84,21 @@ public class Bestellung {
 	private Calendar date;
 	private OrderState currentState ;
 	private Kunde customer;
+	private ArrayList<Bestellposition> items;
 	private int paypalTNr;
 	
-	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, int paypalTNr) {
+	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items, int paypalTNr) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.currentState = currentState;
 		this.customer = customer;
+		this.items = items;
 		this.paypalTNr = paypalTNr;
+	}
+	
+	public void addItem( Bestellposition item )
+	{
+		items.add(item);
 	}
 }
