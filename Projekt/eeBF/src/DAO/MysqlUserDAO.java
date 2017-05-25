@@ -54,7 +54,7 @@ public class MysqlUserDAO implements IUserDAO
 					String loadPassword = rs.getString("Passwort");
 					Calendar createdate = Calendar.getInstance();
 					createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-					String usertype = rs.getString("type");
+					String usertype = rs.getString("usertype");
 					System.out.println("MysqlUserDAO.loadUser: userType: "+usertype);
 					if(usertype.equals("admin"))
 					{
