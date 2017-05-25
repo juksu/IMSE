@@ -27,7 +27,7 @@ CREATE TABLE kunde (
 CREATE TABLE bestellung (
     oid INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     Datum DATETIME NOT NULL,
-    Status SET('offen', 'bezahlt', 'in Zustellung', 'geliefert', 'abgeschlossen') DEFAULT 'offen',
+    Status SET('offen', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen') DEFAULT 'offen',
     PaypalTNr CHAR(12) NOT NULL DEFAULT '',
     aid SMALLINT(5) UNSIGNED NOT NULL,
     PRIMARY KEY (oid),
@@ -89,25 +89,36 @@ CREATE TABLE bestellposition (
         ON DELETE CASCADE
 );
 
-CREATE TABLE unterkategorie (
-    kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
-    Bezeichnung VARCHAR(20) NOT NULL DEFAULT '',
-    Beschreibung VARCHAR(50) NOT NULL DEFAULT '',
-    CONSTRAINT k_pk PRIMARY KEY (kid)
+CREATE TABEL kategorie (
+	kid TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	bezeichnung varchar(20) NOT NULL,
+	beschreibung varchar(50),
+	oberkategorie TINYINT NOT NULL,
+	CONSTRAINT k_pk PRIMARY KEY (kid),
+	CONSTRAINT k_fk FOREIGN KEY (oberkategorie)
+		REFERENCES kategorie (kid)
+		ON DELETE CASCADE
 );
 
-CREATE TABLE oberkategorie (
-    kid1 TINYINT(3) UNSIGNED NOT NULL,
-    kid2 TINYINT(3) UNSIGNED NOT NULL,
-    KEY (kid1),
-    KEY (kid2),
-    CONSTRAINT uk_fk_k_1 FOREIGN KEY (kid1)
-        REFERENCES unterkategorie (kid)
-        ON DELETE CASCADE,
-    CONSTRAINT uk_fk_k_2 FOREIGN KEY (kid2)
-        REFERENCES unterkategorie (kid)
-        ON DELETE CASCADE
-);
+-- ~ CREATE TABLE unterkategorie (
+    -- ~ kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+    -- ~ Bezeichnung VARCHAR(20) NOT NULL DEFAULT '',
+    -- ~ Beschreibung VARCHAR(50) NOT NULL DEFAULT '',
+    -- ~ CONSTRAINT k_pk PRIMARY KEY (kid)
+-- ~ );
+
+-- ~ CREATE TABLE oberkategorie (
+    -- ~ kid1 TINYINT(3) UNSIGNED NOT NULL,
+    -- ~ kid2 TINYINT(3) UNSIGNED NOT NULL,
+    -- ~ KEY (kid1),
+    -- ~ KEY (kid2),
+    -- ~ CONSTRAINT uk_fk_k_1 FOREIGN KEY (kid1)
+        -- ~ REFERENCES unterkategorie (kid)
+        -- ~ ON DELETE CASCADE,
+    -- ~ CONSTRAINT uk_fk_k_2 FOREIGN KEY (kid2)
+        -- ~ REFERENCES unterkategorie (kid)
+        -- ~ ON DELETE CASCADE
+-- ~ );
 
 CREATE TABLE zuordnung (
     pid SMALLINT(5) UNSIGNED NOT NULL,
