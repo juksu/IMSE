@@ -39,8 +39,8 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 	
 	private Produktkategorie createProduktKatObject(ResultSet rs) throws SQLException
 	{
-		int id = rs.getInt("id");
-		String titel=rs.getString("name");
+		int id = rs.getInt("kid");
+		String titel=rs.getString("bezeichnung");
 		String beschreibung = rs.getString("beschreibung");
 		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
 		Produktkategorie pK = new Produktkategorie (id, titel, beschreibung, null);
