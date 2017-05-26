@@ -89,11 +89,11 @@ CREATE TABLE bestellposition (
         ON DELETE CASCADE
 );
 
-CREATE TABEL produktkategorie (
-	kid TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE produktkategorie (
+	kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
 	bezeichnung varchar(20) NOT NULL,
 	beschreibung varchar(50),
-	oberkategorie TINYINT NOT NULL,
+	oberkategorie TINYINT(3) UNSIGNED NOT NULL,
 	CONSTRAINT k_pk PRIMARY KEY (kid),
 	CONSTRAINT k_fk FOREIGN KEY (oberkategorie)
 		REFERENCES produktkategorie (kid)
