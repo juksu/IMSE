@@ -2,7 +2,7 @@ CREATE TABLE benutzerkonto (
     aid SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
     Passwort VARCHAR(40) NOT NULL DEFAULT 'New$0815',
     email VARCHAR(40) NOT NULL DEFAULT 'new.customer@eebf.at',	-- why not have email as key?
-	createdate timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	createdate TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 	usertype char(5) NOT NULL DEFAULT 'kunde',
     CONSTRAINT a_pk PRIMARY KEY (aid)
 );
@@ -25,13 +25,13 @@ CREATE TABLE kunde (
 );
 
 CREATE TABLE bestellung (
-    oid INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    Datum DATETIME NOT NULL,
-    Status SET('offen', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen') DEFAULT 'offen',
-    PaypalTNr CHAR(12) NOT NULL DEFAULT '',
+    oid INT AUTO_INCREMENT,
+    Datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Bestellstatus SET('bestellt', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen') ,
+    PaypalTNr CHAR(12),
     aid SMALLINT(5) UNSIGNED NOT NULL,
-    PRIMARY KEY (oid),
-    KEY (aid),
+    CONSTRAINT o_pk PRIMARY KEY (oid),
+--    KEY (aid), aid is not a key, a customer can have more than one order
     CONSTRAINT o_fk_a FOREIGN KEY (aid)
         REFERENCES benutzerkonto (aid)
         ON DELETE CASCADE
@@ -39,12 +39,12 @@ CREATE TABLE bestellung (
 
 CREATE TABLE lieferung (
     lid INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    lDatum DATETIME NOT NULL,
+    lDatum TIMESTAMP NOT NULL,
     Kosten DECIMAL(4 , 2 ) NOT NULL DEFAULT '2.50',
     UPSLNr CHAR(12),
     oid INT(10) UNSIGNED NOT NULL,
-    PRIMARY KEY (lid),
-    KEY (oid),
+    CONSTRAINT l_pk PRIMARY KEY (lid),
+    KEY (oid), -- TODO only one delivery per order?
     CONSTRAINT l_fk_o FOREIGN KEY (oid)
         REFERENCES bestellung (oid)
         ON DELETE CASCADE
@@ -64,11 +64,6 @@ CREATE TABLE produkt (
     oid INT(10) UNSIGNED,
     sid TINYINT(3) UNSIGNED,
     PRIMARY KEY (pid),
-    KEY (oid),
-    KEY (sid),
-    CONSTRAINT p_fk_o FOREIGN KEY (oid)
-        REFERENCES bestellung (oid)
-        ON DELETE CASCADE,
     CONSTRAINT p_fk_s FOREIGN KEY (sid)
         REFERENCES lager (sid)
         ON DELETE CASCADE
