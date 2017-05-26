@@ -9,7 +9,7 @@ public class Bestellung {
 //	};
 	public class OrderState{
 		private boolean ordered = false;  // if not ordered than only in shopping cart 
-		private boolean open = false;  // TODO what is open?
+//		private boolean open = false;  // TODO what is open?
 		private boolean paid = false;
 		private boolean sending = false;
 		private boolean sent = false;
@@ -23,13 +23,13 @@ public class Bestellung {
 			this.ordered = ordered;
 		}
 		
-		public boolean isOpen() {
-			return open;
-		}
-		
-		public void setOpen(boolean open) {
-			this.open = open;
-		}
+//		public boolean isOpen() {
+//			return open;
+//		}
+//		
+//		public void setOpen(boolean open) {
+//			this.open = open;
+//		}
 		
 		public boolean isPaid() {
 			return paid;
@@ -54,6 +54,10 @@ public class Bestellung {
 		
 		public void setSent(boolean sent) {
 			this.sent = sent;
+			if( sent )
+				sending = false;
+			else
+				sending = true;
 			checkComplete();
 		}
 		
@@ -70,7 +74,6 @@ public class Bestellung {
 			if( complete || (sent && paid) )
 			{
 				ordered = true;
-				open = false;
 				paid = true;
 				sending = false;
 				sent = true;
@@ -80,6 +83,7 @@ public class Bestellung {
 		}	
 	}
 	
+	
 	private int id;
 	private Calendar date;
 	private OrderState currentState ;
@@ -87,8 +91,9 @@ public class Bestellung {
 	private ArrayList<Bestellposition> items;
 	private int paypalTNr;
 	
+	
 	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items, int paypalTNr) {
-		super();
+//		super();
 		this.id = id;
 		this.date = date;
 		this.currentState = currentState;
@@ -97,8 +102,47 @@ public class Bestellung {
 		this.paypalTNr = paypalTNr;
 	}
 	
+	public Bestellung() {
+		this.currentState = new OrderState();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+//	public Calendar getDate() {
+//		return date;
+//	}
+
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+	
+	public OrderState getCurrentState() {
+		return currentState;
+	}
+
+	public void setCurrentState(OrderState currentState) {
+		this.currentState = currentState;
+	}
+
+	public Kunde getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Kunde customer) {
+		this.customer = customer;
+	}
+	
 	public void addItem( Bestellposition item )
 	{
-		items.add(item);
+		// only allow to add items if shopping cart
+		if( !currentState.isOrdered() )
+			items.add(item);
 	}
+
 }
