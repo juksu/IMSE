@@ -24,32 +24,6 @@ CREATE TABLE kunde (
         ON DELETE CASCADE
 );
 
-CREATE TABLE bestellung (
-    oid INT AUTO_INCREMENT,
-    Datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    Bestellstatus SET('bestellt', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen') ,
-    PaypalTNr CHAR(12),
-    aid SMALLINT(5) UNSIGNED NOT NULL,
-    CONSTRAINT o_pk PRIMARY KEY (oid),
---    KEY (aid), aid is not a key, a customer can have more than one order
-    CONSTRAINT o_fk_a FOREIGN KEY (aid)
-        REFERENCES benutzerkonto (aid)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE lieferung (
-    lid INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    lDatum TIMESTAMP NOT NULL,
-    Kosten DECIMAL(4 , 2 ) NOT NULL DEFAULT '2.50',
-    UPSLNr CHAR(12),
-    oid INT(10) UNSIGNED NOT NULL,
-    CONSTRAINT l_pk PRIMARY KEY (lid),
-    KEY (oid), -- TODO only one delivery per order?
-    CONSTRAINT l_fk_o FOREIGN KEY (oid)
-        REFERENCES bestellung (oid)
-        ON DELETE CASCADE
-);
-
 CREATE TABLE lager (
     sid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
     Regalfach SMALLINT(5) UNSIGNED NOT NULL,
@@ -69,21 +43,6 @@ CREATE TABLE produkt (
         ON DELETE CASCADE
 );
 
-CREATE TABLE bestellposition (
-    posid TINYINT(3) UNSIGNED NOT NULL,
-    Menge TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-    oid INT(10) UNSIGNED NOT NULL,
-    pid SMALLINT(5) UNSIGNED NOT NULL,
-    PRIMARY KEY (oid , posid),
-    KEY (pid),
-    CONSTRAINT pos_fk_p FOREIGN KEY (pid)
-        REFERENCES produkt (pid)
-        ON DELETE CASCADE,
-    CONSTRAINT pos_fk_o FOREIGN KEY (oid)
-        REFERENCES bestellung (oid)
-        ON DELETE CASCADE
-);
-
 CREATE TABLE produktkategorie (
 	kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
 	bezeichnung varchar(20) NOT NULL,
@@ -95,26 +54,6 @@ CREATE TABLE produktkategorie (
 		ON DELETE CASCADE
 );
 
--- ~ CREATE TABLE unterkategorie (
-    -- ~ kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
-    -- ~ Bezeichnung VARCHAR(20) NOT NULL DEFAULT '',
-    -- ~ Beschreibung VARCHAR(50) NOT NULL DEFAULT '',
-    -- ~ CONSTRAINT k_pk PRIMARY KEY (kid)
--- ~ );
-
--- ~ CREATE TABLE oberkategorie (
-    -- ~ kid1 TINYINT(3) UNSIGNED NOT NULL,
-    -- ~ kid2 TINYINT(3) UNSIGNED NOT NULL,
-    -- ~ KEY (kid1),
-    -- ~ KEY (kid2),
-    -- ~ CONSTRAINT uk_fk_k_1 FOREIGN KEY (kid1)
-        -- ~ REFERENCES unterkategorie (kid)
-        -- ~ ON DELETE CASCADE,
-    -- ~ CONSTRAINT uk_fk_k_2 FOREIGN KEY (kid2)
-        -- ~ REFERENCES unterkategorie (kid)
-        -- ~ ON DELETE CASCADE
--- ~ );
-
 CREATE TABLE zuordnung (
     pid SMALLINT(5) UNSIGNED NOT NULL,
     kid TINYINT(3) UNSIGNED NOT NULL,
@@ -125,4 +64,41 @@ CREATE TABLE zuordnung (
     CONSTRAINT z_fk_k FOREIGN KEY (kid)
         REFERENCES produktkategorie (kid)
         ON DELETE CASCADE
+);
+
+CREATE TABLE bestellung (
+    oid INT UNSIGNED AUTO_INCREMENT,
+    datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    bestellstatus SET('bestellt', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen') ,
+    paypalTNr CHAR(12),
+    aid SMALLINT(5) UNSIGNED NOT NULL,
+    CONSTRAINT o_pk PRIMARY KEY (oid),
+    CONSTRAINT o_fk_a FOREIGN KEY (aid)
+        REFERENCES benutzerkonto (aid)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE bestellposition (
+    oid INT UNSIGNED,
+    pid SMALLINT(5) UNSIGNED,
+    menge TINYINT UNSIGNED NOT NULL DEFAULT '0',
+    CONSTRAINT pos_pk PRIMARY KEY (oid , pid),
+    CONSTRAINT pos_fk_p FOREIGN KEY (pid)
+        REFERENCES produkt (pid)
+        ON DELETE CASCADE,
+    CONSTRAINT pos_fk_o FOREIGN KEY (oid)
+        REFERENCES bestellung (oid)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE lieferung (
+    lid INT UNSIGNED AUTO_INCREMENT,
+    lDatum TIMESTAMP NOT NULL,
+    kosten DECIMAL(6 , 2) NOT NULL,
+    UPSLNr CHAR(12),
+    oid INT UNSIGNED NOT NULL,
+    CONSTRAINT l_pk PRIMARY KEY (lid),
+    KEY (oid), -- only one delivery per order?
+    CONSTRAINT l_fk_o FOREIGN KEY (oid)
+        REFERENCES bestellung (oid)
 );
