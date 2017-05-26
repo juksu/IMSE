@@ -7,3 +7,6 @@ INSERT INTO eebf.kunde (cid, Nachname, Vorname, Land, PLZ, Ort, Strasse, HausNr,
 ('1', 'Schöndorfer', 'Roman', 'Österreich', '1090', 'Wien', 'Otto-Wagner-Platz', '5', '1');
 INSERT INTO eebf.kunde (cid, Nachname, Vorname, Land, PLZ, Ort, Strasse, HausNr, aid) VALUES  
 ('2', 'Schöndorfer', 'Roman', 'Österreich', '2353', 'Guntramsdorf', 'Burgundergasse', '16', '2');
+
+INSERT INTO eebf.bestellung (Bestellstatus, Datum, PaypalTNr, aid) VALUES ('liefernd,geliefert', current_timestamp(), '1', '1');
+INSERT INTO eebf.bestellung (Bestellstatus, Datum, PaypalTNr, aid) VALUES ('', current_timestamp(), '2', '2');

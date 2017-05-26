@@ -1,8 +1,7 @@
 package Model;
 
 public class Bestellposition {
-	int id;
-//	Bestellung order;
+
 	Produkt item;
 	int quantity;
 	
@@ -15,11 +14,4 @@ public class Bestellposition {
 		this.quantity = quantity;
 	}
 	
-	public Bestellposition(int id, Produkt item, int quantity) {
-		this.id = id;
-//		this.order = order;
-		this.item = item;
-		this.quantity = quantity;
-	}
-
 }

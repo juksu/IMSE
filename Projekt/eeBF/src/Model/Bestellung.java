@@ -89,10 +89,10 @@ public class Bestellung {
 	private OrderState currentState ;
 	private Kunde customer;
 	private ArrayList<Bestellposition> items;
-	private int paypalTNr;
+	private String paypalTNr;
 	
 	
-	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items, int paypalTNr) {
+	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items, String paypalTNr) {
 //		super();
 		this.id = id;
 		this.date = date;
@@ -138,6 +138,14 @@ public class Bestellung {
 		this.customer = customer;
 	}
 	
+	public String getPaypalTNr() {
+		return paypalTNr;
+	}
+
+	public void setPaypalTNr(String paypalTNr) {
+		this.paypalTNr = paypalTNr;
+	}
+
 	public void addItem( Bestellposition item )
 	{
 		// only allow to add items if shopping cart
