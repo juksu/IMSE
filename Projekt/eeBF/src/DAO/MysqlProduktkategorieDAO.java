@@ -54,7 +54,7 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			conn = openConnection();
 			// TODO oberkategorie
 			PreparedStatement ps = conn.prepareStatement
-			("insert into produktkategorie (name, beschreibung) VALUES(?, ?)");
+			("insert into produktkategorie (bezeichnung, beschreibung) VALUES(?, ?)");
 				ps.setString(1, name);
 				ps.setString(2, beschreibung);
 				ps.execute();
