@@ -59,8 +59,9 @@ public class AdminServlet extends HttpServlet
 					}
 					else if (request.getParameter("view").equals("product")) 
 					{
-						String add = "addProdukt";
-						forwardList (request, response, add);
+						request.getRequestDispatcher("addProdukt").include(request, response);
+						//String add = "addProdukt";
+						//forwardList (request, response, add);
 					}
 				} 
 				else 
@@ -74,6 +75,7 @@ public class AdminServlet extends HttpServlet
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
+		/*
 		System.out.println("adminServlet.doPost");
 		HttpSession session = request.getSession(true);
 		if(session.getAttribute("user")==null)
@@ -86,6 +88,7 @@ public class AdminServlet extends HttpServlet
 			if (user instanceof Kunde) response.sendRedirect("index");
 			if (user instanceof Admin) {
 				AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+				
 				if (request.getParameter("button") != null) {
 					String button = request.getParameter("button");
 					switch (button) {
@@ -108,6 +111,7 @@ public class AdminServlet extends HttpServlet
 				}
 			}
 		}
+		*/
 	}
 	
 	public void createProduktgruppe (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -119,7 +123,7 @@ public class AdminServlet extends HttpServlet
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
 	}
-	
+	/*
 	public void createProdukt (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		HttpSession session = request.getSession(true);
@@ -132,7 +136,7 @@ public class AdminServlet extends HttpServlet
 		String add = "";
 		response.sendRedirect("admin?view=product");
 	}
-	
+	*/
 	
 	public void forwardList(HttpServletRequest request, HttpServletResponse response, String add) throws ServletException, IOException {
 		System.out.println("admin.forwardList");
