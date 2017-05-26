@@ -198,7 +198,7 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
 			("insert into user "
-				+ "(email, Passwort, Nachname, Vorname, type, Land, PLZ, Strasse, Ort, HausNr) "
+				+ "(email, Passwort, Nachname, Vorname, usertype, Land, PLZ, Strasse, Ort, HausNr) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
