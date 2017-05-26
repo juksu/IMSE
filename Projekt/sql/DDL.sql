@@ -64,11 +64,6 @@ CREATE TABLE produkt (
     oid INT(10) UNSIGNED,
     sid TINYINT(3) UNSIGNED,
     PRIMARY KEY (pid),
-    KEY (oid),
-    KEY (sid),
-    CONSTRAINT p_fk_o FOREIGN KEY (oid)
-        REFERENCES bestellung (oid)
-        ON DELETE CASCADE,
     CONSTRAINT p_fk_s FOREIGN KEY (sid)
         REFERENCES lager (sid)
         ON DELETE CASCADE
