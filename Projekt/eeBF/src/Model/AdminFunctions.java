@@ -8,6 +8,7 @@ public class AdminFunctions extends UserFunctions
 	private IProduktkategorieDAO produktkategorieDAO;
 	private IUserDAO userDAO;
 	private Admin user;
+	private IProduktDAO produktDAO;
 	
 	public AdminFunctions(Admin user) 
 	{
@@ -52,6 +53,10 @@ public class AdminFunctions extends UserFunctions
 	public void erstelleProduktgruppe(String name)
 	{
 		getProduktkategorieDAO().createProduktkategorie(name, "");
+	}
+	
+	public void erstelleProdukt(String bezeichnung, String beschreibung){
+		produktDAO.createProdukt(0, bezeichnung, beschreibung, 0, 0, null);
 	}
 
 	public void sperreAccount()

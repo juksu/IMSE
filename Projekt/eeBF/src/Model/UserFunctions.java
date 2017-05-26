@@ -7,6 +7,7 @@ public abstract class UserFunctions
 	private User user;
 	private IProduktkategorieDAO produktkategorieDAO;
 	private IUserDAO userDAO;
+	private IProduktDAO produktDAO;
 	
 	public UserFunctions(User user)
 	{
@@ -49,6 +50,10 @@ public abstract class UserFunctions
 	public IProduktkategorieDAO getProduktkategorieDAO() 
 	{
 		return produktkategorieDAO;
+	}
+	
+	public IProduktDAO getProduktDAO(){
+		return produktDAO;
 	}
 
 	public void setProduktkategorieDAO(IProduktkategorieDAO produktkategorieDAO)
