@@ -110,6 +110,7 @@ public class AdminServlet extends HttpServlet
 		response.sendRedirect("admin?view=kategorie");
 	}
 	
+	
 	public void forwardList(HttpServletRequest request, HttpServletResponse response, String add) throws ServletException, IOException {
 		System.out.println("admin.forwardList");
 		HttpSession session = request.getSession(true);

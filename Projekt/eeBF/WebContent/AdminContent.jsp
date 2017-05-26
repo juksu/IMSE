@@ -40,6 +40,7 @@
 							<button type="submit" class="btn btn-primary btn-md navbar-btn " name="view" value="userCreate" style="BACKGROUND-COLOR: 330066;">Benutzer erstellen</button>
 							
 							<small>______</small>
+							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Produktkategorie erstellen</button>
 							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Produkt erstellen</button>
 							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Lagerstand korrigieren</button>
 						</form>

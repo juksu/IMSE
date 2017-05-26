@@ -11,4 +11,28 @@ public class Lager {
 		this.place = place;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getShelf() {
+		return shelf;
+	}
+
+	public void setShelf(int shelf) {
+		this.shelf = shelf;
+	}
+
+	public int getPlace() {
+		return place;
+	}
+
+	public void setPlace(int place) {
+		this.place = place;
+	}
+
 }
