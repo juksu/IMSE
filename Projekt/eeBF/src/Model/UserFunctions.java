@@ -13,6 +13,7 @@ public abstract class UserFunctions
 	{
 		this.user = user;
 		this.produktkategorieDAO=new MysqlProduktkategorieDAO();
+		this.produktDAO = new MysqlProduktDAO();
 		this.userDAO=new MysqlUserDAO();
 	}
 	
@@ -55,6 +56,7 @@ public abstract class UserFunctions
 	public ProduktDAO getProduktDAO(){
 		return produktDAO;
 	}
+	
 
 	public void setProduktkategorieDAO(IProduktkategorieDAO produktkategorieDAO)
 	{

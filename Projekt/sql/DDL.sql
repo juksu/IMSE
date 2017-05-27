@@ -35,9 +35,10 @@ CREATE TABLE produkt (
     pid SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
     PBezeichnung VARCHAR(30) NOT NULL DEFAULT '',
     PBeschreibung VARCHAR(50) NOT NULL DEFAULT '',
-    oid INT(10) UNSIGNED,
+    preis DECIMAL(10,2) NOT NULL,
+    menge INT UNSIGNED NOT NULL,
     sid TINYINT(3) UNSIGNED,
-    PRIMARY KEY (pid),
+    CONSTRAINT p_pk PRIMARY KEY (pid),
     CONSTRAINT p_fk_s FOREIGN KEY (sid)
         REFERENCES lager (sid)
         ON DELETE CASCADE
@@ -79,17 +80,17 @@ CREATE TABLE bestellung (
 );
 
 CREATE TABLE bestellposition (
-    oid INT UNSIGNED,
+	posid TINYINT UNSIGNED AUTO_INCREMENT,
+	oid INT UNSIGNED,
     pid SMALLINT(5) UNSIGNED,
     menge TINYINT UNSIGNED NOT NULL DEFAULT '0',
     preisprostueck DECIMAL(10,2) NOT NULL,
-    CONSTRAINT pos_pk PRIMARY KEY (oid , pid),
-    CONSTRAINT pos_fk_p FOREIGN KEY (pid)
-        REFERENCES produkt (pid)
-        ON DELETE CASCADE,
+    CONSTRAINT pos_pk PRIMARY KEY (posid, oid),
     CONSTRAINT pos_fk_o FOREIGN KEY (oid)
         REFERENCES bestellung (oid)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT pos_fk_p FOREIGN KEY (pid)
+        REFERENCES produkt (pid)
 );
 
 CREATE TABLE lieferung (

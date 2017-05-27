@@ -56,7 +56,7 @@ public class AdminFunctions extends UserFunctions
 	}
 	
 	public void erstelleProdukt(int id, String bezeichnung, String beschreibung){
-		produktDAO.createProdukt(id , bezeichnung, beschreibung, 0, 0, null);
+		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, 0, 0, null);
 	}
 
 	public void sperreAccount()

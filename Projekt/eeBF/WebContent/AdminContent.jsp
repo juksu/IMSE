@@ -42,7 +42,7 @@
 							<small>______</small>
 							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Produktkategorie erstellen</button>
 							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="product" style="BACKGROUND-COLOR: 330066;">Produkt erstellen</button>
-							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Lagerstand korrigieren</button>
+							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="lagerstand" style="BACKGROUND-COLOR: 330066;">Lagerstand korrigieren</button>
 						</form>
 						<form id="uploadform2" action="admin" method="post">
 							<small>___________________________________________________________________________________________________________________________________________</small>

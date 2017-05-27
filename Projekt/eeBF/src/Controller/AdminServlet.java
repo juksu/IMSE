@@ -54,14 +54,15 @@ public class AdminServlet extends HttpServlet
 					{
 						ArrayList<Produktkategorie> kategorieList = userFunctions.showKategorieList();
 						request.setAttribute("kategorieList", kategorieList);
+						System.out.println("doget product group.jsp aufruf");
 						String add = "AdminProductgroupCreate.jsp";
 						forwardList (request, response, add);
 					}
 					else if (request.getParameter("view").equals("product")) 
 					{
-						request.getRequestDispatcher("addProdukt").include(request, response);
-						//String add = "addProdukt";
-						//forwardList (request, response, add);
+						//request.getRequestDispatcher("addProdukt").include(request, response);
+						String add = "ProduktErstellen.jsp";
+						forwardList (request, response, add);
 					}
 				} 
 				else 
@@ -75,7 +76,7 @@ public class AdminServlet extends HttpServlet
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
-		/*
+		
 		System.out.println("adminServlet.doPost");
 		HttpSession session = request.getSession(true);
 		if(session.getAttribute("user")==null)
@@ -92,8 +93,13 @@ public class AdminServlet extends HttpServlet
 				if (request.getParameter("button") != null) {
 					String button = request.getParameter("button");
 					switch (button) {
+					case "product":{
+						System.out.println("OKK");
+						createProdukt(request, response);
+						break;}
 					case "erstellen":
 					{
+						System.out.println("switch case");
 						createProduktgruppe(request,response);
 						break;}
 					case "changePassword":{
@@ -103,19 +109,34 @@ public class AdminServlet extends HttpServlet
 						request.getRequestDispatcher("login").include(request, response);
 						response.setContentType("text/html");
 						break;}
-					case "product":{
-						System.out.println("OKK");
-						createProdukt(request, response);
-						break;}
+					
+					
+					
 					}
 				}
 			}
 		}
-		*/
+		
+		//doGet(request, response);
+	}
+	
+	public void createProdukt (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		
+		System.out.println("aufgerufen produkt");
+		HttpSession session = request.getSession(true);
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		Integer pid =Integer.parseInt(request.getParameter("id"));
+		String bezeichnung =request.getParameter("productbezeichnung");
+		String beschreibung = request.getParameter("productbeschreibung");
+		userFunctions.erstelleProdukt(pid, bezeichnung, beschreibung);
+		String add = "";
+		response.sendRedirect("admin?view=kategorie");
 	}
 	
 	public void createProduktgruppe (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		System.out.println("aufgerufen gruppe");
 		HttpSession session = request.getSession(true);
 		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
 		String name =request.getParameter("productgroup");
@@ -123,20 +144,9 @@ public class AdminServlet extends HttpServlet
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
 	}
-	/*
-	public void createProdukt (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		HttpSession session = request.getSession(true);
-		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
-		Integer id =Integer.parseInt(request.getParameter("id"));
-		String bezeichnung =request.getParameter("productbezeichnung");
-		String beschreibung = request.getParameter("productbeschreibung");
-		 
-		userFunctions.erstelleProdukt(id, bezeichnung, beschreibung);
-		String add = "";
-		response.sendRedirect("admin?view=product");
-	}
-	*/
+	
+	
+	
 	
 	public void forwardList(HttpServletRequest request, HttpServletResponse response, String add) throws ServletException, IOException {
 		System.out.println("admin.forwardList");

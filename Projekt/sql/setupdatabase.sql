@@ -17,9 +17,9 @@ GRANT SELECT ON eebf.* TO 'eeBF_Benutzer'@'localhost';
 
 -- You can create everything in the schema by executing the following commands
 -- Apply the path to your DDL.sql file and remove comments
--- use eebf;
--- source /home/kettu/Development/Uni/IMSE/Projekt/sql/DDL.sql
+use eebf;
+source /home/kettu/Development/Uni/IMSE/Projekt/sql/DDL.sql
 
 -- fill database with sample data
--- use eebf;
--- source /home/kettu/Development/Uni/IMSE/Projekt/sql/insert.sql
+use eebf;
+source /home/kettu/Development/Uni/IMSE/Projekt/sql/insert.sql
