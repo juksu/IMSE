@@ -33,7 +33,7 @@
 						<input type="text" class="form-control" name="productbezeichnung" placeholder="Neuer Produkt-Bezeichnung">
 						<input type="text" class="form-control" name="productbeschreibung" placeholder="Neuer Produkt-Beschreibung">
 						<br>
-						<button type="submit" class="btn btn-primary" name="button" value="erstellen" >Erstellen</button>
+						<button type="submit" class="btn btn-primary" name="button" value="product" >Erstellen</button>
 					</form>
 			  </div>
 			</div>
