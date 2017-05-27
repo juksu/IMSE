@@ -82,6 +82,7 @@ CREATE TABLE bestellposition (
     oid INT UNSIGNED,
     pid SMALLINT(5) UNSIGNED,
     menge TINYINT UNSIGNED NOT NULL DEFAULT '0',
+    preisprostueck DECIMAL(10,2) NOT NULL,
     CONSTRAINT pos_pk PRIMARY KEY (oid , pid),
     CONSTRAINT pos_fk_p FOREIGN KEY (pid)
         REFERENCES produkt (pid)

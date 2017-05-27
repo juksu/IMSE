@@ -1,17 +1,49 @@
 package Model;
 
-public class Bestellposition {
+public class Bestellposition
+{
 
-	Produkt item;
+	Produkt product;
 	int quantity;
-	
+	float pricePerUnit;
+
 	// TODO Preis auch für Bestellposition bzw Bestellung gesamt?
-	// Es kann sich der Preis des Stücks ändern aber wir wollen nach wie vor den Usprünglichen Handelspreis wissen.
-	
-	public Bestellposition(Produkt item, int quantity)
+	// Es kann sich der Preis des Stücks ändern aber wir wollen nach wie vor den
+	// Usprünglichen Handelspreis wissen.
+
+	public Bestellposition(Produkt product, int quantity, float pricePerUnit)
 	{
-		this.item = item;
+		this.product = product;
 		this.quantity = quantity;
+		this.pricePerUnit = pricePerUnit;
 	}
-	
+
+	public Produkt getProduct()
+	{
+		return product;
+	}
+
+	// public void setItem(Produkt item) {
+	// this.item = item;
+	// }
+
+	public int getQuantity()
+	{
+		return quantity;
+	}
+
+	// public void setQuantity(int quantity) {
+	// this.quantity = quantity;
+	// }
+
+	public float getPricePerUnit()
+	{
+		return pricePerUnit;
+	}
+
+//	public void setPriceEach( float priceEach )
+//	{
+//		this.priceEach = priceEach;
+//	}
+
 }

@@ -10,3 +10,7 @@ Datum;Uhrzeit;Dauer (in min);Aufgabenbeschreibung;Aktion / Befehl / Kommando;Erg
 25.05.2017;19:00;15;Datenbankmodel (Kategorie) angepasst um besser der Documentation zu entsprechen;;20d8c14;Andreas;
 25.05.2017;19:15;45;Mehr Datenbankuser;;7427dd3;Andreas;
 25.05.2017;20:00;60;Modellieren eines Warenkorbs;;7427dd3;Andreas;
+26.05.2017;10:00;600;Arbeit arbeit arbeit, großteils um den Use Case Bestellung zu realisieren;;;Andreas;
+27.05.2017;8:30;30;DAO;;;Andreas;
+27.05.2017;9:00;30;Das &/=”§%! hat sich plötzlich einfach dazu entschieden keine Codenavigation mit Ctrl zu machen;Lösche .metadata in Workspace (alles muss neu eingerichtet werden);;Andreas;&/=”§%! Eclipse
+27.05.2017;10:30;45;Bestellposition DAO;;;Andreas;
