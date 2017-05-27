@@ -20,7 +20,16 @@ public class KundenFunctions extends UserFunctions
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2, String nachname, String vorname,
 								String land, int plz,  String ort,String strasse, int hausnummer)
 	{
-		String error = "";
+		String error;
+		if (email.equals(user.getEmail()))
+		{
+			error = "";
+		}
+		else
+		{
+			error = "Neue Mail-Adresse: Login erforderlich!";
+			user.setEmail(email);
+		}	
 		System.out.println(pw_new2);
 		if (!pw_new.isEmpty() || !pw_new2.isEmpty())
 		{
@@ -35,10 +44,6 @@ public class KundenFunctions extends UserFunctions
 		user.setHausnummer(hausnummer);
 
 		getUserDAO().updateKunde(user);
-		if (error.isEmpty())
-		{
-			error = "true";
-		}
 		return error;
 	}
 	

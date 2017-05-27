@@ -96,9 +96,13 @@ public class UserAccountEditServlet extends HttpServlet
 		error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2, nachname, vorname, land, plz, ort, strasse, hausnummer);
 		System.out.println(error);
 		session.setAttribute("error", error);
-		if (error.equals("true"))
+		if (error.isEmpty())
 		{
-			session.invalidate();		
+			request.getRequestDispatcher("UserContent.jsp").include(request, response);
+		}
+		else 
+		{
+			session.invalidate();
 		}
 		doGet(request,response);
 	}

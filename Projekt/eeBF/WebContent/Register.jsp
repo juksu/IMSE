@@ -22,31 +22,30 @@
 			<img style="display: block; text-align: center;" src="logo.png" width="" height="" border="0" alt="Bildtext">
 			<br>
 
-
 			<div class="panel panel-default">
 			  <div class="panel-heading">Formular</div>
 			  <div class="panel-body">
 			  		<form action="register" method="post">
 						<input type="text" class="form-control" name="email" placeholder="E-Mail">
-							<br>
+						<br>
 						<input type="password" class="form-control" name="password" placeholder="Passwort">
-							<br>
+						<br>
 						<input type="password" class="form-control" name="pwcheck" placeholder="Passwort">
-							<br>
+						<br>
+						<br>
 						<input type="text" class="form-control" name="vorname" placeholder="Vorname">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="nachname" placeholder="Nachname">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="land" placeholder="Land">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="plz" placeholder="PLZ">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="ort" placeholder="Ort">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="strasse" placeholder="Strasse">
-							<br>
+						<br>
 						<input type="text" class="form-control" name="hausnummer" placeholder="Hausnummer">
-
 						<br>
 						<button type="submit" class="btn btn-primary" name="type" value="userRegister" id="userregisterlog">Account registrieren</button>
 					</form>

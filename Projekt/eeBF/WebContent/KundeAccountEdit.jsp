@@ -34,16 +34,16 @@
 			  		<form action="accountEdit" method="post">
 			  			<input type="text" class="form-control" name="email" value="${kunde.email }" placeholder="E-Mail">
 			  			<br>
-						<input type="password" class="form-control" name="pw_new" placeholder="Passwort">
+			  			<input type="password" class="form-control" name="pw_old" placeholder="Altes Passwort">
+			  			<br>
+						<input type="password" class="form-control" name="pw_new" placeholder="Neues Passwort">
 						<br>
-						<input type="password" class="form-control" name="pw_new2" placeholder="Passwort wiederholen">
+						<input type="password" class="form-control" name="pw_new2" placeholder="Neues Passwort wiederholen">
 						<br>
-						<input type="password" class="form-control" name="pw_old" placeholder="Aktuelles Passwort">
 						<br>
 						<input type="text" class="form-control" name="nachname" value="${kunde.nachname}" placeholder="Nachname">
 						<br>
 						<input type="text" class="form-control" name="vorname" value="${kunde.vorname}" placeholder="Vorname">
-						<br>
 						<br>
 						<input type="text" class="form-control" name="land" value="${kunde.land}" placeholder="Land">
 						<br>
