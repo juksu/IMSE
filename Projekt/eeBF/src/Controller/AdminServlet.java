@@ -61,7 +61,7 @@ public class AdminServlet extends HttpServlet
 					else if (request.getParameter("view").equals("product")) 
 					{
 						//request.getRequestDispatcher("addProdukt").include(request, response);
-						String add = "addProdukt";
+						String add = "ProduktErstellen.jsp";
 						forwardList (request, response, add);
 					}
 				} 
