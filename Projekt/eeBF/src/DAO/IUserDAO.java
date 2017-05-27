@@ -12,7 +12,7 @@ public interface IUserDAO
 	public void saveAdmin(Admin user);
 	public void updateAdmin(Admin user);
 	void setUserInvalid(User user, boolean invalid);
-	public void createNewUser(String email, String passwort, String vorname, String nachname, String type,	String strasse, int plz, String ort, String hausnummer, String iban, String land); 
+	public void createNewUser(String email, String passwort, String vorname, String type, String nachname, String land, int plz, String ort, String strasse, int hausnummer); 
 	public ArrayList<Integer> userStatistics();
 	public ArrayList<User> getAllUsers();
 	
@@ -22,20 +22,20 @@ public interface IUserDAO
 	public String getUserVorname(int id);
 	public String getUserNachname(int id);
 	public String getUserTyp(int id);
-	public String getUserStrasse(int id);
+	public String getUserLand(int id);
 	public int getUserPLZ(int id);
 	public String getUserOrt(int id);
-	public String getUserHausnummer(int id);
-	public String getUserLand(int id);
+	public String getUserStrasse(int id);
+	public int getUserHausnummer(int id);
 	
 	public void setUserEmail(int id, String email);
 	public void setUserPasswort(User user);
+	public void setUserTyp(int id, String type);
 	public void setUserVorname(int id, String vorname);
 	public void setUserNachname(int id, String nachname);
-	public void setUserTyp(int id, String type);
-	public void setUserStrasse(int id, String strasse);
+	public void setUserLand(int id, String land);
 	public void setUserPLZ(int id, int plz);
 	public void setUserOrt(int id, String ort);
-	public void setUserHausnummer(int id, String hausnummer);
-	public void setUserLand(int id, String land);
+	public void setUserStrasse(int id, String strasse);
+	public void setUserHausnummer(int id, int hausnummer);
 }

@@ -10,16 +10,16 @@ public class Kunde extends User
 	private int plz;
 	private String ort;
 	private String strasse;
-	private String hausnummer;
+	private int hausnummer;
 
 	public Kunde(int id, String email, String passwort, String nachname, String vorname, String land, int plz, String ort, String strasse, 
-			String hausnummer, Calendar createdate) 
+			int hausnummer, Calendar createdate) 
 	{
 		super(id, email, passwort, createdate);
 		setNachname(nachname);
 		setVorname(vorname);
-		setPlz(plz);
 		setLand(land);
+		setPlz(plz);
 		setOrt(ort);
 		setStrasse(strasse);
 		setHausnummer(hausnummer);
@@ -74,12 +74,12 @@ public class Kunde extends User
 		this.ort = ort;
 	}
 	
-	public String getHausnummer()
+	public int getHausnummer()
 	{
 		return hausnummer;
 	}
 	
-	public void setHausnummer(String hausnummer) 
+	public void setHausnummer(int hausnummer) 
 	{
 		this.hausnummer = hausnummer;
 	}

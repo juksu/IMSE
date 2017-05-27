@@ -17,7 +17,7 @@ public class MysqlUserDAO implements IUserDAO
 	
 	public MysqlUserDAO() 
 	{
-		setDbPath("jdbc:mysql://localhost:3306/eebf?useSSL=false");
+		setDbPath("jdbc:mysql://www.eeBF.at:3306/eebf?useSSL=false");
 		setDbUser("eeBF_Admin");
 		setDbPassword("Tombstone");
 		try
@@ -54,7 +54,7 @@ public class MysqlUserDAO implements IUserDAO
 					String loadPassword = rs.getString("Passwort");
 					Calendar createdate = Calendar.getInstance();
 					createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-					String usertype = rs.getString("usertype");
+					String usertype = rs.getString("type");
 					System.out.println("MysqlUserDAO.loadUser: userType: "+usertype);
 					if(usertype.equals("admin"))
 					{
@@ -75,7 +75,7 @@ public class MysqlUserDAO implements IUserDAO
 							int plz =rsC.getInt("PLZ");
 							String ort = rsC.getString("Ort");
 							String strasse = rsC.getString("Strasse");
-							String hausnummer =rsC.getString("HausNr");
+							int hausnummer =rsC.getInt("HausNr");
 							user = new Kunde(loadId, loadEmail, loadPassword, nachname, vorname, land, plz, ort, strasse, hausnummer, createdate);
 							System.out.println("MysqlUserDAO.loadUser: Kunde-Objekt mit der id " +loadIdC+ " erstellt.");
 							rsC.close();
@@ -162,7 +162,7 @@ public class MysqlUserDAO implements IUserDAO
         {
 		conn = openConnection();
     	
-       	 PreparedStatement ps =conn.prepareStatement("select * from user where id=?");
+       	 PreparedStatement ps =conn.prepareStatement("select * from benutzerkonto where id=?");
             ps.setInt(1, id);
             rs =ps.executeQuery();
             if (rs.next()) 
@@ -197,22 +197,30 @@ public class MysqlUserDAO implements IUserDAO
 			System.out.println("MysqlUserDAO.saveUser(Kunde)");
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-			("insert into user "
-				+ "(email, Passwort, Nachname, Vorname, usertype, Land, PLZ, Strasse, Ort, HausNr) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			("insert into benutzerkonto "
+				+ "(email, Passwort, type) "
+				+ "VALUES (?, ?, ?)");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
-				ps.setString(3, user.getNachname());
-				ps.setString(4, user.getVorname());
-				ps.setString(5, "kunde");
-				ps.setString(6, user.getLand());
-				ps.setInt(7, user.getPlz());		
-				ps.setString(8, user.getOrt());			
-				ps.setString(9, user.getStrasse());
-				ps.setString(10, user.getHausnummer());
+				ps.setString(3, "kunde");
 				ps.execute();
 				ps.close();	
-		} catch (SQLException e) 
+			PreparedStatement psC =conn.prepareStatement
+			("insert into kunde "
+				+ "(Nachname, Vorname, Land, PLZ, Strasse, Ort, HausNr, aid) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+				psC.setString(1, user.getNachname());
+				psC.setString(2, user.getVorname());
+				psC.setString(3, user.getLand());
+				psC.setInt(4, user.getPlz());		
+				psC.setString(5, user.getOrt());			
+				psC.setString(6, user.getStrasse());
+				psC.setInt(7, user.getHausnummer());
+				psC.setInt(8, getUserIDByEmail(user.getEmail()));
+				psC.execute();
+				psC.close();	
+		} 
+		catch (SQLException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -242,19 +250,19 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("MysqlUserDAO.updateKunde(Kunde)");
 			conn = openConnection();
-				PreparedStatement ps = conn.prepareStatement
-				("update user set nachname=?, vorname=?, strasse=?, hausnummer=? "
-					+ ", ort=?, PLZ=?, land =?, iban=?, bic =? where id=?");
-					ps.setString(1, user.getNachname());
-					ps.setString(2, user.getVorname());
-					ps.setString(3, user.getLand());
-					ps.setInt(4, user.getPlz());
-					ps.setString(5, user.getOrt());
-					ps.setString(6, user.getStrasse());
-					ps.setString(7, user.getHausnummer());
-					ps.setInt(10, user.getId());
-					ps.execute();
-					ps.close();	
+				PreparedStatement psC = conn.prepareStatement
+				("update kunde set Nachname=?, Vorname=?, Land=?, PLZ=?, Ort=?"
+					+ ", Strasse=?, HausNr=? where aid=?");
+					psC.setString(1, user.getNachname());
+					psC.setString(2, user.getVorname());
+					psC.setString(3, user.getLand());
+					psC.setInt(4, user.getPlz());
+					psC.setString(5, user.getOrt());
+					psC.setString(6, user.getStrasse());
+					psC.setInt(7, user.getHausnummer());
+					psC.setInt(8, user.getId());
+					psC.execute();
+					psC.close();	
 		} 
 		catch (SQLException e) 
 		{
@@ -283,7 +291,7 @@ public class MysqlUserDAO implements IUserDAO
 	{
 		try {
 			conn = openConnection();
-			PreparedStatement ps = conn.prepareStatement("update user set isInvalid=? where id=?");
+			PreparedStatement ps = conn.prepareStatement("update benutzerkonto set isInvalid=? where aid=?");
 			ps.setBoolean(1, invalid);
 			ps.setInt(2, user.getId());
 			ps.executeUpdate();
@@ -306,28 +314,33 @@ public class MysqlUserDAO implements IUserDAO
 		}	
 	}
 	
-	public void createNewUser(String email, String passwort, String vorname, String nachname, String type,
-		String strasse, int plz, String ort, String hausnummer, String iban, String land) {
+	public void createNewUser(String email, String passwort, String type, String vorname, String nachname, 
+			String land, int plz, String ort, String strasse, int hausnummer) {
 		try {
 			conn = openConnection();
 	    	PreparedStatement ps = conn.prepareStatement
-			("insert into user "
-				+ "(email, password, nachname, vorname, type, strasse, PLZ, ort, hausnummer, iban, land) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-				ps.setString(1, email);
-				ps.setString(2, passwort);
-				ps.setString(3, nachname);
-				ps.setString(4, vorname);
-				ps.setString(5, type);
-				ps.setString(6, strasse);
-				ps.setInt(7, plz);
-				ps.setString(8, ort);
-				ps.setString(9, hausnummer);
-				ps.setString(10, iban);
-				ps.setString(11, land);
-				ps.execute();
-				ps.close();
-			
+	    	("insert into benutzerkonto "
+	    		+ "(email, Passwort, type) "
+	    		+ "VALUES (?, ?, ?)");
+	    		ps.setString(1, email);
+	    		ps.setString(2, passwort);
+	    		ps.setString(3, type);
+	    		ps.execute();
+	    		ps.close();	
+			conn = openConnection();
+			PreparedStatement psC =conn.prepareStatement
+			("insert into kunde "
+				+ "(Nachname, Vorname, Land, PLZ, Ort, Strasse, HausNr) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
+				psC.setString(1, nachname);
+				psC.setString(2, vorname);
+				psC.setString(3, land);
+				psC.setInt(4, plz);
+				psC.setString(5, ort);
+				psC.setString(6, strasse);
+				psC.setInt(7, hausnummer);
+				psC.execute();
+				psC.close();	
 		} 
 		catch (SQLException e) 
 		{
@@ -356,7 +369,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("Mysqluserdao userstat");
 			conn = openConnection();
-			PreparedStatement psadmin = conn.prepareStatement("select * from user where type='admin' and isValid='true'");
+			PreparedStatement psadmin = conn.prepareStatement("select * from benutzerkonto where type='admin' and isValid='true'");
 			ResultSet rsadmin;
 			rsadmin = psadmin.executeQuery();
 			System.out.println(rsadmin);
@@ -368,7 +381,7 @@ public class MysqlUserDAO implements IUserDAO
 			rsadmin.close();
 			psadmin.close();
 	
-			PreparedStatement pskunde = conn.prepareStatement("select * from user where type='kunde' and isValid='true'");
+			PreparedStatement pskunde = conn.prepareStatement("select * from benutzerkonto where type='kunde' and isValid='true'");
 			ResultSet rskunde;
 			rskunde = pskunde.executeQuery();
 			while (rskunde.next())
@@ -410,11 +423,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-					("select * from user");
+					("select * from benutzerkonto");
 			ResultSet rs =ps.executeQuery();
 			while (rs.next()) 
 			{
-				int id = rs.getInt("id");
+				int id = rs.getInt("aid");
 				String email = rs.getString("email");
 				String password = "0";
 				Calendar createdate = Calendar.getInstance();
@@ -426,7 +439,7 @@ public class MysqlUserDAO implements IUserDAO
 				} 
 				else if(usertype.equals("kunde"))
 				{
-					user = new Kunde(id, email, password, null, null, null, 0, null, null, null, null);
+					user = new Kunde(id, email, password, null, null, null, 0, null, null, 0, null);
 					userList.add(user);
 				}
 			}
@@ -459,7 +472,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
             try 
             {
-           	 PreparedStatement ps =conn.prepareStatement("select * from user where email=?");
+           	 PreparedStatement ps =conn.prepareStatement("select * from benutzerkonto where email=?");
                 ps.setString(1, email);
                 ResultSet rs =ps.executeQuery();
                 if (rs.next())
@@ -657,14 +670,14 @@ public class MysqlUserDAO implements IUserDAO
 		return null;
 	}
 
-	public String getUserHausnummer(int id)
+	public int getUserHausnummer(int id)
 	{
-		String hausnummer;
+		int hausnummer;
 		if (conn != null)
 		{
 			try {
 	            ResultSet rs= getUserTable(id);
-	            hausnummer = rs.getString("HausNr");
+	            hausnummer = rs.getInt("HausNr");
 	            return hausnummer;
 			} 
 			catch (IllegalArgumentException e)
@@ -676,7 +689,7 @@ public class MysqlUserDAO implements IUserDAO
 				e.printStackTrace();				
 			}
 		}
-		return null;
+		return 0;
 	}
 
 	public String getUserLand(int id)
@@ -708,7 +721,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set email=?"+" where aid=?");
+				PreparedStatement ps = conn.prepareStatement("update benutzerkonto set email=?"+" where aid=?");
 				ps.setString(1, email);
 				ps.setInt(2, id);
 				ps.executeUpdate();
@@ -727,7 +740,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("MysqlUserDAO.saveUser(Kunde)");
 			conn = openConnection();
-			PreparedStatement ps = conn.prepareStatement("update user set Passwort=?"+" where aid=?");
+			PreparedStatement ps = conn.prepareStatement("update benutzerkonto set Passwort=?"+" where aid=?");
 			ps.setString(1, user.getPasswort());
 			ps.setInt(2, user.getId());
 			ps.executeUpdate();
@@ -757,11 +770,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set Vorname=?"+" where aid=?");
-				ps.setString(1, vorname);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set Vorname=?"+" where aid=?");
+				psC.setString(1, vorname);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			}
 			catch (SQLException e)
 			{
@@ -776,11 +789,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set Nachname=?"+" where aid=?");
-				ps.setString(1, nachname);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set Nachname=?"+" where aid=?");
+				psC.setString(1, nachname);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e) 
 			{
@@ -795,7 +808,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set type=?"+" where aid=?");
+				PreparedStatement ps = conn.prepareStatement("update benuzterkonto set type=?"+" where aid=?");
 				ps.setString(1, type);
 				ps.setInt(2, id);
 				ps.executeUpdate();
@@ -814,11 +827,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set Strasse=?"+" where aid=?");
-				ps.setString(1, strasse);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update Kunde set Strasse=?"+" where aid=?");
+				psC.setString(1, strasse);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e)
 			{
@@ -833,11 +846,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set PLZ=?"+" where aid=?");
-				ps.setInt(1, plz);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set PLZ=?"+" where aid=?");
+				psC.setInt(1, plz);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e) 
 			{
@@ -852,11 +865,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set Ort=?"+" where aid=?");
-				ps.setString(1, ort);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set Ort=?"+" where aid=?");
+				psC.setString(1, ort);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e) 
 			{
@@ -865,15 +878,15 @@ public class MysqlUserDAO implements IUserDAO
 		}	
 	}
 
-	public void setUserHausnummer(int id, String hausnummer)
+	public void setUserHausnummer(int id, int hausnummer)
 	{
 		if (conn != null) {
 			try {
-				PreparedStatement ps = conn.prepareStatement("update user set Hausnr=?"+" where aid=?");
-				ps.setString(1, hausnummer);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set HausNr=?"+" where aid=?");
+				psC.setInt(1, hausnummer);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e) 
 			{
@@ -887,11 +900,11 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update user set Land=?"+" where aid=?");
-				ps.setString(1, land);
-				ps.setInt(2, id);
-				ps.executeUpdate();
-				System.out.println(ps);
+				PreparedStatement psC = conn.prepareStatement("update kunde set Land=?"+" where aid=?");
+				psC.setString(1, land);
+				psC.setInt(2, id);
+				psC.executeUpdate();
+				System.out.println(psC);
 			} 
 			catch (SQLException e) 
 			{

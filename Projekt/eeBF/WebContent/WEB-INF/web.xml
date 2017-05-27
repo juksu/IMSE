@@ -25,11 +25,11 @@
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>CreateAuktionServlet</servlet-name>
-    <servlet-class>Controller.CreateAuktionServlet</servlet-class>
+    <servlet-name>UserAccountEditServlet</servlet-name>
+    <servlet-class>Controller.UserAccountEditServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CreateAuktionServlet</servlet-name>
-    <url-pattern>/createAuktion</url-pattern>
+    <servlet-name>UserAccountEditServlet</servlet-name>
+    <url-pattern>/accountEdit</url-pattern>
   </servlet-mapping>
 </web-app>

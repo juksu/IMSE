@@ -5,7 +5,7 @@ import DAO.*;
 
 public class KundenFunctions extends UserFunctions 
 {
-	private IProduktkategorieDAO produktkategorieDAO;
+	private IProduktkategorieDAO ProduktkategorieDAO;
 	private IUserDAO userDAO;
 	private Kunde user;
 
@@ -16,7 +16,7 @@ public class KundenFunctions extends UserFunctions
 	}
 
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2, String nachname, String vorname,
-								String land, int plz,  String ort,String strasse, String hausnummer)
+								String land, int plz,  String ort,String strasse, int hausnummer)
 	{
 		String error = "";
 		System.out.println(pw_new2);

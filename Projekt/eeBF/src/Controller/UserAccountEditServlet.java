@@ -78,10 +78,10 @@ public class UserAccountEditServlet extends HttpServlet
 		String nachname = request.getParameter("nachname");
 		String vorname = request.getParameter("vorname");
 		String land = request.getParameter("land");
-		int plz = 0;
+		int plz = Integer.parseInt(request.getParameter("plz"));
 		String ort = request.getParameter("ort");
 		String strasse = request.getParameter("strasse");
-		String hausnummer = request.getParameter("hausnummer");
+		int hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
 
 		System.out.println(nachname);
 		try 

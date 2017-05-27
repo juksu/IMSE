@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
 	<head>   
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -36,21 +36,16 @@
 							<br>
 						<input type="text" class="form-control" name="nachname" placeholder="Nachname">
 							<br>
-						<input type="text" class="form-control" name="strasse" placeholder="Strasse">
+						<input type="text" class="form-control" name="land" placeholder="Land">
 							<br>
 						<input type="text" class="form-control" name="plz" placeholder="PLZ">
 							<br>
 						<input type="text" class="form-control" name="ort" placeholder="Ort">
 							<br>
+						<input type="text" class="form-control" name="strasse" placeholder="Strasse">
+							<br>
 						<input type="text" class="form-control" name="hausnummer" placeholder="Hausnummer">
-							<br>
-						<input type="text" class="form-control" name="iban" placeholder="IBAN">
-							<br>
-						<input type="text" class="form-control" name="bic" placeholder="BIC">
-							<br>
-						<input type="text" class="form-control" name="land" placeholder="Land">
-						
-						
+
 						<br>
 						<button type="submit" class="btn btn-primary" name="type" value="userRegister" id="userregisterlog">Account registrieren</button>
 					</form>

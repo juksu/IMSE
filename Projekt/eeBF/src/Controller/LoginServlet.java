@@ -94,18 +94,25 @@ public class LoginServlet extends HttpServlet {
 				System.out.println("Loginservlet.doPost: UserFunktions konnten nicht erstellt werden");
 			}
 			if (user != null) {
-				session.setAttribute("user", user);
-				session.setAttribute("userFunctions", userFunctions);
-				System.out.println("LoginServlet.doPost: eingeloggt " +user.getId());	
+				if (user.isInvalid())
+			 	{
+			 		request.setAttribute("error", "Account gesperrt!");
+			 		System.out.println("Loginservlet.doPost: Account gesperrt!" +user.getId());
+			 		//response.sendRedirect("index");
+			 		response.sendRedirect("login");
+				}
+				else
+				{
+					session.setAttribute("user", user);
+					session.setAttribute("userFunctions", userFunctions);
+					System.out.println("LoginServlet.doPost: eingeloggt " +user.getId());
+				}
 			}
-			if (user.isInvalid()) {
-				request.setAttribute("error", "Account gesperrt!");
-				response.sendRedirect("login");
-			}
-		} catch (IllegalArgumentException e){
+		} 
+		catch (IllegalArgumentException e)
+		{
 			session.setAttribute("error", "E-Mail oder Passwort falsch");
 		}
 	doGet(request, response);
-
 	}
 }

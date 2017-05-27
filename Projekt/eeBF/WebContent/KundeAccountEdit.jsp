@@ -43,24 +43,18 @@
 						<br>
 						<input type="text" class="form-control" name="vorname" value="${kunde.vorname}" placeholder="Vorname">
 						<br>
-						<input type="text" class="form-control" name="strasse" value="${kunde.strasse}" placeholder="Strasse">
+						<br>
+						<input type="text" class="form-control" name="land" value="${kunde.land}" placeholder="Land">
 						<br>
 						<input type="text" class="form-control" name="plz" value="${kunde.plz}" placeholder="PLZ">
 						<br>
 						<input type="text" class="form-control" name="ort" value="${kunde.ort}" placeholder="Stadt">
 						<br>
+						<input type="text" class="form-control" name="strasse" value="${kunde.strasse}" placeholder="Strasse">
+						<br>
 						<input type="text" class="form-control" name="hausnummer" value="${kunde.hausnummer}" placeholder="Hausnummer">
 						<br>
-						<input type="text" class="form-control" name="iban" value="${kunde.iban}" placeholder="IBAN">
-						<br>
-						<input type="text" class="form-control" name="bic" value="${kunde.bic}" placeholder="BIC">
-						<br>
-						<input type="text" class="form-control" name="land" value="${kunde.land}" placeholder="Land">
-						
-						
-						<br>
 						<button type="submit" class="btn btn-primary" name="button" value="change" id="changeinfoslog">Los!</button>
-						
 						<br>
 						<br>
 						<button type="submit" class="btn btn-danger" name="button" value="lock" id="lockid">Account permanent sperren!</button>

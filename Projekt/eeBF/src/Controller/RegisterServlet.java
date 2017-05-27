@@ -27,31 +27,21 @@ public class RegisterServlet extends HttpServlet
 		String nachname = request.getParameter("nachname");
 		String vorname = request.getParameter("vorname");
 		String strasse = request.getParameter("strasse");
-		int plz = 0;
-		try {
-			plz = Integer.parseInt(request.getParameter("plz"));
-		} catch (NumberFormatException e) {
-			System.out.println("plz kein int");
-			//TODO ausgabe an user, plz hat falsches format
-		}
-
+		int plz = Integer.parseInt(request.getParameter("plz"));
 		String ort = request.getParameter("ort");
-		String hausnummer = request.getParameter("hausnummer");
-		String iban = request.getParameter("iban");
-		String bic = request.getParameter("bic");
+		int hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
 		String land = request.getParameter("land");
 		if (!email.isEmpty() && 
 				!password.isEmpty() && 
 				!pwcheck.isEmpty() && 
 				!nachname.isEmpty() && 
-				!vorname.isEmpty() && 
-				!strasse.isEmpty() && 
+				!vorname.isEmpty() &&
+				!land.isEmpty() &&
 				plz != 0 && 
 				!ort.isEmpty() && 
-				!hausnummer.isEmpty() && 
-				!iban.isEmpty() &&
-				!bic.isEmpty() && 
-				!land.isEmpty()) {
+				!strasse.isEmpty() && 
+				hausnummer != 0 
+			) {
 			if (password.equals(pwcheck)) {
 				System.out.println("pwcheck passed");
 				IUserDAO userDAO = new MysqlUserDAO();
@@ -64,8 +54,8 @@ public class RegisterServlet extends HttpServlet
 				System.out.println("pwcheck failed");
 			}
 		} else {
-			//TODO ausgabe an user, felder dï¿½rfen nicht leer sein
-			System.out.println("felder dï¿½rfen nicht leer sein");
+			//TODO ausgabe an user, felder dürfen nicht leer sein
+			System.out.println("felder dürfen nicht leer sein");
 		}
 
 
