@@ -75,11 +75,11 @@ public class ShoppingCart extends HttpServlet {
 				
 			}
 			
-			Bestellposition item = new Bestellposition( product, quantity );
+		//	Bestellposition item = new Bestellposition( product, quantity );
 			
 			// TODO write item to DB to get the id
 					
-			shoppingCart.addItem( item );
+		//	shoppingCart.addItem( item );
 		}
 		else 
 		{
