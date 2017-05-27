@@ -1,5 +1,7 @@
 package Model;
 
+// v1.0
+
 import java.util.Calendar;
 
 public class Kunde extends User 
