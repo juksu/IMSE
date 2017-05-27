@@ -2,7 +2,7 @@ package Model;
 
 public class Bestellposition
 {
-
+	int posId;
 	Produkt product;
 	int quantity;
 	float pricePerUnit;
@@ -16,6 +16,14 @@ public class Bestellposition
 		this.product = product;
 		this.quantity = quantity;
 		this.pricePerUnit = pricePerUnit;
+	}
+
+	public int getPosId() {
+		return posId;
+	}
+
+	public void setPosId(int posId) {
+		this.posId = posId;
 	}
 
 	public Produkt getProduct()

@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DAO.IBestellpositionDAO;
+import DAO.IBestellungDAO;
+import DAO.MysqlBestellpositionDAO;
+import DAO.MysqlBestellungDAO;
 import Model.Bestellposition;
 import Model.Bestellung;
 import Model.Kunde;
@@ -21,8 +25,8 @@ import Model.User;
  */
 @WebServlet("/ShoppingCart")
 public class ShoppingCart extends HttpServlet {
-//	private static final long serialVersionUID = 1L; 
-	
+	private static final long serialVersionUID = 1L; 
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -59,7 +63,7 @@ public class ShoppingCart extends HttpServlet {
 		if( user instanceof Kunde )
 		{
 			Kunde customer = (Kunde) user;
-			Bestellung shoppingCart = (Bestellung) session.getAttribute("shoppingCart");
+			Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
 			
 			if( shoppingCart == null )
 			{
@@ -69,17 +73,18 @@ public class ShoppingCart extends HttpServlet {
 				shoppingCart.getCurrentState().setOrdered( false );
 				shoppingCart.setCustomer( customer );
 				
-				session.setAttribute("shoppingCart", shoppingCart);
+				IBestellungDAO io = new MysqlBestellungDAO();
 				
-				// write to database and get the new id from there
-				
+				io.insertBestellung( shoppingCart );
 			}
 			
-		//	Bestellposition item = new Bestellposition( product, quantity );
+			Bestellposition newItem = new Bestellposition( product, quantity, product.getPrice() );
+			IBestellpositionDAO io = new MysqlBestellpositionDAO();
 			
-			// TODO write item to DB to get the id
-					
-		//	shoppingCart.addItem( item );
+			io.insertBestellposition( shoppingCart, newItem );
+			shoppingCart.addItem( newItem );
+			
+			session.setAttribute( "shoppingCart", shoppingCart );
 		}
 		else 
 		{
