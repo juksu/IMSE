@@ -1,6 +1,6 @@
 package DAO;
 
-// v1.0
+// v1.0.1
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -241,10 +241,38 @@ public class MysqlUserDAO implements IUserDAO
 		}
 	}
 	
-	
 	public void saveAdmin(Admin user)
 	{
-		System.out.println("MysqlUserDAO.saveUser(Admin)");
+		try 
+		{
+			System.out.println("MysqlUserDAO.saveUser(Admin)");
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("insert into benutzerkonto "
+				+ "(email, Passwort, type) "
+				+ "VALUES (?, ?, ?)");
+				ps.setString(1, user.getEmail());
+				ps.setString(2, user.getPasswort());
+				ps.setString(3, "admin");
+				ps.execute();
+				ps.close();
+		} 
+		catch (SQLException e) 
+		{
+			System.out.println("MYSQLUser, New User Creation failed");
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void updateKunde(Kunde user)

@@ -1,4 +1,4 @@
-<!-- v1.0 -->
+<!-- v1.0.1 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
@@ -39,11 +39,10 @@
 						<br>
 						<input type="password" class="form-control" name="pw_new2" placeholder="Neues Passwort wiederholen">
 						<br>
-						<button type="submit" class="btn btn-primary" name="button" value="change" id="changeinfoslog">Los!</button>
-						
 						<div>
 					      <p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
 					    </div>
+						<button type="submit" class="btn btn-primary" name="button" value="change" id="changeinfoslog">Los!</button>
 					</form>
 			  </div>
 			</div>

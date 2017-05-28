@@ -1,9 +1,10 @@
+<!-- v1.0.1 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
 	<head>   
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Admin Content Seite Benutzer erstellen</title>
+		<title>Admin Content Seite - Admin erstellen</title>
 		
 		<!-- Bootstrap import -->
 		<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
@@ -25,31 +26,20 @@
 			<!-- Logo -->
 			<img style="display: block; text-align: center;" src="logo.png" width="" height="" border="0" alt="Bildtext">
 			<br>
-
-
+			
 			<div class="panel panel-default">
-			  <div class="panel-heading">Benutzer erstellen</div>
+			  <div class="panel-heading">Admin erstellen</div>
 			  <div class="panel-body">
-			  
-				<!-- Dropwdown User Type -->
-				<div class="dropdown">
-				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User Typ
-				  <span class="caret"></span></button>
-				  <ul class="dropdown-menu">
-				  	<li><a href="#">Admin</a></li>
-				  	<li><a href="#">Forscher</a></li>		  
-				  </ul>
-				 </div>
-				  
-				  <br>
-				  <br>
-				  
-			  		<form action="login" method="post">
-						<input type="text" class="form-control" name="emailnewuser" placeholder="E-Mail">
+			  		<form action="createAdmin" method="post">
+						<input type="text" class="form-control" name="email" placeholder="E-Mail">
 						<br>
-						<input type="password" class="form-control" name="pwnewuser" placeholder="Passwort">
+						<input type="password" class="form-control" name="password" placeholder="Passwort">
 						<br>
+						<input type="password" class="form-control" name="pwcheck" placeholder="Passwort wiederholen">
 						<br>
+						<div>
+							<p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
+						</div>
 						<button type="submit" class="btn btn-primary" name="register" value="Register" >Registrieren</button>
 					</form>
 			  </div>

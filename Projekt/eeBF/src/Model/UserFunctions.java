@@ -19,15 +19,41 @@ public abstract class UserFunctions
 	
 	public String changePassword(String pw_old, String pw_new, String pw_new2) 
 	{
-		String error="";
-		if (!(pw_old==null) &&pw_old.equals(user.getPasswort())&& pw_new.equals(pw_new2))
+		String error = "";
+		if (!pw_old.isEmpty())
 		{
-			user.setPasswort(pw_new);
-			error = "Neues Passwort: Login erforderlich!";
-		} 
-		else 
+			System.out.println("1");
+			if (pw_old.equals(user.getPasswort()) && pw_new.equals(pw_new2))
+			{
+				if(!pw_new.isEmpty())
+				{
+					System.out.println("2");
+					user.setPasswort(pw_new);
+				}
+				else
+				{
+					System.out.println("3");
+					error = error + "Das neue Passwort darf nicht leer sein!";
+				}
+			}
+			else
+			{
+				System.out.println("4");
+				error = error + "Das alte Passwort oder die Passwortwiederholung ist falsch!";
+			}
+		}
+		else
 		{
-			error = "Das alte Passwort oder die Passwortwiederholung ist falsch";
+			if(pw_new.isEmpty() && pw_new2.isEmpty())
+			{
+				System.out.println("5");
+				error = " ";
+			}
+			else
+			{
+				System.out.println("6");
+				error = error + "Das alte Passwort muss angegeben werden!";
+			}
 		}
 		return error;
 	}

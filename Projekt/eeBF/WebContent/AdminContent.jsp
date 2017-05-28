@@ -1,3 +1,4 @@
+<!-- v1.0.1 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
@@ -37,7 +38,7 @@
 						<form id="uploadForm1" action="admin" method="get">
 							<small>__</small>
 							<button type="submit" class="btn btn-primary btn-md navbar-btn" name="view" value="userShow" style="BACKGROUND-COLOR: 330066;">Benutzer ansehen</button>
-							<button type="submit" class="btn btn-primary btn-md navbar-btn " name="view" value="userCreate" style="BACKGROUND-COLOR: 330066;">Benutzer erstellen</button>
+							<button type="submit" class="btn btn-primary btn-md navbar-btn " name="view" value="createAdmin" style="BACKGROUND-COLOR: 330066;">Administrator erstellen</button>
 							
 							<small>______</small>
 							<button type="submit" class="btn btn-primary btn-sm navbar-btn" name="view" value="kategorie" style="BACKGROUND-COLOR: 330066;">Produktkategorie erstellen</button>

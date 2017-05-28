@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import DAO.IUserDAO;
+import DAO.MysqlUserDAO;
 import Model.*;
 
 
@@ -45,9 +48,16 @@ public class AdminServlet extends HttpServlet
 						String add = "AdminUserShow.jsp";
 						forwardList (request, response, add);
 					} 
-					else if (request.getParameter("view").equals("userCreate")) 
+					else if (request.getParameter("view").equals("createAdmin")) 
 					{
+						System.out.println("Admin: doGet - AdminUserCreate.jsp");
 						String add = "AdminUserCreate.jsp";
+						forwardList (request, response, add);
+					}
+					else if (request.getParameter("view").equals("changePassword")) 
+					{
+						System.out.println("Admin: doGet - AdminAccountEdit.jsp");
+						String add = "AdminAccountEdit.jsp";
 						forwardList (request, response, add);
 					}
 					else if (request.getParameter("view").equals("kategorie")) 
@@ -76,7 +86,6 @@ public class AdminServlet extends HttpServlet
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
-		
 		System.out.println("adminServlet.doPost");
 		HttpSession session = request.getSession(true);
 		if(session.getAttribute("user")==null)
@@ -90,28 +99,41 @@ public class AdminServlet extends HttpServlet
 			if (user instanceof Admin) {
 				AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
 				
-				if (request.getParameter("button") != null) {
+				if (request.getParameter("button") != null)
+				{
 					String button = request.getParameter("button");
-					switch (button) {
-					case "product":{
-						System.out.println("OK");
-						createProdukt(request, response);
-						break;}
-					case "erstellen":
+					switch (button)
 					{
-						System.out.println("switch case");
-						createProduktgruppe(request,response);
-						break;}
-					case "changePassword":{
-						response.sendRedirect("changePassword");
-						break;}
-					case "logout":{
-						request.getRequestDispatcher("login").include(request, response);
-						response.setContentType("text/html");
-						break;}
-					
-					
-					
+						case "createAdmin":
+						{
+							System.out.println("Admin: doPost - AdminUserCreate.jsp");
+							response.sendRedirect("createAdmin");
+							break;
+						}
+						case "product":
+						{
+							System.out.println("OK");
+							createProdukt(request, response);
+							break;
+						}
+						case "erstellen":
+						{
+							System.out.println("switch case");
+							createProduktgruppe(request,response);
+							break;
+						}
+						case "changePassword":
+						{
+							System.out.println("Admin: doPost - AdminAccountEdit.jsp");
+							response.sendRedirect("changePassword");
+							break;
+						}
+						case "logout":
+						{
+							request.getRequestDispatcher("login").include(request, response);
+							response.setContentType("text/html");
+							break;
+						}
 					}
 				}
 			}

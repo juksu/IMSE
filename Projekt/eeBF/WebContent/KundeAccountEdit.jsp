@@ -1,4 +1,4 @@
-<!-- v1.0 -->
+<!-- v1.0.1 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
@@ -55,15 +55,13 @@
 						<br>
 						<input type="text" class="form-control" name="hausnummer" value="${kunde.hausnummer}" placeholder="Hausnummer">
 						<br>
+						<div>
+					    	<p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
+					    </div>
 						<button type="submit" class="btn btn-primary" name="button" value="change" id="changeinfoslog">Los!</button>
 						<br>
 						<br>
 						<button type="submit" class="btn btn-danger" name="button" value="lock" id="lockid">Account permanent sperren!</button>
-						
-						<br>
-						<div>
-					      <p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
-					    </div>
 					</form>
 			  </div>
 			</div>

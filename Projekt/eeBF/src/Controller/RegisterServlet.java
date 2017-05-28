@@ -1,6 +1,6 @@
 package Controller;
 
-// v1.0
+// v1.0.1
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -23,16 +23,26 @@ public class RegisterServlet extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
+		int plz = 0;
+		int hausnummer = 0;
+		String error = "";
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String pwcheck = request.getParameter("pwcheck");
 		String nachname = request.getParameter("nachname");
 		String vorname = request.getParameter("vorname");
 		String strasse = request.getParameter("strasse");
-		int plz = Integer.parseInt(request.getParameter("plz"));
 		String ort = request.getParameter("ort");
-		int hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
 		String land = request.getParameter("land");
+		try 
+		{
+			plz = Integer.parseInt(request.getParameter("plz"));
+			hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
+		} 
+		catch (NumberFormatException e) 
+		{
+			 error = error + "Hinweis: PLZ und HausNr sind als Zahl einzugeben. ";
+		}
 		if (!email.isEmpty() && 
 				!password.isEmpty() && 
 				!pwcheck.isEmpty() && 
@@ -42,27 +52,35 @@ public class RegisterServlet extends HttpServlet
 				plz != 0 && 
 				!ort.isEmpty() && 
 				!strasse.isEmpty() && 
-				hausnummer != 0 
-			) {
-			if (password.equals(pwcheck)) {
+				hausnummer != 0)
+			{
+			if (password.equals(pwcheck)) 
+			{
 				System.out.println("pwcheck passed");
 				IUserDAO userDAO = new MysqlUserDAO();
 				Kunde user = new Kunde(0,email, password, nachname, vorname, land, plz, ort, strasse, hausnummer, null);
 				System.out.println(user);
 				userDAO.saveKunde(user);
-				response.sendRedirect("login");
-			} else {
-				//TODO pwcheck failed, ausgabe an user
+			} 
+			else
+			{
 				System.out.println("pwcheck failed");
+				error = error + "Wiederholtes Passwort nicht ident!";
 			}
-		} else {
-			//TODO ausgabe an user, felder dürfen nicht leer sein
-			System.out.println("felder dürfen nicht leer sein");
 		}
-
-
-		//TODO password check failed, benachrichtigung
+		else 
+		{
+			System.out.println("Felder dürfen nicht leer sein");
+			error = error + "Eingabe fehlt!";
+		}
+		if (!error.isEmpty())
+		{
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("Register.jsp").include(request, response);
+		}
+		else 
+		{
+			response.sendRedirect("login");
+		}
 	}
-	
-	
 }
