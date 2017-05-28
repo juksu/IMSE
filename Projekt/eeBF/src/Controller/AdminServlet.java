@@ -64,6 +64,11 @@ public class AdminServlet extends HttpServlet
 						String add = "ProduktErstellen.jsp";
 						forwardList (request, response, add);
 					}
+					else if (request.getParameter("view").equals("lagerstand")){
+						System.out.println("doget lagerstand.jsp aufruf");
+						String add = "Lagerid.jsp";
+						forwardList (request, response, add);
+					}
 				} 
 				else 
 				{
@@ -109,6 +114,10 @@ public class AdminServlet extends HttpServlet
 						request.getRequestDispatcher("login").include(request, response);
 						response.setContentType("text/html");
 						break;}
+					case "lagerstand": {
+						System.out.println("switch case lagerstand");
+						
+					}
 					
 					
 					
