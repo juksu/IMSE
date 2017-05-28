@@ -94,7 +94,7 @@ public class AdminServlet extends HttpServlet
 					String button = request.getParameter("button");
 					switch (button) {
 					case "product":{
-						System.out.println("OKK");
+						System.out.println("OK");
 						createProdukt(request, response);
 						break;}
 					case "erstellen":
