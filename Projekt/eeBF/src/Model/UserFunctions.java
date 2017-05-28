@@ -23,6 +23,7 @@ public abstract class UserFunctions
 		if (!(pw_old==null) &&pw_old.equals(user.getPasswort())&& pw_new.equals(pw_new2))
 		{
 			user.setPasswort(pw_new);
+			error = "Neues Passwort: Login erforderlich!";
 		} 
 		else 
 		{

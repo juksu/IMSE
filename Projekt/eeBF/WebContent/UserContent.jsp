@@ -4,7 +4,7 @@
 	<head>   
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Content Seite</title>
-		
+				
 		<!-- Bootstrap import -->
 		<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>

@@ -1,3 +1,4 @@
+<!-- v1.0 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
@@ -27,17 +28,22 @@
 			<br>
 
 			<div class="panel panel-default">
-			  <div class="panel-heading">Neues Passwort</div>
+			  <div class="panel-heading">Daten ändern</div>
 			  <div class="panel-body">
-			  
-			  		<form action="login" method="post">
-						<input type="password" class="form-control" name="newadminpw" placeholder="Passwort">
+			  		<form action="changePassword" method="post">
+			  			<input type="text" class="form-control" name="email" value="${admin.email }" placeholder="E-Mail">
+			  			<br>
+			  			<input type="password" class="form-control" name="pw_old" placeholder="Altes Passwort">
+			  			<br>
+						<input type="password" class="form-control" name="pw_new" placeholder="Neues Passwort">
 						<br>
-						<input type="password" class="form-control" name="newadminpwagain" placeholder="Passwort wiederholen">
+						<input type="password" class="form-control" name="pw_new2" placeholder="Neues Passwort wiederholen">
 						<br>
-						<input type="password" class="form-control" name="currentadminpw" placeholder="Aktuelles Passwort">
-						<br>
-						<button type="submit" class="btn btn-primary" name="changeadminpassword" value="ChangeAdminPassword" id="changepasswordadminlog">Passwort ändern</button>
+						<button type="submit" class="btn btn-primary" name="button" value="change" id="changeinfoslog">Los!</button>
+						
+						<div>
+					      <p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
+					    </div>
 					</form>
 			  </div>
 			</div>
