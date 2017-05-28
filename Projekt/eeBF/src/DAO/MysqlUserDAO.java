@@ -57,7 +57,7 @@ public class MysqlUserDAO implements IUserDAO
 					String loadPassword = rs.getString("Passwort");
 					Calendar createdate = Calendar.getInstance();
 					createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-					String usertype = rs.getString("type");
+					String usertype = rs.getString("usertype");
 					System.out.println("MysqlUserDAO.loadUser: userType: "+usertype);
 					if(usertype.equals("admin"))
 					{
@@ -359,7 +359,7 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 	    	PreparedStatement ps = conn.prepareStatement
 	    	("insert into benutzerkonto "
-	    		+ "(email, Passwort, type) "
+	    		+ "(email, Passwort, usertype) "
 	    		+ "VALUES (?, ?, ?)");
 	    		ps.setString(1, email);
 	    		ps.setString(2, passwort);
@@ -408,7 +408,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("Mysqluserdao userstat");
 			conn = openConnection();
-			PreparedStatement psadmin = conn.prepareStatement("select * from benutzerkonto where type='admin' and isValid='true'");
+			PreparedStatement psadmin = conn.prepareStatement("select * from benutzerkonto where usertype='admin' and isValid='true'");
 			ResultSet rsadmin;
 			rsadmin = psadmin.executeQuery();
 			System.out.println(rsadmin);
@@ -471,7 +471,7 @@ public class MysqlUserDAO implements IUserDAO
 				String password = "0";
 				Calendar createdate = Calendar.getInstance();
 				createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-				String usertype = rs.getString("type");
+				String usertype = rs.getString("usertype");
 				if(usertype.equals("admin")) {
 					user = new Admin(id, email, password, createdate);
 					userList.add(user);
@@ -627,7 +627,7 @@ public class MysqlUserDAO implements IUserDAO
 			try 
 			{
 	            ResultSet rs= getUserTable(id);
-	            type = rs.getString("type");
+	            type = rs.getString("usertype");
 	            return type;
 			} 
 			catch (IllegalArgumentException e)
@@ -870,7 +870,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update benuzterkonto set type=?"+" where aid=?");
+				PreparedStatement ps = conn.prepareStatement("update benuzterkonto set usertype=?"+" where aid=?");
 				ps.setString(1, type);
 				ps.setInt(2, id);
 				ps.executeUpdate();

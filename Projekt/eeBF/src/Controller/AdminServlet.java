@@ -116,8 +116,9 @@ public class AdminServlet extends HttpServlet
 						break;}
 					case "lagerstand": {
 						System.out.println("switch case lagerstand");
-						request.getParameter("id");
-						request.getRequestDispatcher("ProdukteBeimLager").include(request, response);
+					    
+						lagerStand(request, response);
+						break;
 					}
 					
 					
@@ -153,6 +154,15 @@ public class AdminServlet extends HttpServlet
 		userFunctions.erstelleProduktgruppe(name);
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
+	}
+	
+	public void lagerStand (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("aufgerufen lagerstand");
+		HttpSession session = request.getSession(true);
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		String id = request.getParameter("sid");
+		userFunctions.showProductsByLagerId(Integer.parseInt(id));
+		response.sendRedirect("admin?view=lagerstand");
 	}
 	
 	
