@@ -1,5 +1,7 @@
 package Controller;
 
+// v1.0
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,67 +19,80 @@ public class ChangePasswordServlet extends HttpServlet
 
 	private static final long serialVersionUID = 1L;
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		HttpSession session = request.getSession(true);
-		if(session.getAttribute("user")==null){  
+		if(session.getAttribute("user")==null)
+		{  
 			System.out.println("MenuServlet.doGet: nicht eingeloggt, weiter auf login.jsp");
 			response.sendRedirect("login");
-
 		}
-		else if (session.getAttribute("user")!=null){ // include content if attribute login is set
+		else if (session.getAttribute("user")!=null)
+		{ 
 			User user = (User) session.getAttribute("user");
-			//weiterleiten, falls user ein Kunde ist.
 			if (user instanceof Kunde) response.sendRedirect("accountEdit");
-			forwardList (request, response);
+			Admin admin = (Admin) session.getAttribute("user");
+			request.setAttribute("admin", admin);
+			forwardList (request, response, user);
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
 		System.out.println("MenuServlet.doPost");
 		HttpSession session = request.getSession(true);
-		if(session.getAttribute("user")==null){  
+		if(session.getAttribute("user")==null)
+		{  
 			response.sendRedirect("login");
 		}
-		else if (session.getAttribute("user")!=null){
+		else if (session.getAttribute("user")!=null)
+		{
 			User user = (User) session.getAttribute("user");
-			//weiterleiten, falls user ein Kunde ist.
 			if (user instanceof Kunde) response.sendRedirect("changeAccount");
-
-			if (request.getParameter("button") != null) {
+			AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+			if (request.getParameter("button") != null)
+			{
 				String button = request.getParameter("button");
-				
-				switch (button) {
-				
+		
+				switch (button) 
+				{
 				case "change":
-					changeData(request, response);
+					changePassword(request, response);
 					break;
 				}
-			
 			}
-
 		}
-
-		
 	}
 	
-	public void changeData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	public void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		HttpSession session = request.getSession(true);
-		UserFunctions userFunctions = (UserFunctions) session.getAttribute("userFunctions");
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		String error ="";
+		System.out.println(request.getParameter("email"));
+		String email = request.getParameter("email");
 		String pw_old = request.getParameter("pw_old");
 		String pw_new = request.getParameter("pw_new");
 		String pw_new2 = request.getParameter("pw_new2");
-		String error = userFunctions.changePassword(pw_old, pw_new, pw_new2);
+		
+		error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2);
+		System.out.println(error);
 		session.setAttribute("error", error);
-		if (error.isEmpty()) session.invalidate();
-		forwardList(request, response);
+		if (error.isEmpty())
+		{
+			request.getRequestDispatcher("AdminContent.jsp").include(request, response);
+		}
+		else 
+		{
+			session.invalidate();
+		}
+		doGet(request,response);
 	}
 	
-	public void forwardList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void forwardList(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException
+	{
 		HttpSession session = request.getSession(true);
-		//KundenFunctions userFunctions = (KundenFunctions) session.getAttribute("userFunctions");
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
 		request.getRequestDispatcher("AdminAccountEdit.jsp").include(request, response);
 		session.removeAttribute("error");
 	}

@@ -295,7 +295,35 @@ public class MysqlUserDAO implements IUserDAO
 
 	public void updateAdmin(Admin user)
 	{
-		
+		try
+		{
+			System.out.println("MysqlUserDAO.updateAdmin(Admin)");
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("update benutzerkonto set email=?,"
+				+ " Passwort=? where aid=?");
+				ps.setString(1, user.getEmail());
+				ps.setString(2, user.getPasswort());
+				ps.setInt(3, user.getId());	
+				ps.execute();
+				ps.close();	
+		} 
+		catch (SQLException e) 
+		{
+			System.out.println("MysqlUserDAO, New User Updated failed");
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void setUserInvalid(User user, boolean invalid)
