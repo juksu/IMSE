@@ -140,7 +140,10 @@ public class AdminServlet extends HttpServlet
 		Integer pid =Integer.parseInt(request.getParameter("id"));
 		String bezeichnung =request.getParameter("productbezeichnung");
 		String beschreibung = request.getParameter("productbeschreibung");
-		userFunctions.erstelleProdukt(pid, bezeichnung, beschreibung);
+		String preis = request.getParameter("preis");
+		String menge = request.getParameter("menge");
+		String sid = request.getParameter("sid");
+		userFunctions.erstelleProdukt(pid, bezeichnung, beschreibung, Integer.parseInt(preis), Integer.parseInt(menge), Integer.parseInt(sid));
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
 	}

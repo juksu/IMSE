@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import Model.*;
 
 public interface IProduktDAO {
-	public void createProdukt(int id, String name, String description, float price, int quantity, Lager storage);
+	public void createProdukt(int id, String name, String description, int price, int quantity, int lagerid);
 	public int getAnzahl();
 	//public String getName(int id);
 	public String getBezeichnung(int id);

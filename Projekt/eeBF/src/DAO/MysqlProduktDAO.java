@@ -50,18 +50,21 @@ public class MysqlProduktDAO implements IProduktDAO
 		return p;
 	}	
 
-	public void createProdukt(int id, String name, String description, float price, int quantity, Lager storage)
+	public void createProdukt(int id, String name, String description, int preis, int quantity, int lagerid)
 	{
 		try 
 		{
 			conn = openConnection();
 			// TODO oberkategorie
 			PreparedStatement ps = conn.prepareStatement
-			("insert into produkt(PBezeichnung, PBeschreibung, oid, sid) VALUES(?, ?, null, null)");
+			("insert into produkt(PBezeichnung, PBeschreibung, preis, menge, sid) VALUES(?, ?, ?, ?, ?)");
 				
 				//ps.setInt(1, id);
 				ps.setString(1, name);
 				ps.setString(2, description);
+				ps.setInt(3, preis);
+				ps.setInt(4, quantity);
+				ps.setInt(5, lagerid);
 				ps.execute();
 				ps.close();
 		} 
