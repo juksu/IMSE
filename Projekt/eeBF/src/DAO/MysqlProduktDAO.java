@@ -153,6 +153,40 @@ public class MysqlProduktDAO implements IProduktDAO
 		return ProduktList;
 	}
 
+	public ArrayList<Produkt> getAllProduktenByLagerId(int id) 
+	{
+		ArrayList<Produkt> ProduktList = new ArrayList<Produkt>();
+		try
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("select * from produkt where sid=?");
+			ps.setInt(1,  id);
+			ResultSet rs=ps.executeQuery();
+			while (rs.next())
+			{
+				ProduktList.add(createProduktObject(rs));
+			}
+			rs.close();
+			ps.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		return ProduktList;
+	}
 	/*
 	public String getName(int id) 
 	{
