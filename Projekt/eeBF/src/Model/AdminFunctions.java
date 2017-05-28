@@ -45,6 +45,11 @@ public class AdminFunctions extends UserFunctions
 		return kategorieList;
 	}
 	
+	public ArrayList<Produkt> showProductsByLagerId(int id){
+		ArrayList<Produkt> produktList = getProduktDAO().getAllProduktenByLagerId(id);
+		return produktList;
+	}
+	
 	public void erstelleUser() 
 	{
 		throw new UnsupportedOperationException();

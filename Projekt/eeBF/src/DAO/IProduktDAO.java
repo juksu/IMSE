@@ -8,5 +8,7 @@ public interface IProduktDAO {
 	//public String getName(int id);
 	public String getBezeichnung(int id);
 	public ArrayList<Produkt> getAllProdukten();
+	public ArrayList<Produkt> getAllProduktenByLagerId(int id);
+	
 	
 }

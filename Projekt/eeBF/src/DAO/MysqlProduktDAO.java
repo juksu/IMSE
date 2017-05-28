@@ -187,6 +187,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		}
 		return ProduktList;
 	}
+	
 	/*
 	public String getName(int id) 
 	{
