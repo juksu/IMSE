@@ -28,5 +28,40 @@
 			  </form>
 			</div>
 		</div>
+		
+		
+			<!-- Produkten Tabelle -->
+		<form action="admin" method="post" id="TableForm" role="form" >   
+			<c:choose>
+                    <c:when test="${not empty produktList}">
+                        <table id="myTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Produkt</th>
+                                                                                                
+                                </tr>
+                            </thead>
+                            <c:forEach var="produkt" items="${produktList}">
+                                <tr>
+                                <td>${produkt.sid}</td>
+                                </tr>
+                            </c:forEach>               
+                        </table>  
+                    </c:when>                    
+                    <c:otherwise>
+                        <br>           
+                        <div class="alert alert-info">
+                  			Keine Produkten gefunden
+                        </div>
+                    </c:otherwise>
+                </c:choose>                                
+            </form>
+            
 	</body> 
+	<script>
+	$(document).ready(function()
+	{
+		$('#myTable').dataTable();
+	});
+	</script>
 </html>

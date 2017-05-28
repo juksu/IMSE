@@ -65,7 +65,7 @@ public class AdminServlet extends HttpServlet
 						forwardList (request, response, add);
 					}
 					else if (request.getParameter("view").equals("lagerstand")){
-						System.out.println("doget lagerstand.jsp aufruf");
+						System.out.println("doget Lagerid.jsp aufruf");
 						String add = "Lagerid.jsp";
 						forwardList (request, response, add);
 					}
@@ -116,7 +116,9 @@ public class AdminServlet extends HttpServlet
 						break;}
 					case "lagerstand": {
 						System.out.println("switch case lagerstand");
-					    
+						int id = Integer.parseInt(request.getParameter("sid"));
+						//session.setAttribute("lagerid", id);
+						request.setAttribute("lagerid", id);
 						lagerStand(request, response);
 						break;
 					}
@@ -163,8 +165,8 @@ public class AdminServlet extends HttpServlet
 		System.out.println("aufgerufen lagerstand");
 		HttpSession session = request.getSession(true);
 		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
-		String id = request.getParameter("sid");
-		userFunctions.showProductsByLagerId(Integer.parseInt(id));
+		userFunctions.showProductsByLagerId((int)request.getAttribute("lagerid"));
+
 		response.sendRedirect("admin?view=lagerstand");
 	}
 	
