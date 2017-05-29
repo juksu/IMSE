@@ -1,8 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -44,63 +42,10 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession(true);
-	//	if( session.getAttribute( "user" ) == null )
-	//		response.sendRedirect("login");
-		
-		Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
-		if( shoppingCart == null )
-		{
-			shoppingCart = new Bestellung();
-			
-//			public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items,
-//					String paypalTNr)
-			session.setAttribute( "shoppingCart", shoppingCart );
-		}
-		
-		// TODO only for debug
-//		PrintWriter writer = response.getWriter();
-//		response.setContentType("text/html;charset=UTF-8");
-//		writer.println("b#ase+üla");
-		
 		if( request.getParameter( "additem" ) != null )
 		{
 			addItemToShoppingCart( request, response );
-//			
-//			System.out.println( request.getParameter( "additem" ) );
-//			System.out.println( request.getParameter( "itemquantity" ) );
-			
-//			try
-//			{
-//				int pid = Integer.parseInt( request.getParameter( "additem" ) );
-//				int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
-//				
-//				Produkt prod = new Produkt( pid, "name", "description", (float) (Math.random()*10), 0, null);
-//				
-//				Bestellposition newpos = new Bestellposition(prod, quantity, (float) (Math.random()*10)); 
-//				
-//				shoppingCart.addItem( newpos );
-//				
-//				// TODO testing
-//				shoppingCart.setId( Integer.parseInt( request.getParameter( "additem" ) ) );
-				
-//			} 
-//			catch ( NumberFormatException e )
-//			{
-//				// TODO
-//			}
-		}
-		
-//		request.setAttribute( "shoppingCart", shoppingCart );
-//		session.setAttribute( "shoppingCart", shoppingCart );
-//		System.out.println( shoppingCart.getId() );
-//		response.sendRedirect("Einkaufswagen.jsp");
-				
-				
-		
-		
-			
+		}		
 	}
 
 	/**
@@ -114,11 +59,15 @@ public class ShoppingCart extends HttpServlet {
 	{	
 		HttpSession session = request.getSession(false);
 		
-		if( session == null )
-			response.sendRedirect( "login" );
-		if( session.getAttribute( "user" ) == null );
-			response.sendRedirect( "login" );
+		String redirect = "Einkaufswagen.jsp";
 		
+		if( session == null )
+			redirect = "login";
+		if( session.getAttribute( "user" ) == null )
+			redirect = "login";
+		
+		// TODO test case
+		// User user = new Kunde(2, "mymail", null, null, null, null, 0, null, null, 0, null);
 		User user = (User) session.getAttribute( "user" );
 		
 		// only Kunden can order
@@ -138,43 +87,34 @@ public class ShoppingCart extends HttpServlet {
 				shoppingCart.setOrderStateOrdered( false );
 				shoppingCart.setCustomer( customer );
 				
+				System.out.println( "shoppingCart session created" );
+				
+				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
 				ioOrder.insertBestellung( shoppingCart );
+				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
 			}
 			
 			int pid = Integer.parseInt( request.getParameter( "additem" ) );
 			int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
 			
-			// TODO sample data 
-			Produkt prod = new Produkt( pid, "name", "description", (float) (Math.random()*10), 0, null);
-//			Bestellposition newpos = new Bestellposition(prod, quantity, (float) (Math.random()*10));
+			Produkt prod = ioProduct.getProduktById( pid );
 			
-			
-//			Produkt prod = ioProduct.getProduktById( pid );
+			// TODO catch case if product could not be found in database
 			Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
-			
-			shoppingCart.addItem( newItem );
-			
-			// TODO testing
-//			shoppingCart.setId( Integer.parseInt( request.getParameter( "additem" ) ) );
-			
-
-//			IBestellpositionDAO io = new MysqlBestellpositionDAO();
-			
 			ioPos.insertBestellposition( shoppingCart, newItem );
+			
 			shoppingCart.addItem( newItem );
 			ioOrder.updateBestellung( shoppingCart, true );
 			
-//			session.setAttribute( "shoppingCart", shoppingCart );
-			
-			System.out.println( "bla " + shoppingCart.getId() );
-			request.setAttribute( "shoppingCart", shoppingCart );
-//			session.setAttribute( "shoppingCart", shoppingCart );
-			response.sendRedirect("Einkaufswagen.jsp");
+			// request.setAttribute( "shoppingCart", shoppingCart );
+			session.setAttribute( "shoppingCart", shoppingCart );
 		}
 		else 
 		{
-			// TODO
+			redirect = "index";
 		}
+		
+		response.sendRedirect( redirect );
 		
 	}
 	

@@ -1,6 +1,6 @@
 package DAO;
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,32 +9,11 @@ import Model.*;
 
 public class MysqlProduktDAO implements IProduktDAO 
 {
-	private String dbPath;
-	private String dbUser;
-	private String dbPassword;
 	private Connection conn = null;
-
-	public MysqlProduktDAO () 
-	{
-		setDbPath("jdbc:mysql://localhost:3306/eebf?useSSL=false");
-		setDbUser("eeBF_Admin");
-		setDbPassword("Tombstone");
-      	try
-      	{
-      		Class.forName("com.mysql.jdbc.Driver");
-        } 
-      	catch (ClassNotFoundException e)
-      	{
-      		System.out.println("An error occurred. com.mysql.jdbc.Driver konnte nicht geladen werden");
-      		e.printStackTrace();
-      	} 	
-	}
 	
-	private Connection openConnection() throws SQLException
+	private Connection openConnection() throws SQLException, ClassNotFoundException
 	{
-		conn = null;
-    	conn = DriverManager.getConnection(getDbPath(), getDbUser(), getDbPassword());
-    	return conn;
+		return DBConnection.getConnection( DBConnection.connectionTypes.ADMIN );
 	}
 	
 	private Produkt createProduktObject(ResultSet rs) throws SQLException
@@ -69,7 +48,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				ps.execute();
 				ps.close();
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			System.out.println("MYSQLAuktion, New produkt Creation failed");
 			e.printStackTrace();
@@ -105,7 +84,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				rs.close();
 				ps.close();
 			} 
-			catch (SQLException e)
+			catch (SQLException | ClassNotFoundException e)
 			{
 				e.printStackTrace();
 			} 
@@ -146,7 +125,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				rs.close();
 				ps.close();
 			} 
-			catch (SQLException e)
+			catch (SQLException | ClassNotFoundException e)
 			{
 				e.printStackTrace();
 			} 
@@ -182,7 +161,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				rs.close();
 				ps.close();
 			} 
-			catch (SQLException e)
+			catch (SQLException | ClassNotFoundException e)
 			{
 				e.printStackTrace();
 			} 
@@ -212,7 +191,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			rs.close();
 			ps.close();
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		} 
@@ -252,7 +231,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			rs.close();
 			ps.close();
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		} 
@@ -325,7 +304,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			rs.close();
 			ps.close();
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		} 
@@ -359,7 +338,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				ps.execute();
 				ps.close();
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			System.out.println("MYSQLAuktion, produkt change failed");
 			e.printStackTrace();
@@ -425,6 +404,9 @@ public class MysqlProduktDAO implements IProduktDAO
 		catch (SQLException e) 
 		{
 			e.printStackTrace();				
+		} catch( ClassNotFoundException e )
+		{
+			e.printStackTrace();
 		}
 		finally 
 		{
@@ -440,33 +422,39 @@ public class MysqlProduktDAO implements IProduktDAO
 		return null;
 	}
 
-	public String getDbPath()
+	@Override
+	public Produkt getProduktById( int id )
 	{
-		return dbPath;
-	}
-
-	public void setDbPath(String dbPath)
-	{
-		this.dbPath = dbPath;
-	}
-
-	public String getDbUser()
-	{
-		return dbUser;
-	}
-
-	public void setDbUser(String dbUser)
-	{
-		this.dbUser = dbUser;
-	}
-
-	public String getDbPassword()
-	{
-		return dbPassword;
-	}
-
-	public void setDbPassword(String dbPassword)
-	{
-		this.dbPassword = dbPassword;
+		Produkt product = null;
+		PreparedStatement ps = null;
+		
+		try
+		{
+			conn = DBConnection.getConnection( DBConnection.connectionTypes.USER );
+			ps = conn.prepareStatement( "select * from produkt where pid = ?" );
+			ps.setInt( 1, id );
+			ResultSet rs = ps.executeQuery();
+			if( rs.next() )
+				product = createProduktObject( rs );
+			rs.close();
+			ps.close();
+			conn.close();
+		} catch ( SQLException | ClassNotFoundException e )
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				ps.close();
+				conn.close();
+			} catch( SQLException e )
+			{
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return product;
 	}
 }

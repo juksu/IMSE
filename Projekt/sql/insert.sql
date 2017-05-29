@@ -12,13 +12,13 @@ INSERT INTO eebf.bestellung (Bestellstatus, Datum, PaypalTNr, aid) VALUES ('lief
 INSERT INTO eebf.bestellung (Bestellstatus, Datum, PaypalTNr, aid) VALUES ('', current_timestamp(), '2', '2');
 
 
-INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge, bezeichnung) VALUES (3, 'nokia', 'handys', 25, 3 ,'handy');
+INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge) VALUES (3, 'nokia', 'handys', 25, 3);
 
-INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge, bezeichnung) VALUES (4, 'bmw', 'buecher', 23, 2 ,'auto');
+INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge) VALUES (4, 'bmw', 'buecher', 23, 2);
 
-INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge, bezeichnung) VALUES (6, 'hp', 'handys', 123, 3, 'laptop');
+INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge) VALUES (6, 'hp', 'handys', 123, 3);
 
-INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge, bezeichnung) VALUES (7, 'bla', 'buecher', 57,4 ,'buch');
+INSERT INTO eebf.produkt (pid, PBezeichnung, PBeschreibung, preis, menge) VALUES (7, 'bla', 'buecher', 57, 4);
 
 
 INSERT INTO eebf.produktkategorie (kid, bezeichnung, beschreibung) VALUES (1, 'auto', 'autos');
