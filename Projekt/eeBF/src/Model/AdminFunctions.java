@@ -63,6 +63,8 @@ public class AdminFunctions extends UserFunctions
 	public void erstelleProdukt(Integer id, String bezeichnung, String beschreibung, int preis, int menge, int lagerid){
 		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, preis, menge, lagerid);
 	}
+	
+
 
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2)
 	{
@@ -90,6 +92,12 @@ public class AdminFunctions extends UserFunctions
 	{
 		throw new UnsupportedOperationException();
 	}
+
+	public void changeMenge(int pid, int newmenge) {
+		getProduktDAO().newMenge(pid, newmenge);
+	}
+
+	
 	
 	
 	

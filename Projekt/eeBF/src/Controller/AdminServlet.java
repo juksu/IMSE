@@ -69,6 +69,7 @@ public class AdminServlet extends HttpServlet
 						if(session.getAttribute("lagerid")!=null){
 							int sid = (int )session.getAttribute("lagerid");
 							ArrayList<Produkt> produktList = userFunctions.showProductsByLagerId(sid);
+							System.out.println("produktLIST.size(): "+ produktList.size());
 							request.setAttribute("produktList", produktList);
 						}
 						
@@ -129,6 +130,17 @@ public class AdminServlet extends HttpServlet
 						lagerStand(request, response);
 						break;
 					}
+					case "menge": {
+						System.out.println("switch case menge");
+						String pid = request.getParameter("pid");
+						System.out.println("pid gekriegt" + pid);
+						session.setAttribute("pid", Integer.parseInt(pid));
+						String menge = request.getParameter("menge");
+						session.setAttribute("menge", Integer.parseInt(menge));
+						System.out.println("new menge:" + menge + " id: " );
+						menge(request, response);
+						break;
+					}
 					
 					
 					
@@ -176,6 +188,17 @@ public class AdminServlet extends HttpServlet
 		System.out.println("aus der SESSION ID bekommen: " + sid );
 		userFunctions.showProductsByLagerId(sid);
 		String add = "";
+		response.sendRedirect("admin?view=lagerstand");
+	}
+	
+	public void menge (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("aufgerufen menge");
+		HttpSession session = request.getSession(true);
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		int pid = (int) session.getAttribute("pid");
+		int newmenge = (int) session.getAttribute("menge");
+		userFunctions.changeMenge(pid, newmenge);
+		
 		response.sendRedirect("admin?view=lagerstand");
 	}
 	

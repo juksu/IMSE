@@ -156,7 +156,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		}
 		return ProduktList;
 	}
-	
+	/*
 	public ArrayList<Produkt> getAllProduktenByLagerId(int sid) 
 	{
 		System.out.println("MYSQLProduktkDAO.getAllProduktenByLagerId");
@@ -193,7 +193,7 @@ public class MysqlProduktDAO implements IProduktDAO
         }
 		return produktList;
 	}
-/*
+*/
 	public ArrayList<Produkt> getAllProduktenByLagerId(int sid) 
 	{
 		System.out.println("MYSQLProduktkDAO.getAllProduktenByLagerId");
@@ -229,7 +229,41 @@ public class MysqlProduktDAO implements IProduktDAO
 		}
 		return ProduktList;
 	}
-	*/
+	
+	public void newMenge(int id, int menge)
+	{
+		try 
+		{
+			conn = openConnection();
+			// TODO oberkategorie
+			PreparedStatement ps = conn.prepareStatement
+			("update eebf.produkt set menge=? where pid=?");
+				
+				//ps.setInt(1, id);
+				ps.setInt(1, menge);
+				ps.setInt(2, id);
+				
+				ps.execute();
+				ps.close();
+		} 
+		catch (SQLException e)
+		{
+			System.out.println("MYSQLAuktion, produkt change failed");
+			e.printStackTrace();
+		}
+		finally
+		{
+			try 
+			{
+				conn.close();
+			} 
+			catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+	}	
+	
 	
 	/*
 	public String getName(int id) 
