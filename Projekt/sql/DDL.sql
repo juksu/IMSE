@@ -31,6 +31,15 @@ CREATE TABLE lager (
     CONSTRAINT s_pk PRIMARY KEY (sid)
 );
 
+
+CREATE TABLE produktkategorie (
+	kid TINYINT(3) UNSIGNED NOT NULL,
+	bezeichnung varchar(20) NOT NULL,
+	beschreibung varchar(50),
+	CONSTRAINT k_pk PRIMARY KEY (bezeichnung)
+);
+
+
 CREATE TABLE produkt (
     pid SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
     PBezeichnung VARCHAR(30) NOT NULL DEFAULT '',
@@ -39,21 +48,14 @@ CREATE TABLE produkt (
     menge INT UNSIGNED NOT NULL,
     sid TINYINT(3) UNSIGNED,
     CONSTRAINT p_pk PRIMARY KEY (pid),
-    CONSTRAINT p_fk_s FOREIGN KEY (sid)
+ CONSTRAINT p_fk_s FOREIGN KEY (sid)
         REFERENCES lager (sid)
+        ON DELETE CASCADE
+    CONSTRAINT p_fk_s FOREIGN KEY (bezeichnung)
+        REFERENCES produktkategorie (bezeichnung)
         ON DELETE CASCADE
 );
 
-CREATE TABLE produktkategorie (
-	kid TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
-	bezeichnung varchar(20) NOT NULL,
-	beschreibung varchar(50),
-	oberkategorie TINYINT(3) UNSIGNED,
-	CONSTRAINT k_pk PRIMARY KEY (kid),
-	CONSTRAINT k_fk FOREIGN KEY (oberkategorie)
-		REFERENCES produktkategorie (kid)
-		ON DELETE CASCADE
-);
 
 CREATE TABLE zuordnung (
     pid SMALLINT(5) UNSIGNED NOT NULL,

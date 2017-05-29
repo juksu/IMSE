@@ -85,7 +85,120 @@ public class MysqlProduktDAO implements IProduktDAO
 				e.printStackTrace();
 			}
 		}
-	}	
+	}
+	
+	public ArrayList<Produkt> searchByCategory(String titel) 
+	{
+		ArrayList<Produkt> SearchByCategory = new ArrayList<Produkt>();
+		try 
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+	        ( "select * from produkt where bezeichnung = ?");
+	         // System.out.println(sqlStr);  // for debugging
+			ps.setString(1, titel);
+	         ResultSet rs=ps.executeQuery();
+				while (rs.next())
+				{
+					SearchByCategory.add(createProduktObject(rs));
+				}
+				rs.close();
+				ps.close();
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				try 
+				{
+					conn.close();
+				}
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			return SearchByCategory;
+		}
+
+	public ArrayList<Produkt> MengePruefen(String titel){
+		ArrayList<Produkt> MengePruefen = new ArrayList<Produkt>();
+		try 
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+	        ( "select PBezeichnung, Menge from produkt where PBezeichnung = ?");
+	         // System.out.println(sqlStr);  // for debugging
+			ps.setString(1, titel);
+	         ResultSet rs=ps.executeQuery();
+					 while(rs.next()){
+				         //Retrieve by column name
+				         String name = rs.getString("name");
+				         int menge  = rs.getInt("quantity");
+
+				         //Display values
+				         System.out.print("Name: " + name);
+				         System.out.print(", Menge: " + menge);
+				        
+				      }
+				rs.close();
+				ps.close();
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				try 
+				{
+					conn.close();
+				}
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			return MengePruefen;
+		}
+	
+	public ArrayList<Produkt> searchProdukt(String name) 
+	{
+		ArrayList<Produkt> SearchList = new ArrayList<Produkt>();
+		try 
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+	        ( "select * from produkt where PBezeichnung = ?");
+	         // System.out.println(sqlStr);  // for debugging
+			ps.setString(1, name);
+	         ResultSet rs=ps.executeQuery();
+				while (rs.next())
+				{
+					SearchList.add(createProduktObject(rs));
+				}
+				rs.close();
+				ps.close();
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				try 
+				{
+					conn.close();
+				}
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+			return SearchList;
+		}
 
 	public int getAnzahl() {
 		int i =0;
