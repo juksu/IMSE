@@ -66,7 +66,14 @@ public class AdminServlet extends HttpServlet
 					}
 					else if (request.getParameter("view").equals("lagerstand")){
 						System.out.println("doget Lagerid.jsp aufruf");
+						if(session.getAttribute("lagerid")!=null){
+							int sid = (int )session.getAttribute("lagerid");
+							ArrayList<Produkt> produktList = userFunctions.showProductsByLagerId(sid);
+							request.setAttribute("produktList", produktList);
+						}
+						
 						String add = "Lagerid.jsp";
+						
 						forwardList (request, response, add);
 					}
 				} 
@@ -116,9 +123,9 @@ public class AdminServlet extends HttpServlet
 						break;}
 					case "lagerstand": {
 						System.out.println("switch case lagerstand");
-						int id = Integer.parseInt(request.getParameter("sid"));
-						//session.setAttribute("lagerid", id);
-						request.setAttribute("lagerid", id);
+						String sid = request.getParameter("sid");
+						System.out.println("id gekriegt" + sid);
+						session.setAttribute("lagerid", Integer.parseInt(sid));
 						lagerStand(request, response);
 						break;
 					}
@@ -165,8 +172,10 @@ public class AdminServlet extends HttpServlet
 		System.out.println("aufgerufen lagerstand");
 		HttpSession session = request.getSession(true);
 		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
-		userFunctions.showProductsByLagerId((int)request.getAttribute("lagerid"));
-
+		int sid = (int) session.getAttribute("lagerid");
+		System.out.println("aus der SESSION ID bekommen: " + sid );
+		userFunctions.showProductsByLagerId(sid);
+		String add = "";
 		response.sendRedirect("admin?view=lagerstand");
 	}
 	

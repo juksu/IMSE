@@ -39,11 +39,12 @@ public class MysqlProduktDAO implements IProduktDAO
 	
 	private Produkt createProduktObject(ResultSet rs) throws SQLException
 	{
-		int id = rs.getInt("id");
-		String name=rs.getString("name");
-		String beschreibung = rs.getString("beschreibung");
-		float price = rs.getFloat("price");
-		int quantity = rs.getInt("quantity");
+		int id = rs.getInt("pid");
+		String name=rs.getString("PBezeichnung");
+		String beschreibung = rs.getString("PBeschreibung");
+		float price = rs.getFloat("preis");
+		int quantity = rs.getInt("menge");
+		//int sid = rs.getInt(columnIndex)
 		
 		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
 		Produkt p = new Produkt (id, name, beschreibung,price, quantity, null);
@@ -159,7 +160,7 @@ public class MysqlProduktDAO implements IProduktDAO
 	public ArrayList<Produkt> getAllProduktenByLagerId(int sid) 
 	{
 		System.out.println("MYSQLProduktkDAO.getAllProduktenByLagerId");
-		ArrayList<Produkt> ProduktList = new ArrayList<Produkt>();
+		ArrayList<Produkt> produktList = new ArrayList<Produkt>();
 		ResultSet rs= null;
         try 
         {
@@ -170,7 +171,7 @@ public class MysqlProduktDAO implements IProduktDAO
             rs =ps.executeQuery();
             if (rs.next()) 
             {
-            	ProduktList.add(createProduktObject(rs));
+            	produktList.add(createProduktObject(rs));
             } else throw new IllegalArgumentException ("Produkt mit  sID: "+sid+" nicht gefunden");
             
         } 
@@ -190,7 +191,7 @@ public class MysqlProduktDAO implements IProduktDAO
 				e.printStackTrace();
 			}
         }
-		return ProduktList;
+		return produktList;
 	}
 /*
 	public ArrayList<Produkt> getAllProduktenByLagerId(int sid) 
