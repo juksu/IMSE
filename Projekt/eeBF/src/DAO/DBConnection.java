@@ -14,6 +14,7 @@ class DBConnection {
 		String dbUser;
 		String dbPassword;
 		String dbPath = "jdbc:mysql://localhost:3306/eebf?useSSL=false";
+//		String dbPath = "jdbc:mysql://www.eeBF.at:3306/eebf?useSSL=false"; // TODO set to this path on production
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		

@@ -8,7 +8,7 @@ public class Bestellung
 	// enum orderState {
 	// OFFEN, BEZAHLT, LIEFERND, GELIEFERT, ABGESCHLOSSEN
 	// };
-	public class OrderState
+	private class OrderState
 	{
 		private boolean ordered = false; // if not ordered than only in shopping
 											// cart
@@ -104,21 +104,22 @@ public class Bestellung
 	private ArrayList<Bestellposition> items;
 	private String paypalTNr;
 
-	public Bestellung(int id, Calendar date, OrderState currentState, Kunde customer, ArrayList<Bestellposition> items,
-			String paypalTNr)
-	{
-		// super();
-		this.id = id;
-		this.date = date;
-		this.currentState = currentState;
-		this.customer = customer;
-		this.items = items;
-		this.paypalTNr = paypalTNr;
-	}
+//	public Bestellung(int id, Calendar date, Kunde customer, ArrayList<Bestellposition> items, String paypalTNr)
+//	{
+//		// super();
+//		this.id = id;
+//		this.date = date;
+//		this.currentState = new OrderState();
+//		this.customer = customer;
+//		this.items = items;
+//		this.paypalTNr = paypalTNr;
+//	}
 
 	public Bestellung()
 	{
+		this.date = Calendar.getInstance();
 		this.currentState = new OrderState();
+		this.items = new ArrayList<Bestellposition>();
 	}
 
 	public int getId()
@@ -131,9 +132,9 @@ public class Bestellung
 		this.id = id;
 	}
 
-	// public Calendar getDate() {
-	// return date;
-	// }
+	 public Calendar getDate() {
+		 return date;
+	 }
 
 	public void setDate( Calendar date )
 	{
@@ -160,6 +161,16 @@ public class Bestellung
 		this.customer = customer;
 	}
 
+	public ArrayList<Bestellposition> getItems()
+	{
+		return items;
+	}
+
+	public void setItems( ArrayList<Bestellposition> items )
+	{
+		this.items = items;
+	}
+
 	public String getPaypalTNr()
 	{
 		return paypalTNr;
@@ -173,7 +184,7 @@ public class Bestellung
 	public void addItem( Bestellposition item )
 	{
 		// only allow to add items if shopping cart
-		if( !currentState.isOrdered() )
+//		if( !currentState.isOrdered() )
 			items.add(item);
 	}
 
@@ -188,5 +199,84 @@ public class Bestellung
 		
 		return totalPrice;
 	}
+	
+	public void setOrderStateOrdered( boolean isOrdered )
+	{
+		currentState.setOrdered( isOrdered );
+	}
+	
+	public boolean isOrderStateOrdered()
+	{
+		return currentState.isOrdered();
+	}
+	
+	public void setOrderStatePaid( boolean isPaid )
+	{
+		currentState.setPaid( isPaid );
+	}
+	
+	public boolean isOrderStatePaid()
+	{
+		return currentState.isPaid();
+	}
+	
+	public void setOrderStateSending( boolean isSending )
+	{
+		currentState.setSending( isSending );
+	}
+	
+	public boolean isOrderStateSending()
+	{
+		return currentState.isSending();
+	}
+	
+	public void setOrderStateSent( boolean isSent )
+	{
+		currentState.setSent( isSent );
+	}
+	
+	public boolean isOrderStateSent()
+	{
+		return currentState.isSent();
+	}
+	
+	public void setOrderStateComplete( boolean isComplete )
+	{
+		currentState.setComplete( isComplete );
+	}
+	
+	public boolean isOrderStateComplete()
+	{
+		return currentState.isComplete();
+	}
+	
+	/**
+	 * shortfunction for setting the order state
+	 * @param state 5 entry long boolean array in following order {isOrdered, isPaid, isSending, isSent, isComplete} 
+	 */
+	public void setOrderState( boolean[] state )
+	{
+		if( state.length <= 5 )
+		{
+			setOrderStateOrdered( state[0] );
+			setOrderStatePaid( state[1] );
+			setOrderStateSending( state[2] );
+			setOrderStateSent( state[3] );
+			setOrderStateComplete( state[4] );
+		}
+	}
+	
+	/**
+	 * shortfunction for getting the order state 
+	 * @return 5 entry long boolean array in following order {isOrdered, isPaid, isSending, isSent, isComplete} 
+	 */
+	public boolean[] getOrderState()
+	{
+		boolean orderState[] =  {isOrderStateOrdered(), isOrderStatePaid(),
+				isOrderStateSending(), isOrderStateSent(), isOrderStateComplete() };
+		
+		return orderState;
+	}
+	
 
 }

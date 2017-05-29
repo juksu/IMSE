@@ -11,6 +11,8 @@
 <script type="text/javascript"
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
 <!-- SEHR UNSCHÖN GELÖST FÜR DEN ABSTAND DER BUTTONS in der NAVleiste -->
 <style>
 small {
