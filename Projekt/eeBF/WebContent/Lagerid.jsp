@@ -42,12 +42,13 @@
 			<c:choose>
                     <c:when test="${not empty produktList}">
                         <table id="myTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Produkt</th>
-                                                                                                
-                                </tr>
-                            </thead>
+                         
+                            <tr><th> ID </th>
+                            <th> Bezeichnung </th>
+                            <th> Beschreibung </th>
+                            <th> Preis </th>
+                            <th> Menge </th></tr>
+                            
                             <c:forEach var="produkt" items="${produktList}">
                                 <tr>
                                 <td>${produkt.id}</td>
@@ -56,7 +57,8 @@
                                 <td>${produkt.price}</td>
                                 <td>${produkt.quantity}</td>
                                 </tr>
-                            </c:forEach>               
+                            </c:forEach> 
+                                          
                         </table>  
                     </c:when>                    
                     <c:otherwise>
@@ -67,7 +69,15 @@
                     </c:otherwise>
                 </c:choose>                                
             </form>
-			
+            
+            
+            
+			<form action="admin" method="post">
+						<input type="text" class="form-control" name="pid" placeholder="Produkt ID">
+						<input type="text" class="form-control" name="menge" placeholder="neue Menge">
+						<br>
+						<button type="submit" class="btn btn-primary" name="button" value="menge" >Change</button>
+					</form>
 			
 			
 		</div>
