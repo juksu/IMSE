@@ -70,7 +70,8 @@ public class AdminServlet extends HttpServlet
 							int sid = (int )session.getAttribute("lagerid");
 							ArrayList<Produkt> produktList = userFunctions.showProductsByLagerId(sid);
 							System.out.println("produktLIST.size(): "+ produktList.size());
-							request.setAttribute("produktList", produktList);
+							if (produktList.size()!=0)
+								request.setAttribute("produktList", produktList);
 						}
 						
 						String add = "Lagerid.jsp";
