@@ -77,6 +77,40 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			}
 		}
 	}	
+	
+	public ArrayList<Produktkategorie> getAllProduktkategorie() 
+	{
+		ArrayList<Produktkategorie> ProduktList = new ArrayList<Produktkategorie>();
+		try
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("select * from produktkategorie");
+			ResultSet rs=ps.executeQuery();
+			while (rs.next())
+			{
+				ProduktList.add(createProduktKatObject(rs));
+			}
+			rs.close();
+			ps.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		return ProduktList;
+	}
 
 	public int getAnzahl() {
 		int i =0;
@@ -114,39 +148,7 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		
 	}
 	
-	public ArrayList<Produktkategorie> getAllProduktkategorie() 
-	{
-		ArrayList<Produktkategorie> ProduktList = new ArrayList<Produktkategorie>();
-		try
-		{
-			conn = openConnection();
-			PreparedStatement ps = conn.prepareStatement
-			("select * from produktkategorie");
-			ResultSet rs=ps.executeQuery();
-			while (rs.next())
-			{
-				ProduktList.add(createProduktKatObject(rs));
-			}
-			rs.close();
-			ps.close();
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		} 
-		finally 
-		{
-			try 
-			{
-				conn.close();
-			}
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-		}
-		return ProduktList;
-	}
+	
 
 	public int getIdByName(String name)
 	{
