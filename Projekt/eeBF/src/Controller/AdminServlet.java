@@ -1,5 +1,7 @@
 package Controller;
 
+// v1.1.2
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -8,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import DAO.IUserDAO;
-import DAO.MysqlUserDAO;
 import Model.*;
 
 
@@ -48,16 +47,9 @@ public class AdminServlet extends HttpServlet
 						String add = "AdminUserShow.jsp";
 						forwardList (request, response, add);
 					} 
-					else if (request.getParameter("view").equals("createAdmin")) 
+					else if (request.getParameter("view").equals("userCreate")) 
 					{
-						System.out.println("Admin: doGet - AdminUserCreate.jsp");
 						String add = "AdminUserCreate.jsp";
-						forwardList (request, response, add);
-					}
-					else if (request.getParameter("view").equals("changePassword")) 
-					{
-						System.out.println("Admin: doGet - AdminAccountEdit.jsp");
-						String add = "AdminAccountEdit.jsp";
 						forwardList (request, response, add);
 					}
 					else if (request.getParameter("view").equals("kategorie")) 
@@ -74,6 +66,20 @@ public class AdminServlet extends HttpServlet
 						String add = "ProduktErstellen.jsp";
 						forwardList (request, response, add);
 					}
+					else if (request.getParameter("view").equals("lagerstand")){
+						System.out.println("doget Lagerid.jsp aufruf");
+						if(session.getAttribute("lagerid")!=null){
+							int sid = (int )session.getAttribute("lagerid");
+							ArrayList<Produkt> produktList = userFunctions.showProductsByLagerId(sid);
+							System.out.println("produktLIST.size(): "+ produktList.size());
+							if (produktList.size()!=0)
+								request.setAttribute("produktList", produktList);
+						}
+						
+						String add = "Lagerid.jsp";
+						
+						forwardList (request, response, add);
+					}
 				} 
 				else 
 				{
@@ -86,6 +92,7 @@ public class AdminServlet extends HttpServlet
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{   
+		
 		System.out.println("adminServlet.doPost");
 		HttpSession session = request.getSession(true);
 		if(session.getAttribute("user")==null)
@@ -99,41 +106,47 @@ public class AdminServlet extends HttpServlet
 			if (user instanceof Admin) {
 				AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
 				
-				if (request.getParameter("button") != null)
-				{
+				if (request.getParameter("button") != null) {
 					String button = request.getParameter("button");
-					switch (button)
+					switch (button) {
+					case "product":{
+						System.out.println("OKK");
+						createProdukt(request, response);
+						break;}
+					case "erstellen":
 					{
-						case "createAdmin":
-						{
-							System.out.println("Admin: doPost - AdminUserCreate.jsp");
-							response.sendRedirect("createAdmin");
-							break;
-						}
-						case "product":
-						{
-							System.out.println("OK");
-							createProdukt(request, response);
-							break;
-						}
-						case "erstellen":
-						{
-							System.out.println("switch case");
-							createProduktgruppe(request,response);
-							break;
-						}
-						case "changePassword":
-						{
-							System.out.println("Admin: doPost - AdminAccountEdit.jsp");
-							response.sendRedirect("changePassword");
-							break;
-						}
-						case "logout":
-						{
-							request.getRequestDispatcher("login").include(request, response);
-							response.setContentType("text/html");
-							break;
-						}
+						System.out.println("switch case");
+						createProduktgruppe(request,response);
+						break;}
+					case "changePassword":{
+						response.sendRedirect("changePassword");
+						break;}
+					case "logout":{
+						request.getRequestDispatcher("login").include(request, response);
+						response.setContentType("text/html");
+						break;}
+					case "lagerstand": {
+						System.out.println("switch case lagerstand");
+						String sid = request.getParameter("sid");
+						System.out.println("id gekriegt" + sid);
+						session.setAttribute("lagerid", Integer.parseInt(sid));
+						lagerStand(request, response);
+						break;
+					}
+					case "menge": {
+						System.out.println("switch case menge");
+						String pid = request.getParameter("pid");
+						System.out.println("pid gekriegt" + pid);
+						session.setAttribute("pid", Integer.parseInt(pid));
+						String menge = request.getParameter("menge");
+						session.setAttribute("menge", Integer.parseInt(menge));
+						System.out.println("new menge:" + menge + " id: " );
+						menge(request, response);
+						break;
+					}
+					
+					
+					
 					}
 				}
 			}
@@ -151,7 +164,10 @@ public class AdminServlet extends HttpServlet
 		Integer pid =Integer.parseInt(request.getParameter("id"));
 		String bezeichnung =request.getParameter("productbezeichnung");
 		String beschreibung = request.getParameter("productbeschreibung");
-		userFunctions.erstelleProdukt(pid, bezeichnung, beschreibung);
+		String preis = request.getParameter("preis");
+		String menge = request.getParameter("menge");
+		String sid = request.getParameter("sid");
+		userFunctions.erstelleProdukt(pid, bezeichnung, beschreibung, Integer.parseInt(preis), Integer.parseInt(menge), Integer.parseInt(sid));
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
 	}
@@ -165,6 +181,28 @@ public class AdminServlet extends HttpServlet
 		userFunctions.erstelleProduktgruppe(name);
 		String add = "";
 		response.sendRedirect("admin?view=kategorie");
+	}
+	
+	public void lagerStand (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("aufgerufen lagerstand");
+		HttpSession session = request.getSession(true);
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		int sid = (int) session.getAttribute("lagerid");
+		System.out.println("aus der SESSION ID bekommen: " + sid );
+		userFunctions.showProductsByLagerId(sid);
+		String add = "";
+		response.sendRedirect("admin?view=lagerstand");
+	}
+	
+	public void menge (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("aufgerufen menge");
+		HttpSession session = request.getSession(true);
+		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
+		int pid = (int) session.getAttribute("pid");
+		int newmenge = (int) session.getAttribute("menge");
+		userFunctions.changeMenge(pid, newmenge);
+		
+		response.sendRedirect("admin?view=lagerstand");
 	}
 	
 	
