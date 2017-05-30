@@ -15,19 +15,19 @@ public class MysqlBestellungDAO implements IBestellungDAO
 	{
 		String status = "";
 
-		if( order.getCurrentState().isOrdered() )
+		if( order.isOrderStateOrdered() )
 			status = "bestellt";
 
-		if( order.getCurrentState().isPaid() )
+		if( order.isOrderStatePaid() )
 			status.concat( ",bezahlt" );
 
-		if( order.getCurrentState().isSending() )
+		if( order.isOrderStateSending() )
 			status.concat( ",liefernd" );
 
-		if( order.getCurrentState().isSent() )
+		if( order.isOrderStateSent() )
 			status.concat( ",geliefert" );
 
-		if( order.getCurrentState().isComplete() )
+		if( order.isOrderStateComplete() )
 			status.concat( ",abgeschlossen" );
 
 		return status;
@@ -42,6 +42,7 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		try
 		{
 			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
+
 			String query = "INSERT INTO bestellung (bestellstatus, aid) VALUES (?, ?)";
 
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
@@ -87,6 +88,7 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		try
 		{
 			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
+
 			String query;
 			if( updateTimestamp )
 				query = "UPDATE bestellung SET datum=current_timestamp(),bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
