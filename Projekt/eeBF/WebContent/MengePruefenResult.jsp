@@ -40,7 +40,16 @@
 <%
 String lis = request.getParameter("foo");
 MysqlProduktDAO object = new MysqlProduktDAO();
-object.MengePruefen(lis);
+ArrayList<Produkt> list =new ArrayList<Produkt>();
+list=object.MengePruefen(lis);
+
+
+for (int i=0;i<list.size();i++)
+          {
+
+              out.println("<li>"+ "<p>"+"Name of Product: "+list.get(i).getName()+"<br>"+
+            		  "Quantity:" +  list.get(i).getQuantity()+"<br>"+"</li>"+"</p>");}
+              
 
 %>
 </ul>

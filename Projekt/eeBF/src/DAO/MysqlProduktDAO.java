@@ -105,26 +105,20 @@ public class MysqlProduktDAO implements IProduktDAO
 			return SearchByCategory;
 		}
 
-	public void MengePruefen(String titel){
-		
+	public ArrayList <Produkt> MengePruefen(String titel){
+		ArrayList<Produkt> Search = new ArrayList<Produkt>();
 		try 
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select PBezeichnung, menge from produkt where PBezeichnung = ?");
+	        ( "select * from produkt where PBezeichnung = ?");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
-					 while(rs.next()){
-				         //Retrieve by column name
-				         String name = rs.getString("name");
-				         int menge  = rs.getInt("quantity");
-
-				         //Display values
-				         System.out.print("Name: " + name);
-				         System.out.print(", Menge: " + menge);
-				        
-				      }
+	         while (rs.next())
+				{
+					Search.add(createProduktObject(rs));
+				}
 				rs.close();
 				ps.close();
 			} 
@@ -143,7 +137,7 @@ public class MysqlProduktDAO implements IProduktDAO
 					e.printStackTrace();
 				}
 			}
-			
+			return Search;
 		}
 	
 	public ArrayList<Produkt> searchProdukt(String name) 
