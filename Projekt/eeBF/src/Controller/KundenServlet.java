@@ -35,24 +35,21 @@ public class KundenServlet extends HttpServlet {
 			redirect = "login";
 		}
 		else
-//		if( request.getParameter( "kundenfunctions" ) != null )
 		{
-			if( request.getParameter( "button" ) != null )
+			if( request.getParameter( "useraction" ) != null )
 			{
-				String target = request.getParameter( "button" ); 
+				String target = request.getParameter( "useraction" ); 
 				
-//				if( request.getParameter( "produktsuche" ) != null )
-				if( target.equals( "produktsearch" ) )
+				if( target.equals( "productsearch" ) )
 					;
-					
-				if( request.getParameter( "shoppingcart" ) != null )
+				if( target.equals( "shoppingcart" ) )
 					redirect = "Einkaufswagen.jsp";
-				
-//				if( request.getParameter( "changeaccount" ) != null )
-				if( target.equals( "changeaccount" ) )
-				{
-					System.out.println("changeaccount");
+				if( target.equals( "editaccount" ) )
 					redirect = "UserAccountEdit.jsp";
+				if( target.equals( "logout" ) )
+				{
+					session.invalidate();
+					redirect = "index";
 				}
 			}
 		}

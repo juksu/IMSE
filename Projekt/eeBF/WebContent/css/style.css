@@ -31,3 +31,8 @@ table.shoppingcart {
 div.checkout {
 	text-align: right;
 }
+
+
+.btn-warning {
+	margin-left: 20px;
+}

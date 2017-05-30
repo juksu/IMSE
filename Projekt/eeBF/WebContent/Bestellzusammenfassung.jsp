@@ -9,7 +9,7 @@
 		<div class="container">
 			<%@ include file="Includes/HeaderKunde.jsp"%>
 		
-			Danke für Ihre Bestellung!
+			Vielen Dank für Ihre Bestellung!
 		</div>
 	</body>
 </html>
