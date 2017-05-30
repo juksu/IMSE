@@ -38,7 +38,9 @@
                                 <tr>
                                 <td>${user.id}</td>
                       			<td>${user.email}</td>
+                      			<!-- Weiterer Use-Case:
                       			<td><button type="submit" class="btn btn-success" name="sperren" value="${user.id}" >Sperren</button></td>
+                               	-->
                                 </tr>
                             </c:forEach>               
                         </table>  
