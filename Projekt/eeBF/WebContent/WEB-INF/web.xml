@@ -59,4 +59,12 @@
     <servlet-name>SearchByCategory</servlet-name>
     <url-pattern>/SearchByCategory</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>MengePruefen</servlet-name>
+    <servlet-class>Controller.MengePruefen</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MengePruefen</servlet-name>
+    <url-pattern>/MengePruefen</url-pattern>
+  </servlet-mapping>
 </web-app>

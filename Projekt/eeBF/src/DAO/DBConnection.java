@@ -25,7 +25,7 @@ class DBConnection {
 		{
 			case ADMIN : 
 				dbUser = "eeBF_Admin";
-				dbPassword = "Tombston";
+				dbPassword = "Tombstone";
 				break;
 			case CUSTOMER :
 				dbUser = "eeBF_Kunde";

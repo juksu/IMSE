@@ -76,7 +76,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select PBezeichnung, PBeschreibung, preis, menge from produkt, zuordnung, produktkategorie where bezeichnung = ? and zuordnung.bezeichnung= bezeichnung");
+	        ( "select * from produkt inner join zuordnung on produkt.pid= zuordnung.pid inner join produktkategorie on produktkategorie.kid = zuordnung.kid where produktkategorie.bezeichnung= ?");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
@@ -105,13 +105,13 @@ public class MysqlProduktDAO implements IProduktDAO
 			return SearchByCategory;
 		}
 
-	public ArrayList<Produkt> MengePruefen(String titel){
-		ArrayList<Produkt> MengePruefen = new ArrayList<Produkt>();
+	public void MengePruefen(String titel){
+		
 		try 
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select PBezeichnung, Menge from produkt where PBezeichnung = ?");
+	        ( "select PBezeichnung, menge from produkt where PBezeichnung = ?");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
@@ -143,7 +143,7 @@ public class MysqlProduktDAO implements IProduktDAO
 					e.printStackTrace();
 				}
 			}
-			return MengePruefen;
+			
 		}
 	
 	public ArrayList<Produkt> searchProdukt(String name) 

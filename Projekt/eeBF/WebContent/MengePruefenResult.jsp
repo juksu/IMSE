@@ -40,20 +40,7 @@
 <%
 String lis = request.getParameter("foo");
 MysqlProduktDAO object = new MysqlProduktDAO();
-ArrayList<Produkt> list =new ArrayList<Produkt>();
-list=object.searchByCategory(lis);
-
-
-for (int i=0;i<list.size();i++)
-          {
-
-              out.println("<li>"+ "<p>"+"Product ID: "+list.get(i).getId()+"<br>"+
-            		  "Name of Product: "+list.get(i).getName()+"<br>"+
-            		  "Description: "+list.get(i).getDescription()+"<br>"+
-            		  "Price: "+ list.get(i).getPrice()+"<br>" +
-            		  "Quantity:" +  list.get(i).getQuantity()+"<br>"+
-            		  "Storage: " + list.get(i).getStorage()+"<br>"+"</li>"+"</p>");}
-						
+object.MengePruefen(lis);
 
 %>
 </ul>
