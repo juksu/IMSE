@@ -42,7 +42,6 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		try
 		{
 			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
-
 			String query = "INSERT INTO bestellung (bestellstatus, aid) VALUES (?, ?)";
 
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
@@ -88,7 +87,6 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		try
 		{
 			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
-
 			String query;
 			if( updateTimestamp )
 				query = "UPDATE bestellung SET datum=current_timestamp(),bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";

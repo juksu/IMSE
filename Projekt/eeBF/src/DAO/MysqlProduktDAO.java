@@ -76,7 +76,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select * from produkt where bezeichnung = ?");
+	        ( "select * from produkt inner join zuordnung on produkt.pid= zuordnung.pid inner join produktkategorie on produktkategorie.kid = zuordnung.kid where produktkategorie.bezeichnung= ?");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
@@ -105,26 +105,20 @@ public class MysqlProduktDAO implements IProduktDAO
 			return SearchByCategory;
 		}
 
-	public ArrayList<Produkt> MengePruefen(String titel){
-		ArrayList<Produkt> MengePruefen = new ArrayList<Produkt>();
+	public ArrayList <Produkt> MengePruefen(String titel){
+		ArrayList<Produkt> Search = new ArrayList<Produkt>();
 		try 
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select PBezeichnung, Menge from produkt where PBezeichnung = ?");
+	        ( "select * from produkt where PBezeichnung = ?");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
-					 while(rs.next()){
-				         //Retrieve by column name
-				         String name = rs.getString("name");
-				         int menge  = rs.getInt("quantity");
-
-				         //Display values
-				         System.out.print("Name: " + name);
-				         System.out.print(", Menge: " + menge);
-				        
-				      }
+	         while (rs.next())
+				{
+					Search.add(createProduktObject(rs));
+				}
 				rs.close();
 				ps.close();
 			} 
@@ -143,7 +137,7 @@ public class MysqlProduktDAO implements IProduktDAO
 					e.printStackTrace();
 				}
 			}
-			return MengePruefen;
+			return Search;
 		}
 	
 	public ArrayList<Produkt> searchProdukt(String name) 
