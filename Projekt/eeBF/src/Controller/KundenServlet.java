@@ -40,8 +40,12 @@ public class KundenServlet extends HttpServlet {
 			{
 				String target = request.getParameter( "useraction" ); 
 				
-				if( target.equals( "productsearch" ) )
-					;
+				if( target.equals( "searchbykeyword" ) )
+					redirect = "SortByKeyword.jsp";
+				if( target.equals( "searchbycategory" ) )
+					redirect = "SearchByCategory.jsp";
+				if( target.equals( "availability" ) )
+					redirect = "MengePruefen.jsp";
 				if( target.equals( "shoppingcart" ) )
 					redirect = "Einkaufswagen.jsp";
 				if( target.equals( "editaccount" ) )

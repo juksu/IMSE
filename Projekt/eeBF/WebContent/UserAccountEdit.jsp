@@ -5,27 +5,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>User Content Seite Account Edit</title>
 		
-		<!-- Bootstrap import -->
-		<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-		<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		
-		<!-- SEHR UNSCHÖN GELÖST FÜR DEN ABSTAND DER BUTTONS -->
-		<style>
-		 small { visibility: hidden; }
-		</style>
+		<%@ include file="Includes/Head.jsp" %>
 		
 	</head>   
 	<body style="margin:20px auto">  
 		<div class="container">
-		<div class="row header" style="text-align:center"></div>
-
-			<!-- Logo -->
-			<img style="display: block; text-align: center;" src="logo.png" width="" height="" border="0" alt="Bildtext">
-			<br>
-
+			
+			<%@ include file="Includes/HeaderKunde.jsp"%>
 
 			<div class="panel panel-default">
 			  <div class="panel-heading">Neues Passwort</div>
