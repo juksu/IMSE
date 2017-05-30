@@ -1,6 +1,6 @@
 package Controller;
 
-// v1.0
+// v1.0.2
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -68,18 +68,30 @@ public class ChangePasswordServlet extends HttpServlet
 	{
 		HttpSession session = request.getSession(true);
 		AdminFunctions userFunctions = (AdminFunctions) session.getAttribute("userFunctions");
-		String error ="";
+		String error = "";
+		String endSession = "  ";
 		System.out.println(request.getParameter("email"));
 		String email = request.getParameter("email");
 		String pw_old = request.getParameter("pw_old");
 		String pw_new = request.getParameter("pw_new");
 		String pw_new2 = request.getParameter("pw_new2");
-		
-		error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2);
-		System.out.println(error);
-		session.setAttribute("error", error);
-		if (error.isEmpty())
+		if (!email.isEmpty())
 		{
+			System.out.println("A");
+			error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2);
+		}
+		else
+		{
+			System.out.println("B");
+			error = error + "Eingabe fehlt!";
+		}
+		if (error.equals(endSession))
+		{
+			error="";
+		}
+		if (!error.isEmpty())
+		{
+			request.setAttribute("error", error);
 			request.getRequestDispatcher("AdminContent.jsp").include(request, response);
 		}
 		else 

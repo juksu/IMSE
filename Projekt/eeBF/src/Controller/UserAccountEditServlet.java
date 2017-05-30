@@ -1,5 +1,7 @@
 package Controller;
 
+// v1.0.1
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,10 +67,12 @@ public class UserAccountEditServlet extends HttpServlet
 	
 	public void changeData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		//passwort aendern ja nein?
 		HttpSession session = request.getSession(true);
 		KundenFunctions userFunctions = (KundenFunctions) session.getAttribute("userFunctions");
-		String error ="";
+		int plz = 0;
+		int hausnummer = 0;
+		String error = "";
+		String endSession = "  ";
 		System.out.println(request.getParameter("email"));
 		System.out.println(request.getParameter("nachname"));
 		String email = request.getParameter("email");
@@ -78,26 +82,34 @@ public class UserAccountEditServlet extends HttpServlet
 		String nachname = request.getParameter("nachname");
 		String vorname = request.getParameter("vorname");
 		String land = request.getParameter("land");
-		int plz = Integer.parseInt(request.getParameter("plz"));
 		String ort = request.getParameter("ort");
 		String strasse = request.getParameter("strasse");
-		int hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
-
-		System.out.println(nachname);
 		try 
 		{
-			Integer.parseInt(request.getParameter("plz"));
-			System.out.println("Error: "+error);
+			plz = Integer.parseInt(request.getParameter("plz"));
+			hausnummer = Integer.parseInt(request.getParameter("hausnummer"));
 		} 
 		catch (NumberFormatException e) 
 		{
-			 error="Die eingegebene PLZ ist keine gueltige Nummer";
+			 error = error + "Hinweis: PLZ und HausNr sind als Zahl einzugeben. ";
 		}
-		error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2, nachname, vorname, land, plz, ort, strasse, hausnummer);
-		System.out.println(error);
-		session.setAttribute("error", error);
-		if (error.isEmpty())
+		if (!email.isEmpty())
 		{
+			System.out.println("A");
+			error = error + userFunctions.accountAendern(email, pw_old, pw_new, pw_new2, nachname, vorname, land, plz, ort, strasse, hausnummer);
+		}
+		else
+		{
+			System.out.println("B");
+			error = error + "Eingabe fehlt!";
+		}
+		if (error.equals(endSession))
+		{
+			error="";
+		}
+		if (!error.isEmpty())
+		{
+			request.setAttribute("error", error);
 			request.getRequestDispatcher("UserContent.jsp").include(request, response);
 		}
 		else 

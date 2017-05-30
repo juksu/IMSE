@@ -1,6 +1,6 @@
 package DAO;
 
-// v1.0
+// v1.1.1
 
 import java.sql.Connection;
 //import java.sql.DriverManager;
@@ -180,7 +180,7 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
 			("insert into benutzerkonto "
-				+ "(email, Passwort, type) "
+				+ "(email, Passwort, usertype) "
 				+ "VALUES (?, ?, ?)");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
@@ -223,7 +223,36 @@ public class MysqlUserDAO implements IUserDAO
 	
 	public void saveAdmin(Admin user)
 	{
-		System.out.println("MysqlUserDAO.saveUser(Admin)");
+	try 
+		{
+			System.out.println("MysqlUserDAO.saveUser(Admin)");
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("insert into benutzerkonto "
+				+ "(email, Passwort, usertype) "
+				+ "VALUES (?, ?, ?)");
+				ps.setString(1, user.getEmail());
+				ps.setString(2, user.getPasswort());
+				ps.setString(3, "admin");
+				ps.execute();
+				ps.close();
+		} 
+		catch (SQLException | ClassNotFoundException e) 
+		{
+			System.out.println("MYSQLUser, New User Creation failed");
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void updateKunde(Kunde user)
@@ -399,7 +428,7 @@ public class MysqlUserDAO implements IUserDAO
 			rsadmin.close();
 			psadmin.close();
 	
-			PreparedStatement pskunde = conn.prepareStatement("select * from benutzerkonto where type='kunde' and isValid='true'");
+			PreparedStatement pskunde = conn.prepareStatement("select * from benutzerkonto where usertype='kunde' and isValid='true'");
 			ResultSet rskunde;
 			rskunde = pskunde.executeQuery();
 			while (rskunde.next())

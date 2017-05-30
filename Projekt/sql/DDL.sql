@@ -49,7 +49,6 @@ CREATE TABLE produktkategorie (
 	bezeichnung varchar(20) NOT NULL,
 	beschreibung varchar(50),
 	oberkategorie TINYINT(3) UNSIGNED,
-	KEY (bezeichnung),
 	CONSTRAINT k_pk PRIMARY KEY (kid),
 	CONSTRAINT k_fk FOREIGN KEY (oberkategorie)
 		REFERENCES produktkategorie (kid)

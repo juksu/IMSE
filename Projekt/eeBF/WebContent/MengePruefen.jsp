@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import= "DAO.*"%>
@@ -93,12 +93,12 @@
         <title>The list of Products</title>
     </head>
     <body>
-       <a href="userMenu.jsp">Back to menu</a>
+       <a href="userContent.jsp">Back to menu</a>
 
-        <h2>Search product by keyword</h2> 
+        <h2>Look for quantity of the product</h2> 
         <br/><br/>
 
-        <form method="post" name="Search" action="ListOfSortedProducts">
+        <form method="post" name="Search" action="MengePruefen">
             <table cellpadding="15" border="0" width="100%" align="center"   background="images/logo.jpg">
                 <tr><td colspan=2 style="font-size:12pt;" align="center">
                 <tr> <td> <input type="text"  class="input inputsearch" name="keyword" placeholder="Search.."required>
@@ -108,25 +108,6 @@
             </table>
         </form>
         <br/><br/>
-        <ul class="zebra">
-           
-<%  
-
-MysqlProduktDAO object = new MysqlProduktDAO();
-ArrayList<Produkt> list =new ArrayList<Produkt>();
-list=object.getAllProdukten();
-
-
-for (int i=0;i<list.size();i++)
-          {
-
-              out.println("<li>"+ "<p>"+"Name of Product: "+list.get(i).getName()+"<br>"+
-            		  "Description: "+list.get(i).getDescription()+"<br>"+
-            		  "Price: "+ list.get(i).getPrice()+"<br>" +
-            		  "Quantity:" +  list.get(i).getQuantity()+"<br>"+
-            		  "Storage: " + list.get(i).getStorage()+"<br>"+"</li>"+"</p>");}
-              
-%>
-</ul>
+        
 </body>
 </html>

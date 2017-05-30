@@ -1,6 +1,6 @@
 package DAO;
 import java.sql.Connection;
-//import java.sql.DriverManager;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,11 +9,32 @@ import Model.*;
 
 public class MysqlProduktkategorieDAO implements IProduktkategorieDAO 
 {
+	private String dbPath;
+	private String dbUser;
+	private String dbPassword;
 	private Connection conn = null;
-	
-	private Connection openConnection() throws SQLException, ClassNotFoundException
+
+	public MysqlProduktkategorieDAO () 
 	{
-    	return DBConnection.getConnection( DBConnection.connectionTypes.ADMIN );
+		setDbPath("jdbc:mysql://localhost:3306/eebf?useSSL=false");
+		setDbUser("eeBF_Admin");
+		setDbPassword("Tombstone");
+      	try
+      	{
+      		Class.forName("com.mysql.jdbc.Driver");
+        } 
+      	catch (ClassNotFoundException e)
+      	{
+      		System.out.println("An error occurred. com.mysql.jdbc.Driver konnte nicht geladen werden");
+      		e.printStackTrace();
+      	} 	
+	}
+	
+	private Connection openConnection() throws SQLException
+	{
+		conn = null;
+    	conn = DriverManager.getConnection(getDbPath(), getDbUser(), getDbPassword());
+    	return conn;
 	}
 	
 	private Produktkategorie createProduktKatObject(ResultSet rs) throws SQLException
@@ -39,7 +60,7 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 				ps.execute();
 				ps.close();
 		} 
-		catch (SQLException | ClassNotFoundException e)
+		catch (SQLException e)
 		{
 			System.out.println("MYSQLAuktion, New produktkategorie Creation failed");
 			e.printStackTrace();
@@ -56,40 +77,6 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			}
 		}
 	}	
-	
-	public ArrayList<Produktkategorie> getAllProduktkategorie() 
-	{
-		ArrayList<Produktkategorie> ProduktList = new ArrayList<Produktkategorie>();
-		try
-		{
-			conn = openConnection();
-			PreparedStatement ps = conn.prepareStatement
-			("select * from produktkategorie");
-			ResultSet rs=ps.executeQuery();
-			while (rs.next())
-			{
-				ProduktList.add(createProduktKatObject(rs));
-			}
-			rs.close();
-			ps.close();
-		} 
-		catch (SQLException | ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		} 
-		finally 
-		{
-			try 
-			{
-				conn.close();
-			}
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-		}
-		return ProduktList;
-	}
 
 	public int getAnzahl() {
 		int i =0;
@@ -103,7 +90,7 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			rs.close();
 			ps.close();
 		} 
-		catch (SQLException | ClassNotFoundException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		} 
@@ -127,7 +114,39 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		
 	}
 	
-	
+	public ArrayList<Produktkategorie> getAllProduktkategorie() 
+	{
+		ArrayList<Produktkategorie> ProduktList = new ArrayList<Produktkategorie>();
+		try
+		{
+			conn = openConnection();
+			PreparedStatement ps = conn.prepareStatement
+			("select * from produktkategorie");
+			ResultSet rs=ps.executeQuery();
+			while (rs.next())
+			{
+				ProduktList.add(createProduktKatObject(rs));
+			}
+			rs.close();
+			ps.close();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try 
+			{
+				conn.close();
+			}
+			catch (SQLException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		return ProduktList;
+	}
 
 	public int getIdByName(String name)
 	{
@@ -151,9 +170,6 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		catch (SQLException e)
 		{
 				e.printStackTrace();				
-		} catch( ClassNotFoundException e )
-		{
-			e.printStackTrace();
 		}
 		finally 
 		{
@@ -215,9 +231,6 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		catch (SQLException e) 
 		{
 			e.printStackTrace();				
-		} catch( ClassNotFoundException e )
-		{
-			e.printStackTrace();
 		}
 		finally 
 		{
@@ -231,5 +244,35 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			}
 		}
 		return null;
+	}
+
+	public String getDbPath()
+	{
+		return dbPath;
+	}
+
+	public void setDbPath(String dbPath)
+	{
+		this.dbPath = dbPath;
+	}
+
+	public String getDbUser()
+	{
+		return dbUser;
+	}
+
+	public void setDbUser(String dbUser)
+	{
+		this.dbUser = dbUser;
+	}
+
+	public String getDbPassword()
+	{
+		return dbPassword;
+	}
+
+	public void setDbPassword(String dbPassword)
+	{
+		this.dbPassword = dbPassword;
 	}
 }

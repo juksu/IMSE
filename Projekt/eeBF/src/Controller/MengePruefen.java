@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 	import javax.servlet.http.HttpServletResponse;
 
   
-@WebServlet(name="SearchByCategory",urlPatterns={"/SearchByCategory"})
-	public class SearchByCategory extends HttpServlet {  
+@WebServlet(name="MengePruefen",urlPatterns={"/MengePruefen"})
+	public class MengePruefen extends HttpServlet {  
 	    /**
 		 * 
 		 */
@@ -22,11 +22,11 @@ import javax.servlet.http.HttpServlet;
                 throws ServletException, IOException {    
      
       
-    String name=request.getParameter("category");
+    String name=request.getParameter("keyword");
    
   
      response.setContentType( "text/html" );
-    response.sendRedirect( "ListOfSearchByCategory.jsp?foo="+name );   }  
+    response.sendRedirect( "MengePruefenResult.jsp?foo="+name );   }  
     
 }  
  

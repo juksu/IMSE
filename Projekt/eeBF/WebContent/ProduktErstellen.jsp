@@ -30,11 +30,8 @@
 
 			  		<form action="admin" method="post">
 			  			<input type="text" class="form-control" name="id" placeholder="Neuer Produkt-ID">
-						<input type="text" class="form-control" name="productbezeichnung" placeholder="Neue Produkt-Bezeichnung">
-						<input type="text" class="form-control" name="productbeschreibung" placeholder="Neue Produkt-Beschreibung">
-						<input type="text" class="form-control" name="preis" placeholder="Neuer Produktpreis">
-						<input type="text" class="form-control" name="menge" placeholder="Neue Produktmenge">
-						<input type="text" class="form-control" name="sid" placeholder="Lager ID">
+						<input type="text" class="form-control" name="productbezeichnung" placeholder="Neuer Produkt-Bezeichnung">
+						<input type="text" class="form-control" name="productbeschreibung" placeholder="Neuer Produkt-Beschreibung">
 						<br>
 						<button type="submit" class="btn btn-primary" name="button" value="product" >Erstellen</button>
 					</form>

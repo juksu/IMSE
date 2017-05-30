@@ -1,6 +1,6 @@
 package Model;
 
-// v1.0
+// v1.0.1
 
 import java.util.ArrayList;
 import DAO.*;
@@ -20,21 +20,13 @@ public class KundenFunctions extends UserFunctions
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2, String nachname, String vorname,
 								String land, int plz,  String ort,String strasse, int hausnummer)
 	{
-		String error;
-		if (email.equals(user.getEmail()))
+		String error = "";
+		if (!email.equals(user.getEmail()))
 		{
-			error = "";
-		}
-		else
-		{
-			error = "Neue Mail-Adresse: Login erforderlich!";
 			user.setEmail(email);
-		}	
-		System.out.println(pw_new2);
-		if (!pw_new.isEmpty() || !pw_new2.isEmpty())
-		{
-			error = error + changePassword(pw_old, pw_new, pw_new2);
+			error = error + " ";
 		}
+		error = error + changePassword(pw_old, pw_new, pw_new2);
 		user.setNachname(nachname);
 		user.setVorname(vorname);
 		user.setLand(land);

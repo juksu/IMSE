@@ -1,4 +1,4 @@
-<!-- v1.0 -->
+<!-- v1.0.1 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>-->
 <html>
@@ -30,7 +30,7 @@
 						<br>
 						<input type="password" class="form-control" name="password" placeholder="Passwort">
 						<br>
-						<input type="password" class="form-control" name="pwcheck" placeholder="Passwort">
+						<input type="password" class="form-control" name="pwcheck" placeholder="Passwort wiederholen">
 						<br>
 						<br>
 						<input type="text" class="form-control" name="vorname" placeholder="Vorname">
@@ -47,6 +47,9 @@
 						<br>
 						<input type="text" class="form-control" name="hausnummer" placeholder="Hausnummer">
 						<br>
+						<div>
+							<p class="text-danger"><c:out value="${error}" escapeXml="false" /></p>
+						</div>
 						<button type="submit" class="btn btn-primary" name="type" value="userRegister" id="userregisterlog">Account registrieren</button>
 					</form>
 			  </div>
