@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import DAO.IBestellpositionDAO;
 import DAO.IBestellungDAO;
+import DAO.IProduktDAO;
 import DAO.MysqlBestellpositionDAO;
 import DAO.MysqlBestellungDAO;
+import DAO.MysqlProduktDAO;
 import Model.Bestellposition;
 import Model.Bestellung;
 import Model.Kunde;
@@ -40,11 +42,17 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession(true);
-		if( session.getAttribute( "user" ) == null )
-			response.sendRedirect("login");
-		
+		String redirect = "Einkaufswagen.jsp";
+		if( request.getParameter( "additem" ) != null )
+		{
+			redirect = addItemToShoppingCart( request, response );
+		}
+		else if( request.getParameter( "checkout"  ) != null )
+//			response.sendRedirect( "Kasse.jsp" );
+			redirect = "Kasse.jsp";
+		else if( request.getParameter( "pay" ) != null )
+			redirect = "Bestellzusammenfassung.jsp";	//TODO sollte natürlich zum Bezahlservice weiterleiten
+		response.sendRedirect( redirect );
 	}
 
 	/**
@@ -54,42 +62,67 @@ public class ShoppingCart extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public void addItemToShoppingCart( HttpServletRequest request, Produkt product, int quantity )
-	{
+	public String addItemToShoppingCart( HttpServletRequest request, HttpServletResponse response ) throws IOException
+	{	
 		HttpSession session = request.getSession(false);
-		User user = ((User) session.getAttribute( "user" ));
+		
+		String redirect = "Einkaufswagen.jsp";
+		
+		if( session == null )
+			redirect = "login";
+		if( session.getAttribute( "user" ) == null )
+			redirect = "login";
+		
+		// TODO test case
+		// User user = new Kunde(2, "mymail", null, null, null, null, 0, null, null, 0, null);
+		User user = (User) session.getAttribute( "user" );
 		
 		// only Kunden can order
 		if( user instanceof Kunde )
 		{
 			Kunde customer = (Kunde) user;
 			Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
+			IBestellungDAO ioOrder = new MysqlBestellungDAO();
+			IProduktDAO ioProduct = new MysqlProduktDAO();
+			IBestellpositionDAO ioPos = new MysqlBestellpositionDAO();
 			
 			if( shoppingCart == null )
 			{
 				shoppingCart = new Bestellung();
 				
 				shoppingCart.setDate( Calendar.getInstance() );
-				shoppingCart.getCurrentState().setOrdered( false );
+				shoppingCart.setOrderStateOrdered( false );
 				shoppingCart.setCustomer( customer );
 				
-				IBestellungDAO io = new MysqlBestellungDAO();
+				System.out.println( "shoppingCart session created" );
 				
-				io.insertBestellung( shoppingCart );
+				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+				ioOrder.insertBestellung( shoppingCart );
+				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
 			}
 			
-			Bestellposition newItem = new Bestellposition( product, quantity, product.getPrice() );
-			IBestellpositionDAO io = new MysqlBestellpositionDAO();
+			int pid = Integer.parseInt( request.getParameter( "additem" ) );
+			int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
 			
-			io.insertBestellposition( shoppingCart, newItem );
+			Produkt prod = ioProduct.getProduktById( pid );
+			
+			// TODO catch case if product could not be found in database
+			Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
+			ioPos.insertBestellposition( shoppingCart, newItem );
+			
 			shoppingCart.addItem( newItem );
+			ioOrder.updateBestellung( shoppingCart, true );
 			
+			// request.setAttribute( "shoppingCart", shoppingCart );
 			session.setAttribute( "shoppingCart", shoppingCart );
 		}
 		else 
 		{
-			// TODO
+			redirect = "index";
 		}
+		
+//		response.sendRedirect( redirect );
+		return redirect;
 		
 	}
 	

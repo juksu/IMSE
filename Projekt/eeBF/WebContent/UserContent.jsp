@@ -22,7 +22,6 @@
 	<body style="margin:20px auto">  
 		<div class="container">
 		<div class="row header" style="text-align:center"></div>
-
 			<!-- Logo -->
 			<img style="display: block; text-align: center;" src="logo.png" width="" height="" border="0" alt="Bildtext">
 			<br>
