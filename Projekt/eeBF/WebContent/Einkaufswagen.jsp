@@ -17,15 +17,15 @@
 			
 			
 			<!-- TODO just for testing -->
-			<form action="ShoppingCart" method="post">
-				<input type="text" name="itemquantity" size="2" value="1"/>
-				<button name="additem" type="submit" value="3">Add Item</button>
-			</form>
+<!-- 			<form action="ShoppingCart" method="post"> -->
+<!-- 				<input type="text" name="itemquantity" size="2" value="1"/> -->
+<!-- 				<button name="additem" type="submit" value="3">Add Item</button> -->
+<!-- 			</form> -->
 			
-			<form action="ShoppingCart" method="post">
-				<input type="text" name="itemquantity" size="2" value="2"/>
-				<button name="additem" type="submit" value="4">Add Item</button>
-			</form>
+<!-- 			<form action="ShoppingCart" method="post"> -->
+<!-- 				<input type="text" name="itemquantity" size="2" value="2"/> -->
+<!-- 				<button name="additem" type="submit" value="4">Add Item</button> -->
+<!-- 			</form> -->
 	
 			<!-- items in shopping cart -->
 	<%-- 		<c:out value="${shoppingCart.getId()}" /> --%>

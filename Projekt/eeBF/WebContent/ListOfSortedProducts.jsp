@@ -40,9 +40,14 @@ for (int i=0;i<list.size();i++)
             		  "Description: "+list.get(i).getDescription()+"<br>"+
             		  "Price: "+ list.get(i).getPrice()+"<br>" +
             		  "Quantity:" +  list.get(i).getQuantity()+"<br>"+
-            		  "Storage: " + list.get(i).getStorage()+"<br>"+"</li>"+"</p>");}
-              
-
+            		  "Storage: " + list.get(i).getStorage()+"<br>"+"</li>"+"</p>" +
+						
+						"<form action='ShoppingCart' method='post'>" +
+						"<input type='text' name='itemquantity' size='2' value='1'/>" +
+						"<button name='additem' type='submit' value='" + 
+						list.get(i).getId() + 
+						"'>Produkt in Einkaufswagen legen</button>" + 
+						"</form>");}
 %>
 </ul>
 </body>
