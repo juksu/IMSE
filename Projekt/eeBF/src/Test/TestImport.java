@@ -138,10 +138,11 @@ public class TestImport {
 			daten[10] = "2012-01-06";
 			System.out.println("Kontrolle Datum: " + daten[10]);
 
+			//Auswahl ('bestellt', 'bezahlt', 'liefernd', 'geliefert', 'abgeschlossen')
 			String stati[] = new String[7];
-			stati[0] = "offen";
+			stati[0] = "bestellt";
 			stati[1] = "bezahlt";
-			stati[2] = "in Zustellung";
+			stati[2] = "liefernd";
 			stati[3] = "geliefert";
 			stati[4] = "abgeschlossen";
 			System.out.println("Kontrolle Status: " + stati[6]);
@@ -153,7 +154,7 @@ public class TestImport {
 			String table3 = "bestellung";
 			int id = 0;
 
-			for(int i = 0; i < 10; i++){
+			for(int i = 0; i < 1000; i++){
 				//Datum						
 				int indexDaten = r.nextInt(10)+ 1;
 				String datum = daten[indexDaten];
@@ -220,7 +221,7 @@ public class TestImport {
 					System.err.println("Fehler: " + table2 + e.getMessage());
 				}
 				try {
-					String insertSql3 = "INSERT INTO "+table3+" SET Datum='"+datum+"', Status='"+status+"', aid='"+id+"'";
+					String insertSql3 = "INSERT INTO "+table3+" SET Datum='"+datum+"', Bestellstatus='"+status+"', aid='"+id+"'";
 					System.out.println("Datensatz " + i + ": " + insertSql3);
 					stmt.executeUpdate(insertSql3);
 				

@@ -180,7 +180,7 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
 			("insert into benutzerkonto "
-				+ "(email, Passwort, type) "
+				+ "(email, Passwort, usertype) "
 				+ "VALUES (?, ?, ?)");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
@@ -229,7 +229,7 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
 			("insert into benutzerkonto "
-				+ "(email, Passwort, type) "
+				+ "(email, Passwort, usertype) "
 				+ "VALUES (?, ?, ?)");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
@@ -428,7 +428,7 @@ public class MysqlUserDAO implements IUserDAO
 			rsadmin.close();
 			psadmin.close();
 	
-			PreparedStatement pskunde = conn.prepareStatement("select * from benutzerkonto where type='kunde' and isValid='true'");
+			PreparedStatement pskunde = conn.prepareStatement("select * from benutzerkonto where usertype='kunde' and isValid='true'");
 			ResultSet rskunde;
 			rskunde = pskunde.executeQuery();
 			while (rskunde.next())

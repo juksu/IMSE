@@ -42,6 +42,14 @@
     <url-pattern>/changePassword</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>CreateAdminServlet</servlet-name>
+    <servlet-class>Controller.CreateAdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateAdminServlet</servlet-name>
+    <url-pattern>/createAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <description/>
     <display-name>ListOfSortedProducts</display-name>
     <servlet-name>ListOfSortedProducts</servlet-name>
