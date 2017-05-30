@@ -1,9 +1,9 @@
 package DAO;
 
-// v1.0.1
+// v1.1.2
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,32 +13,11 @@ import Model.*;
 
 public class MysqlUserDAO implements IUserDAO
 {
-	private String dbPath;
-	private String dbUser;
-	private String dbPassword;
 	private Connection conn = null;
 	
-	public MysqlUserDAO() 
+	private Connection openConnection() throws SQLException, ClassNotFoundException
 	{
-		setDbPath("jdbc:mysql://www.eeBF.at:3306/eebf?useSSL=false");
-		setDbUser("eeBF_Admin");
-		setDbPassword("Tombstone");
-		try
-		{
-    	  Class.forName("com.mysql.jdbc.Driver");
-		} 
-		catch (ClassNotFoundException e) 
-		{
-    	  System.out.println("An error occurred. com.mysql.jdbc.Driver konnte nicht geladen werden");
-    	  e.printStackTrace();
-		} 
-	}
-	
-	private Connection openConnection() throws SQLException
-	{
-		conn = null;
-    	conn = DriverManager.getConnection(getDbPath(), getDbUser(), getDbPassword());
-    	return conn;
+    	return DBConnection.getConnection( DBConnection.connectionTypes.ADMIN );
 	}
 	
 	public User loadUser(int id) 
@@ -57,7 +36,7 @@ public class MysqlUserDAO implements IUserDAO
 					String loadPassword = rs.getString("Passwort");
 					Calendar createdate = Calendar.getInstance();
 					createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-					String usertype = rs.getString("type");
+					String usertype = rs.getString("usertype");
 					System.out.println("MysqlUserDAO.loadUser: userType: "+usertype);
 					if(usertype.equals("admin"))
 					{
@@ -94,8 +73,8 @@ public class MysqlUserDAO implements IUserDAO
 	          }
 				rs.close();
 				ps.close();
-	      } 
-			catch (SQLException ex)
+	} 
+			catch (SQLException | ClassNotFoundException ex)
 			{
 	          ex.printStackTrace();
 	      } 
@@ -139,7 +118,7 @@ public class MysqlUserDAO implements IUserDAO
 				throw new IllegalArgumentException ("User konnte nicht eingeloggt werden. E-Mail oder Passwort falsch");
 			}
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			e.printStackTrace();	
 		}
@@ -174,7 +153,7 @@ public class MysqlUserDAO implements IUserDAO
             } else throw new IllegalArgumentException ("User mit der ID: "+id+" nicht gefunden");
             
         } 
-        catch (SQLException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
         	System.out.println(id);
             ex.printStackTrace();
@@ -223,7 +202,7 @@ public class MysqlUserDAO implements IUserDAO
 				psC.execute();
 				psC.close();	
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -241,9 +220,10 @@ public class MysqlUserDAO implements IUserDAO
 		}
 	}
 	
+	
 	public void saveAdmin(Admin user)
 	{
-		try 
+	try 
 		{
 			System.out.println("MysqlUserDAO.saveUser(Admin)");
 			conn = openConnection();
@@ -257,7 +237,7 @@ public class MysqlUserDAO implements IUserDAO
 				ps.execute();
 				ps.close();
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -303,7 +283,7 @@ public class MysqlUserDAO implements IUserDAO
 				psC.execute();
 				psC.close();	
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MysqlUserDAO, New User Updated failed");
 			e.printStackTrace();
@@ -336,7 +316,7 @@ public class MysqlUserDAO implements IUserDAO
 				ps.execute();
 				ps.close();	
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MysqlUserDAO, New User Updated failed");
 			e.printStackTrace();
@@ -364,7 +344,7 @@ public class MysqlUserDAO implements IUserDAO
 			ps.executeUpdate();
 			ps.close();	
 		} 
-		catch (SQLException e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		} 
@@ -387,14 +367,14 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 	    	PreparedStatement ps = conn.prepareStatement
 	    	("insert into benutzerkonto "
-	    		+ "(email, Passwort, type) "
+	    		+ "(email, Passwort, usertype) "
 	    		+ "VALUES (?, ?, ?)");
 	    		ps.setString(1, email);
 	    		ps.setString(2, passwort);
 	    		ps.setString(3, type);
 	    		ps.execute();
 	    		ps.close();	
-			conn = openConnection();
+//			conn = openConnection();
 			PreparedStatement psC =conn.prepareStatement
 			("insert into kunde "
 				+ "(Nachname, Vorname, Land, PLZ, Ort, Strasse, HausNr) "
@@ -409,7 +389,7 @@ public class MysqlUserDAO implements IUserDAO
 				psC.execute();
 				psC.close();	
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -436,7 +416,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("Mysqluserdao userstat");
 			conn = openConnection();
-			PreparedStatement psadmin = conn.prepareStatement("select * from benutzerkonto where type='admin' and isValid='true'");
+			PreparedStatement psadmin = conn.prepareStatement("select * from benutzerkonto where usertype='admin' and isValid='true'");
 			ResultSet rsadmin;
 			rsadmin = psadmin.executeQuery();
 			System.out.println(rsadmin);
@@ -464,7 +444,7 @@ public class MysqlUserDAO implements IUserDAO
 			userCount.add(admin);
 
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			e.printStackTrace();
 		}
@@ -499,7 +479,7 @@ public class MysqlUserDAO implements IUserDAO
 				String password = "0";
 				Calendar createdate = Calendar.getInstance();
 				createdate.setTimeInMillis(rs.getTimestamp("createdate").getTime());
-				String usertype = rs.getString("type");
+				String usertype = rs.getString("usertype");
 				if(usertype.equals("admin")) {
 					user = new Admin(id, email, password, createdate);
 					userList.add(user);
@@ -513,7 +493,7 @@ public class MysqlUserDAO implements IUserDAO
 			ps.close();
 			rs.close();
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -655,7 +635,7 @@ public class MysqlUserDAO implements IUserDAO
 			try 
 			{
 	            ResultSet rs= getUserTable(id);
-	            type = rs.getString("type");
+	            type = rs.getString("usertype");
 	            return type;
 			} 
 			catch (IllegalArgumentException e)
@@ -836,7 +816,7 @@ public class MysqlUserDAO implements IUserDAO
 			ps.executeUpdate();
 			ps.close();	
 		} 
-		catch (SQLException e) 
+		catch (SQLException | ClassNotFoundException e) 
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
@@ -898,7 +878,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			try 
 			{
-				PreparedStatement ps = conn.prepareStatement("update benuzterkonto set type=?"+" where aid=?");
+				PreparedStatement ps = conn.prepareStatement("update benuzterkonto set usertype=?"+" where aid=?");
 				ps.setString(1, type);
 				ps.setInt(2, id);
 				ps.executeUpdate();
@@ -1001,35 +981,5 @@ public class MysqlUserDAO implements IUserDAO
 				e.printStackTrace();
 			}
 		}	
-	}
-
-	public String getDbPath() 
-	{
-		return dbPath;
-	}
-
-	public void setDbPath(String dbPath) 
-	{
-		this.dbPath = dbPath;
-	}
-		
-	public String getDbUser()
-	{
-		return dbUser;
-	}
-
-	public void setDbUser(String dbUser)
-	{
-		this.dbUser = dbUser;
-	}
-
-	public String getDbPassword() 
-	{
-		return dbPassword;
-	}
-
-	public void setDbPassword(String dbPassword)
-	{
-		this.dbPassword = dbPassword;
 	}
 }
