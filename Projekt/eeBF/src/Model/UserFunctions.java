@@ -1,5 +1,7 @@
 package Model;
 
+// v1.1.2
+
 import DAO.*;
 
 public abstract class UserFunctions 
