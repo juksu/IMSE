@@ -1,6 +1,6 @@
 package Model;
 
-// v1.0.1
+// v1.1.2
 
 import java.util.ArrayList;
 import DAO.*;
@@ -46,25 +46,46 @@ public class AdminFunctions extends UserFunctions
 		ArrayList<Produktkategorie> kategorieList = getProduktkategorieDAO().getAllProduktkategorie();
 		return kategorieList;
 	}
+	
+	public ArrayList<Produkt> showProductsByLagerId(int id){
+		ArrayList<Produkt> produktList = getProduktDAO().getAllProduktenByLagerId(id);
+		return produktList;
+	}
+	
+	public void erstelleUser() 
+	{
+		throw new UnsupportedOperationException();
+	}
 
 	public void erstelleProduktgruppe(String name)
 	{
 		getProduktkategorieDAO().createProduktkategorie(name, "");
 	}
 	
-	public void erstelleProdukt(int id, String bezeichnung, String beschreibung){
-		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, 0, 0, null);
+	public void erstelleProdukt(Integer id, String bezeichnung, String beschreibung, int preis, int menge, int lagerid){
+		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, preis, menge, lagerid);
 	}
+	
+
 
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2)
 	{
-		String error = "";
-		if (!email.equals(user.getEmail()))
+		String error;
+		if (email.equals(user.getEmail()))
 		{
-			user.setEmail(email);
-			error = error + " ";
+			error = "";
 		}
-		error = error + changePassword(pw_old, pw_new, pw_new2);
+		else
+		{
+			error = "Neue Mail-Adresse: Login erforderlich!";
+			user.setEmail(email);
+		}	
+		System.out.println(pw_new2);
+		if (!pw_new.isEmpty() || !pw_new2.isEmpty())
+		{
+			error = error + changePassword(pw_old, pw_new, pw_new2);
+		}
+
 		getUserDAO().updateAdmin(user);
 		return error;
 	}
@@ -73,4 +94,17 @@ public class AdminFunctions extends UserFunctions
 	{
 		throw new UnsupportedOperationException();
 	}
+
+	public void changeMenge(int pid, int newmenge) {
+		getProduktDAO().newMenge(pid, newmenge);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 }
