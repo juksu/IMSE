@@ -9,7 +9,8 @@
 
 </head>
 
-<body style="margin: 20px auto">
+<!-- <body style="margin: 20px auto"> -->
+<body>
 	<div class="container">
 
 		<%@ include file="Includes/HeaderKunde.jsp"%>

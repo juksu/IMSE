@@ -42,10 +42,17 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String redirect = "Einkaufswagen.jsp";
 		if( request.getParameter( "additem" ) != null )
 		{
-			addItemToShoppingCart( request, response );
-		}		
+			redirect = addItemToShoppingCart( request, response );
+		}
+		else if( request.getParameter( "checkout"  ) != null )
+//			response.sendRedirect( "Kasse.jsp" );
+			redirect = "Kasse.jsp";
+		else if( request.getParameter( "pay" ) != null )
+			redirect = "Bestellzusammenfassung.jsp";	//TODO sollte natürlich zum Bezahlservice weiterleiten
+		response.sendRedirect( redirect );
 	}
 
 	/**
@@ -55,7 +62,7 @@ public class ShoppingCart extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public void addItemToShoppingCart( HttpServletRequest request, HttpServletResponse response ) throws IOException
+	public String addItemToShoppingCart( HttpServletRequest request, HttpServletResponse response ) throws IOException
 	{	
 		HttpSession session = request.getSession(false);
 		
@@ -114,7 +121,8 @@ public class ShoppingCart extends HttpServlet {
 			redirect = "index";
 		}
 		
-		response.sendRedirect( redirect );
+//		response.sendRedirect( redirect );
+		return redirect;
 		
 	}
 	
