@@ -76,7 +76,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		{
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement
-	        ( "select * from produkt where bezeichnung = ?");
+	        ( "select PBezeichnung, PBeschreibung, preis, menge from produkt, zuordnung, produktkategorie where bezeichnung = ? and zuordnung.bezeichnung= bezeichnung");
 	         // System.out.println(sqlStr);  // for debugging
 			ps.setString(1, titel);
 	         ResultSet rs=ps.executeQuery();
