@@ -4,3 +4,8 @@ bin/
 .classpath
 .settings
 Projekt/eeBF/.gitignore
+all.aux
+all.bbl
+all.blg
+all.log
+all.toc
