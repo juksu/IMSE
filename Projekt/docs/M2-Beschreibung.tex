@@ -1,0 +1,53 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{\textbf{IMSE Projektabgabe}\\ Meilenstein 2}
+\author{\textbf{Team 12} \\ Schöndorfer Roman \\ Nikitina Olena \\ Rabizo Daniil \\ Fuchs Andreas}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+%\tableofcontents
+
+\section*{Kurzbeschreibung}
+In diesem Meilenstein wurde das von Roman Schöndorfer in Meilenstein 1 spezifizierte Projekt Ethical European Business Fashion [e\(^2\)BF] umgesetzt. Die detailierte Beschreibung befindet sich in der beiligenden Datei \emph{eeBF-Spezifikation.pdf}.
+
+Umgesetzt wurde dass Projekt in Java unter verwendung von Java Servlets und JSP auf einem Apache Tomcat Server laufend. Das Projekt baut auf einer bereits bestehenden Entwicklung aus Datenbanksysteme und Softwareengineering und wurde wo nötig angepasst und im Funktionsumfang vervollständigt.
+
+Alle Sourcefiles sind auf dem git-Repository des Teams zu finden: \\ https://github.com/juksu/IMSE.
+
+\section*{Übersicht}
+\subsection*{Programmiersprache} Java, Java Servlets, JSP, JSTL, SQL
+
+\subsection*{Server} Apache Tomcat (ab Version 8)
+
+\subsection*{Datenbank} MySQL
+
+\subsection*{Git Repository} https://github.com/juksu/IMSE
+
+\subsection*{Use-Case Verantwortliche}
+
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lp{8cm}}
+	Roman Schöndorfer: 	& Benutzerkontos erstellen und ändern.\\
+	Olena Nikitina:		& Produkt suchen und Verfügbarkeit prüfen.\\
+	Daniil Rabizo: 		& Administration im Backoffice (Produkt erstellen, Lagerstand korrigieren)\\
+	Andreas Fuchs: 		& Produkt bestellen, Bestellung abschließen und Bezahlung vornehmen.\\
+\end{tabular}
+
+\section*{Anhang}
+\begin{description}
+	\item eeBF-Spezifikation.pdf: Spezifikation des Software Projekts mit Use-Case Beschreibung, UML-Struktur- und Verhaltensdiagrammen sowie Datenbankentwurf.
+	\item Arbeitsprotokoll.pdf: Gesameltes Arbeitsprotokoll (nicht vollständig)
+	\item sql/: Ordner mit .sql files zum Anlegen und Verwalten der Datenbank
+	\item eeBF/: Java Projekt Source Files.
+\end{description}
+
+
+\end{document}
