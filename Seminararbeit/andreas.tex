@@ -1,16 +1,17 @@
-%~ \documentclass[a4paper]{article}
-%~ \usepackage[utf8]{inputenc}
-%~ \usepackage[ngerman]{babel}
-%~ \usepackage{amsmath}
-%~ \usepackage{amssymb}
-%~ \usepackage{algorithm2e}
+%\documentclass[a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{algorithm2e}
+%\usepackage{graphicx}
 
 %\title{\textbf{foo}\\bar }
 %\author{Andreas Fuchs, 1106307}
 %\date{\today}
 
-%~ \usepackage{graphicx}
-%~ \begin{document}
+
+%\begin{document}
 
 %\maketitle
 %\tableofcontents
@@ -19,22 +20,22 @@
 %%%
 %%%
 %%%
-\section{Objekt Orientierte Ära}
+\section{Die Objekt Orientierte Ära}
 
 \subsection{Motivation:}
 
-Damals wie auch heute wurden Daten und Applikation voneinander getrennt. Dadurch werden persistente Daten, üblicherweise durch ein DBMS verwaltet, anders behandelt als programmeigene Daten die nur während der Laufzeit existieren. Um also auf persistenten Daten zu arbeiten und diese zu manipulieren musste also eine Sprache in die andere eingebunden werden - üblicherweise durch Aufrufe aus der Applikation an das DBMS.
+Seit dem Aufkommen von Datenbanksystemen ist es üblich die (persistenten) Daten von der Applikation zu trennen. Dadurch werden persistente Daten, üblicherweise durch ein DBMS verwaltet, anders behandelt als programmeigene Daten die nur während der Laufzeit existieren. Um also auf persistenten Daten zu arbeiten und diese zu manipulieren musste also eine Sprache in die andere eingebunden werden - üblicherweise durch Aufrufe aus der Applikation an das DBMS.
 
 Dies hatte zum einen den Nachteil dass Applikationsentwickler sowohl in der Programmiersprache des Programms als auch in der Abfragesprache des DBMS vertraut sein mussten.
 
-Zusätzlich führte die fortschreitender Entwicklung von Programmierparadigmen und dem Durchbruch Objektorientierter Programmierung (OOP) zu einem sogenannten \emph{impedence mismatch} \cite{copeland1984}. Dies ist wenn sich die Programmiersprache der Applikation und des DBMS auf konzeptioneller und struktureller weiße Unterscheiden und die damit verbunden Schwierigkeit Daten in einer Form in der anderen Form zu repräsentieren.
+Zusätzlich führte die fortschreitender Entwicklung von Programmierparadigmen und dem Durchbruch Objektorientierter Programmierung (OOP) zu einem sogenannten \emph{impedence mismatch} \cite{copeland1984}. Dies ist wenn sich die Programmiersprache der Applikation und des DBMS auf konzeptioneller und struktureller weiße Unterscheiden und die damit verbunden Schwierigkeit Daten in einer Form in der anderen zu repräsentieren.
 
 Im speziellen können im \emph{Object-Relational Impedance Mismatch} folgende Schwierigkeiten ausgemacht werden \cite{ireland2009}
 
 
 \begin{description}
 	\item \textbf{Struktur:} 
-		Eine Klasse besitzt sowohl eine beliebige Struktur mit möglicherweise Pointern/Referenzen oder benutzerdefinierten Datentypen als auch beliebige Semantik definiert durch ihre Methoden und sie ist möglicherweise teil einer Klassenhierarchie. Ein Tupel besteht nur aus reinen Werten (einfachen Datentypen) und ist kein Teil einer Hierarchie.
+		Eine Klasse besitzt sowohl eine beliebige Struktur die möglicherweise Pointern/Referenzen oder benutzerdefinierten Datentypen enthält als auch beliebige Semantik, definiert durch ihre Methoden. Sie ist möglicherweise auch Teil einer Klassenhierarchie. Ein Tupel besteht nur aus reinen Werten (einfachen Datentypen) und ist kein Teil einer Hierarchie.
 	
 	\item \textbf{Instanz:}
 		Ein Objekt ist eine Instanz einer Klasse. Ein Tupel ist eine Wahrheitsaussage über ein Universum.
@@ -58,7 +59,7 @@ Im speziellen können im \emph{Object-Relational Impedance Mismatch} folgende Sc
 Um diese Probleme zu beheben war es naheliegend den Umweg von der Applikation zu den persistenten Daten über ein (externes) DBMS zu ersparen und einen weg zu Entwickeln der es erlaubt die Objekt in der Programmiersprache selbst persistent zu machen. Deswegen werden die OODBS auch oft \emph{Persistente Programmiersprachen} genannt.
 
 \subsubsection{Frühe Ansätze}
-Bereits in den späten 70ern wurde mit ersten Prototypen wie Pascal-R oder Rigel experimentiert. Es dauerte jedoch bis Mitte der 80er dass verschiedene kommerzielle Anbieter persistente Programmiersprachen am Markt anboten. Diese richteten Ihre Aufmerksamkeit meist auf den Technischen und Planerischen Bereich. Aufgrund dieser markttechnischen Ausrichtung lag der Fokus dieser frühen OODBS lag wenig auf Abfragesprachen und Transaktionsmanagement und mehr auf der Performance. Obwohl einige Umsetzungen Innovative Architekturen boten um dieses Ziel umzusetzen fanden persistente Programmiersprachen nur geringe Verbreitung vornehmlich bei CAD-Anwendungen.
+Bereits in den späten 1970ern wurde mit ersten Prototypen wie Pascal-R oder Rigel experimentiert. Es dauerte jedoch bis Mitte der 1980er dass verschiedene kommerzielle Anbieter persistente Programmiersprachen am Markt anboten. Diese richteten ihre Aufmerksamkeit meist auf den Technischen und Planerischen Bereich. Aufgrund dieser markttechnischen Ausrichtung lag der Fokus dieser frühen OODBS wenig auf Abfragesprachen und Transaktionsmanagement und mehr auf der Performance. Obwohl einige Umsetzungen Innovative Architekturen boten um dieses Ziel umzusetzen fanden persistente Programmiersprachen nur geringe Verbreitung vornehmlich bei CAD-Anwendungen.
 
 %competitive in performance with conventional method (programmiersprache + load programm) zB Programmperformance ggf um einiges schlechter falls bei jeder änderung auf platte geschrieben wird 
 
@@ -76,7 +77,7 @@ Ein weitere nicht zu unterschätzende Schwierigkeit stellt die Komplexität von 
 
 
 \subsection{Objektrelationale Abbildung}
-Ein anderer Ansatz Impedance Missmatch zu lösen ist, die Abbildung von dem Objetkorientierten auf das Relationale Modell zu automatisieren und für den Entwickler transparent zu machen.
+Ein Ansatz den Impedance Missmatch zu umgehen ist, die Abbildung von dem Objetkorientierten auf das Relationale Modell dem Entwickler aus der Hand zu nehmen und durch ein Framework zu automatisieren. Dies löst zwar nicht direkt den impedance mismatch, diese ist jedoch für den Softwareentwickler im idealen Fall nicht mehr sichtbar.
 
 Versuche einer Objektrelationealen Abbildung (ORA) gehen zurück bis auf 1984 \cite{ireland2009}, es dauerte jedoch bis in die 90er - zum teil vorangetrieben durch den geringen Fortschritt in OODBS - bis erste Produkte wie \emph{TopLink} auf dem Markt erschienen. Seitem haben sich eine Vielzahl an Produkten für verschiedene Programmiersprachen wie zum Beispiel Hibernate für Java oder das Entity Framework für .NET etabliert. 
 
@@ -100,7 +101,7 @@ Angenommen wir haben eine Klasse Person mit den Attributen Name und Adresse sowi
 \label{oo-example}
 \end{figure}
 
-Für die Klasse die Persistent werden soll muss die ODMG-Klasse d\_Object als Superklasse eingebunden werden. Wie Üblich wird diese Eigenschaft an die Abgeleiteten Klassen vererbt, es ist also nicht nötig die Klasse d\_Object noch einmal einzubinden. Die Persistenz wird dabei während der Erzeugung deklariert. Objekte können jedoch andere Objekte über einen smart pointer \emph{d\_Ref} referenzieren. Alle primitiven C++ Datentypen bis auf union, bit fields und references werden explizit unterstützt und einige strukturierte Literale wie zum Beispiel String und sowie Collection Typen wie Arrays werden ebenso unterstützt. Algorithm \ref{odl} zeigt unser Beispiel und wie dieses in C++ mit der Object Definition Language (ODL) persistent gemacht werden könnte \ref{vassilis2000}, \ref{kemper2013}.
+Für die Klasse die Persistent werden soll muss die ODMG-Klasse d\_Object als Superklasse eingebunden werden. Wie Üblich wird diese Eigenschaft an die abgeleiteten Klassen vererbt, es ist also nicht nötig die Klasse d\_Object noch einmal einzubinden. Die Persistenz wird dabei während der Erzeugung deklariert. Objekte können andere Objekte über einen smart pointer \emph{d\_Ref} referenzieren. Alle primitiven C++ Datentypen bis auf union, bit fields und references werden explizit unterstützt und einige strukturierte Literale wie zum Beispiel String sowie Collection Typen wie Arrays werden ebenso unterstützt. Algorithm \ref{odl} zeigt unser Beispiel und wie dieses in C++ mit der Object Definition Language (ODL) persistent gemacht werden könnte \ref{vassilis2000}, \ref{kemper2013}.
 
 \vspace{.3cm}
 \begin{algorithm}[H]
@@ -136,7 +137,7 @@ Für die Klasse die Persistent werden soll muss die ODMG-Klasse d\_Object als Su
 \end{algorithm}
 \vspace{.3cm}
 
-Die Object Query Language (OQL) erlaubt den Zugriff auf die Daten in der OODBS und ist syntaktisch an SQL angelehnt bietet jedoch im Vergleich zu SQL:1992 den Vorteil dass man flexibler auf belieb strukturierten Objekten arbeiten kann \cite{kemper2013}. Algorithm \ref{oql} zeigt eine einfache OQL abfrage.
+Die Object Query Language (OQL) erlaubt den Zugriff auf die Daten in einer OODBS und ist syntaktisch an SQL angelehnt, bietet jedoch im Vergleich zu SQL:1992 den Vorteil dass man flexibler auf belieb strukturierten Objekten arbeiten kann \cite{kemper2013}. Algorithm \ref{oql} zeigt eine einfache OQL abfrage.
 
 \vspace{.3cm}
 \begin{algorithm}[H]
@@ -152,6 +153,8 @@ Die Object Query Language (OQL) erlaubt den Zugriff auf die Daten in der OODBS u
 
 %TODO Beispiel Hibernate?
 
+%\subsection{Object Relational Mapping mit Hibernate}
+%Wir verwenden hier wieder das obige Beispiel.
 
 \subsection{Nachwirkungen}
 Mit der divergierenden Entwicklung von Programmierparadigmen und Datenbanksystemen, im besonderen die Objektorientierte Programmierung und das Relationale Schema, kam es zu einem deutlichen \emph{Impedance Missmatch}. 
@@ -160,18 +163,18 @@ Da die Entwicklung von OODBS in den letzten Jahren stagnierte machte wurde sich 
 
 
 %%%%%%%%
-\section{Objekt Relationale Ära}
+\section{Objektrelationale Datenbanken}
 %%%%%%%%
 
 Frühe Relationale Systeme wie INGRES waren hauptsächliche an Geschäftsdaten interessiert und boten nur sehr einfache aber dem Markt entsprechende Datentypen wie Ganzzahlen, Gleitkommazahlen oder Strings sowie nur einfache Operationen. Weiters unterstützten sie nur B-Bäume um in einer Relation zu suchen.
 
 Dies ist jedoch nicht für jeden Markt ausreichend. Geographic Information Systems (GIS) ist ein solcher Markt. In GIS sind Koordinaten als Längen- und Breitengrad angegeben. Eine Koordinate zu finden erfordert somit eine zweidimensionale suche. Ein B-Baum ist jedoch nur in der Lage über eine Dimension zu suchen und ist wenig effizient im Vergleich zu auf mehrdimensionale Suche ausgelegte Bäume wie kd-Trees. Schwieriger noch gestaltet sich eine Suche auf eine Fläche für die es in INGRES keine adäquate Operation gibt da diese von eindimensionalen Daten ausgeht \cite{stonebraker2005}.
 
-Da jeder Markt eigene Anforderungen stellt ist es wenig zielführend die angeforderten Datentypen und Operationen fest zu codieren - ausgenommen der Hersteller beabsichtigt eine Spezialisierung auf diesen Markt. Anstelle sollte es möglich sein dass Kunden die Datenbank selbst an ihre Bedürfnisse anpassen können.
+Da jeder Markt eigene Anforderungen stellt ist es wenig zielführend die angeforderten Datentypen und Operationen fest zu codieren - ausgenommen der Hersteller beabsichtigt eine Spezialisierung auf diesen Markt. Anstelle sollte es möglich sein dass Kunden die Datenbank möglichst flexibel selbst an ihre Bedürfnisse anpassen können.
 
 
-\subsection{Objektrelationale Datenbanken}
-Dieses Ausgangslage ist der der OODBS nicht unähnlich da hier wie dort sich um einen Impedance Mismatch handelt. Objekt-Relationale ist jedoch im Gegensatz zum "{}revolutionären"{} OODBS Ansatz ein "{}evolutionärer"{} Ansatz der versucht das Relationale Modell um die folgenden Eigenschaften zu erweitern \cite{kemper2013}:
+\subsection{Objektrelationale Datenbanksysteme}
+Dieses Ausgangslage ist der der OODBS nicht unähnlich da hier wie dort sich um einen Impedance Mismatch handelt. Objektrelationale Datenbanksysteme (ORDBS) sind jedoch im Gegensatz zum "{}revolutionären"{} OODBS Ansatz ein "{}evolutionärer"{} Ansatz der versucht das Relationale Modell um die folgenden Eigenschaften zu erweitern \cite{kemper2013}:
 \begin{itemize}
 	\item \textbf{Große Objekte (Large Objects):} Datentypen die es erlauben auch sehr große Attributwerte zu speichern. Eigentlich handelt es sich hier nur um "{}reine"{} Werte aber dennoch werden sie vielfach den Objektrelationalen Datenbanken hinzugerechnet.
 	\item \textbf{Mengenwertige Attribute:} Erlaubt es einem Attribut einen Menge von Werten zuzuordnen.
@@ -183,17 +186,16 @@ Dieses Ausgangslage ist der der OODBS nicht unähnlich da hier wie dort sich um 
 	\item \textbf{Vererbung:} Erlaubt es Generalisierungen beziehungsweise Spezialisierungen umzusetzen.
 	\item \textbf{Benutzerdefinierte Operationen:} Erlaubt es den Daten auch eigene Operationen zuzuordnen.
 \end{itemize}
-zu erweitern.
 
 \subsubsection{Frühe Ansätze}
-Postgres war eine der ersten größeren Objektrelationalen Datenbankdesigns. Es gab auch schon zuvor Versuche die rein Relationale Datenbank INGRES zu erweitern welche jedoch eher in einer Zerstückelung des ursprünglichen INGRES-Designs resultierte. Postgres bot im Vergleich eine unter anderem verbesserte Unterstützung komplexer Datentypen sowie die Möglichkeit Benutzerdefinierter Datentypen, Operationen und Methoden ohne jedoch vom Ursprünglichen Relationalen Design abzuweichen um die Kompatibilität zu wahren \cite{stonebraker1986}. Später kamen noch Vererbung, Referenzen und Mengen hinzu \cite{stonebraker1990}. 
+Postgres war eine der ersten größeren Objektrelationalen Datenbankdesigns. Es gab auch schon zuvor Versuche die rein Relationale Datenbank INGRES zu erweitern welche jedoch eher in einer Zerstückelung des ursprünglichen INGRES-Designs resultierte. Postgres bot in ihrem ursprünglichen Design im Vergleich eine unter anderem verbesserte Unterstützung komplexer Datentypen sowie die Möglichkeit Benutzerdefinierter Datentypen, Operationen und Methoden ohne jedoch vom Ursprünglichen Relationalen Design abzuweichen um die Kompatibilität zu wahren \cite{stonebraker1986}. Später kamen noch Vererbung, Referenzen und Mengen hinzu \cite{stonebraker1990}. 
 
 Manch andere Datenbanksysteme wie Sybase hatten benutzerdefinierte Funktionen in der Form von \emph{Stored Procedures} ermöglicht welche den Vorteil boten die Anzahl an Transaktionen zu minimieren.
 
 \subsection{Schwierigkeiten}
-So wie auch OODBS hatte auch der Objektrelationale Ansatz das Problem dass sich zunächst keine Standards durchgesetzt haben. Dies ist auch heutzutage noch wahr obwohl der SQL:1999 Standard einen Standard verabschiedet hätte.
+So wie auch OODBS hatte auch der Objektrelationale Ansatz das Problem dass sich zunächst keine Standards durchgesetzt haben. Dies ist auch heutzutage noch wahr obwohl der SQL:1999 einen Standard verabschiedet hätte, den aber viele Datenbankanbieter noch nicht realisiert haben oder nicht einhalten und stattdessen eigen Methoden bieten.
 
-Eine weitere Ursache die den Durchbruch verzögerte war dass es mit zusätzlichen Features auch zu zusätzlicher Komplexität, sowohl für den Hersteller als auch für den Benutzer, kommt. Der Hersteller muss nicht nur die Funktionalität bereitstellen sondern sie soll auch möglichst Performant sein und Abfragen optimieren können. \cite{carey1997} fand dass manche Abfragen, insbesondere jene die Mengen involvieren, auf Objektrelationalen Datenbank weniger Performant sind als jene die dieses Verhalten auf Relationalen Datenbanken simulieren.
+Eine weitere Ursache die den Durchbruch verzögerte war dass, ebenso wie bei OODBS, es mit zusätzlichen Features auch zu zusätzlicher Komplexität, sowohl für den Hersteller als auch für den Benutzer, kommt. Der Hersteller muss nicht nur die Funktionalität bereitstellen sondern sie soll auch möglichst Performant sein und Abfragen optimieren können. \cite{carey1997} fand dass manche Abfragen, insbesondere jene die Mengen involvieren, auf Objektrelationalen Datenbank weniger Performant sind als jene die dieses Verhalten auf Relationalen Datenbanken simulieren.
 Aber auch für den Applikationsentwickler ist die Zunahme an Optionen weniger überschaubar. Insbesondere werden viele der Features kaum verwendet und ein großer Teil der Anwendungsentwickler verwendet die üblichen Features der Relationalen Datenbank und bildet diese auf Applikationsebene auf das objektorientierte Struktur ab. Dies gilt sogar für Objektrelationale Abbildung \cite{fotache2009}.
 %TODO: noch etwas ausführlicher aus Paper 470373 oder die zwei Papers in Downloads
 
@@ -226,7 +228,7 @@ Wir Verwenden das selbe Beispiel wie in Abschnitt \ref{oo-example-section} und w
 \subsection{Nachwirkungen}
 Aufgrund des evolutionären Ansatzes des Objektrelationalen Designs fand es einen höheren Anklang als der revolutionäre Ansatz der Obejktorientierten Datenbanksysteme. Das Postgres Design wurde später Implementiert und ständig erweitert und ist heutzutage unter dem Namen PostgreSQL weit verbreitet. 
 
-Der SQL:1999 Standard hatte das Ziel einen standardisiertes Objekt-Relationales Datenmodell einschließlich Anfragesprache zu definieren. Viele dieser Standards sind jedoch bisher von den Datenbanksystemanbietern nicht oder nicht dem Standard entsprechend umgesetzt \cite{kemper2013}. Zumindest bieten aber alle großen Anbieter Relationaler Datenbanken manche Features des Objektrelationalen Designs, wie zum Beispiel Stored Procedures, in ihren Produkten an.
+Der SQL:1999 Standard hatte das Ziel einen standardisiertes Objekt-Relationales Datenmodell einschließlich Anfragesprache zu definieren. Viele dieser Standards sind jedoch bisher von den Datenbanksystemanbietern nicht oder nicht dem Standard entsprechend umgesetzt \cite{kemper2013}. Zumindest bieten aber alle großen Anbieter Relationaler Datenbanken manche Features des Objektrelationalen Designs, wie zum Beispiel stored procedures, in ihren Produkten an.
 
 
-%~ \end{document}
+%\end{document}
