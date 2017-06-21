@@ -16,7 +16,7 @@ public class MysqlProduktDAO implements IProduktDAO
 	
 	private Connection openConnection() throws SQLException, ClassNotFoundException
 	{
-		return DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
+		return DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 	}
 	
 	private Produkt createProduktObject(ResultSet rs) throws SQLException
@@ -427,7 +427,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		
 		try
 		{
-			conn = DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
+			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 			ps = conn.prepareStatement( "select * from produkt where pid = ?" );
 			ps.setInt( 1, id );
 			ResultSet rs = ps.executeQuery();

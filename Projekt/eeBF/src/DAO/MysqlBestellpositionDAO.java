@@ -21,7 +21,7 @@ public class MysqlBestellpositionDAO implements IBestellpositionDAO
 
 		try
 		{
-			conn = DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
+			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 			String query = "INSERT INTO bestellposition (oid, pid, menge, preisprostueck) VALUES (?, ?, ?, ?)";
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
 			stmt.setInt( 1, order.getId() );
@@ -67,7 +67,7 @@ public class MysqlBestellpositionDAO implements IBestellpositionDAO
 
 		try
 		{
-			conn = DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
+			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 			String query = "UPDATE bestellposition SET menge=?, preisprostueck=? WHERE posid=?, oid=?";
 			stmt = conn.prepareStatement( query );
 			stmt.setInt( 1, item.getQuantity() );
