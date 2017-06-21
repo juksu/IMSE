@@ -41,7 +41,7 @@ public class MysqlBestellungDAO implements IBestellungDAO
 
 		try
 		{
-			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
+			conn = DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
 
 			String query = "INSERT INTO bestellung (bestellstatus, aid) VALUES (?, ?)";
 
@@ -87,7 +87,7 @@ public class MysqlBestellungDAO implements IBestellungDAO
 
 		try
 		{
-			conn = DBConnection.getConnection( DBConnection.connectionTypes.CUSTOMER );
+			conn = DBConnection.getConnection( DBConnection.dbTypes.MYSQL, DBConnection.userTypes.CUSTOMER );
 
 			String query;
 			if( updateTimestamp )
