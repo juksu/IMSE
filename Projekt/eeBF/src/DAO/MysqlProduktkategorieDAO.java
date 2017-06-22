@@ -9,32 +9,11 @@ import Model.*;
 
 public class MysqlProduktkategorieDAO implements IProduktkategorieDAO 
 {
-	private String dbPath;
-	private String dbUser;
-	private String dbPassword;
 	private Connection conn = null;
 
-	public MysqlProduktkategorieDAO () 
+	private Connection openConnection() throws SQLException, ClassNotFoundException
 	{
-		setDbPath("jdbc:mysql://localhost:3306/eebf?useSSL=false");
-		setDbUser("eeBF_Admin");
-		setDbPassword("Tombstone");
-      	try
-      	{
-      		Class.forName("com.mysql.jdbc.Driver");
-        } 
-      	catch (ClassNotFoundException e)
-      	{
-      		System.out.println("An error occurred. com.mysql.jdbc.Driver konnte nicht geladen werden");
-      		e.printStackTrace();
-      	} 	
-	}
-	
-	private Connection openConnection() throws SQLException
-	{
-		conn = null;
-    	conn = DriverManager.getConnection(getDbPath(), getDbUser(), getDbPassword());
-    	return conn;
+    	return DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 	}
 	
 	private Produktkategorie createProduktKatObject(ResultSet rs) throws SQLException
@@ -64,6 +43,9 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		{
 			System.out.println("MYSQLAuktion, New produktkategorie Creation failed");
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -92,6 +74,9 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		} 
 		catch (SQLException e)
 		{
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally 
@@ -133,6 +118,9 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} 
 		finally 
 		{
@@ -170,6 +158,9 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		catch (SQLException e)
 		{
 				e.printStackTrace();				
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally 
 		{
@@ -231,6 +222,9 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		catch (SQLException e) 
 		{
 			e.printStackTrace();				
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally 
 		{
@@ -244,35 +238,5 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 			}
 		}
 		return null;
-	}
-
-	public String getDbPath()
-	{
-		return dbPath;
-	}
-
-	public void setDbPath(String dbPath)
-	{
-		this.dbPath = dbPath;
-	}
-
-	public String getDbUser()
-	{
-		return dbUser;
-	}
-
-	public void setDbUser(String dbUser)
-	{
-		this.dbUser = dbUser;
-	}
-
-	public String getDbPassword()
-	{
-		return dbPassword;
-	}
-
-	public void setDbPassword(String dbPassword)
-	{
-		this.dbPassword = dbPassword;
 	}
 }
