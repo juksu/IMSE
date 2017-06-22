@@ -11,6 +11,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
+import conf.Conf;
+
 class DBConnection {
 	static enum userTypes{USER, CUSTOMER, ADMIN};
 	
@@ -19,10 +21,15 @@ class DBConnection {
 		// TODO A connection pool would be nice to have
 		String dbUser;
 		String dbPassword;
+		String host = Conf.getHost();
+		String port = "3306";
 		// devolpment env
 		// String dbPath = "jdbc:mysql://localhost:3306/eebf?useSSL=false";
 		// production env
-		String dbPath  = "jdbc:mysql://www.eeBF.at:3306/eebf?useSSL=false";
+//		String dbPath  = "jdbc:mysql://www.eeBF.at:3306/eebf?useSSL=false";
+		
+		String dbPath = "jdbc:mysql://".concat(host).concat(":").concat(port)
+				.concat("/eebf?useSSL=false");
 		
 		// TODO one does not simply hardcode database access data and share them on github
 		// not to speak of having unsafe passwords
@@ -54,7 +61,7 @@ class DBConnection {
 		String dbUser;
 		String dbPassword;
 		// development env
-		String serverAddress = "localhost";
+		String host = Conf.getHost();
 		int port = 27017;
 		// production env
 //		String serverAddress = "www.eeBF.at";
@@ -87,7 +94,7 @@ class DBConnection {
 		MongoCredential credential = MongoCredential.createCredential(
 				dbUser, collection, dbPassword.toCharArray() );
 		// get client
-		mongoClient = new MongoClient(new ServerAddress( serverAddress, port ), 
+		mongoClient = new MongoClient(new ServerAddress( host, port ), 
 				Arrays.asList(credential));
 
 		// get database from client

@@ -13,9 +13,7 @@ import javax.servlet.http.HttpSession;
 import DAO.IBestellpositionDAO;
 import DAO.IBestellungDAO;
 import DAO.IProduktDAO;
-import DAO.MysqlBestellpositionDAO;
-import DAO.MysqlBestellungDAO;
-import DAO.MysqlProduktDAO;
+import DAO.getDAO;
 import Model.Bestellposition;
 import Model.Bestellung;
 import Model.Kunde;
@@ -82,9 +80,12 @@ public class ShoppingCart extends HttpServlet {
 		{
 			Kunde customer = (Kunde) user;
 			Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
-			IBestellungDAO ioOrder = new MysqlBestellungDAO();
-			IProduktDAO ioProduct = new MysqlProduktDAO();
-			IBestellpositionDAO ioPos = new MysqlBestellpositionDAO();
+//			IBestellungDAO ioOrder = new MysqlBestellungDAO();
+			IBestellungDAO ioOrder = getDAO.getBestellungDAO();
+//			IProduktDAO ioProduct = new MysqlProduktDAO();
+			IProduktDAO ioProduct = getDAO.getProduktDAO();
+//			IBestellpositionDAO ioPos = new MysqlBestellpositionDAO();
+			IBestellpositionDAO ioPos = getDAO.getBestellpositionDAO();
 			
 			if( shoppingCart == null )
 			{
