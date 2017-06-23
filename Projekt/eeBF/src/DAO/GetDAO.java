@@ -2,7 +2,7 @@ package DAO;
 
 import conf.Conf;
 
-public class getDAO {
+public class GetDAO {
 	
 	public static IBestellpositionDAO getBestellpositionDAO()
 	{
