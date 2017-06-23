@@ -55,7 +55,7 @@ class DBConnection {
 		return DriverManager.getConnection(dbPath, dbUser, dbPassword);
 	}
 	
-	static DB getMongoDBConnection( userTypes userType ) throws UnknownHostException
+	static MongoClient getMongoClient( userTypes userType ) throws UnknownHostException
 	{
 		// TODO A connection pool would be nice to have
 		String dbUser;
@@ -96,7 +96,18 @@ class DBConnection {
 		// get client
 		mongoClient = new MongoClient(new ServerAddress( host, port ), 
 				Arrays.asList(credential));
+		
+		return mongoClient;
+	}
+	
+	
+	static DB getMongoDBConnection( MongoClient mongoClient ) throws NullPointerException
+	{
+		if( mongoClient == null )
+			throw( new NullPointerException() );
 
+		String collection = "eebf";
+		
 		// get database from client
 		return mongoClient.getDB( collection );
 	}

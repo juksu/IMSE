@@ -80,11 +80,8 @@ public class ShoppingCart extends HttpServlet {
 		{
 			Kunde customer = (Kunde) user;
 			Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
-//			IBestellungDAO ioOrder = new MysqlBestellungDAO();
 			IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
-//			IProduktDAO ioProduct = new MysqlProduktDAO();
 			IProduktDAO ioProduct = GetDAO.getProduktDAO();
-//			IBestellpositionDAO ioPos = new MysqlBestellpositionDAO();
 			IBestellpositionDAO ioPos = GetDAO.getBestellpositionDAO();
 			
 			if( shoppingCart == null )
@@ -112,7 +109,10 @@ public class ShoppingCart extends HttpServlet {
 			ioPos.insertBestellposition( shoppingCart, newItem );
 			
 			shoppingCart.addItem( newItem );
+			
 			ioOrder.updateBestellung( shoppingCart, true );
+			
+			
 			
 			// request.setAttribute( "shoppingCart", shoppingCart );
 			session.setAttribute( "shoppingCart", shoppingCart );
