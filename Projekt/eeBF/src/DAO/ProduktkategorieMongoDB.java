@@ -76,11 +76,18 @@ public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
 
 	@Override
 	public int getAnzahl() {
-		/*
+		MongoClient mongoClient = null;
 		int counter = 0;
-		try{
-			DB db = openConnection();
-			System.out.println("connected successfully");
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
 			
 			DBCollection coll = db.getCollection("produktkategorie");
 			DBCursor cursor = coll.find();
@@ -88,39 +95,85 @@ public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
 			       counter++;
 			   }
 
-			
-			
-			}catch(Exception e){
-				System.out.println(e);
-			}
 		return counter;
-		*/
-		return null;
+		
 	}
 	
 
 	@Override
 	public String getName(int id) {
-		try{
-			DB db = openConnection();
-			System.out.println("connected successfully");
+		MongoClient mongoClient = null;
+		int counter = 0;
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
 			
 			DBCollection coll = db.getCollection("produktkategorie");
+			String idString = Integer.toString(id);
+			/*
+			DBObject searchById = new BasicDBObject("kid", new ObjectId(idString));
+			DBObject found = coll.findOne(searchById);
+			String name = null;
+			*/
+			BasicDBObject queryDetails = new BasicDBObject();
+			 queryDetails.put("kid", idString);
+			 DBCursor cursorDetails =coll.find(queryDetails);
+			 DBObject oneDetails;
+			 boolean Name=cursorDetails.hasNext();
+			 String name = null;
+			 while(Name)
+			  { 
+			    oneDetails=cursorDetails.next();        
+			     name = oneDetails.get("bezeichnung").toString();
+			    
+			  }
+			  return name;  
 			
-			
-			}catch(Exception e){
-				System.out.println(e);
-			}
-		return null;
-		
 	}
 
 	@Override
 	public String getBeschreibung(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		MongoClient mongoClient = null;
+		int counter = 0;
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
+			DBCollection coll = db.getCollection("produktkategorie");
+			String idString = Integer.toString(id);
+			/*
+			DBObject searchById = new BasicDBObject("kid", new ObjectId(idString));
+			DBObject found = coll.findOne(searchById);
+			String name = null;
+			*/
+			BasicDBObject queryDetails = new BasicDBObject();
+			 queryDetails.put("kid", idString);
+			 DBCursor cursorDetails =coll.find(queryDetails);
+			 DBObject oneDetails;
+			 boolean Name=cursorDetails.hasNext();
+			 String name = null;
+			 while(Name)
+			  { 
+			    oneDetails=cursorDetails.next();        
+			     name = oneDetails.get("beschreibung").toString();
+			    
+			  }
+			  return name;  
+			
 	}
-
+//Lena
 	@Override
 	public ArrayList<Produktkategorie> getAllProduktkategorie() {
 		// TODO Auto-generated method stub
@@ -129,8 +182,38 @@ public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
 
 	@Override
 	public int getIdByName(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+		MongoClient mongoClient = null;
+		
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
+			DBCollection coll = db.getCollection("produktkategorie");
+			
+			/*
+			DBObject searchById = new BasicDBObject("kid", new ObjectId(idString));
+			DBObject found = coll.findOne(searchById);
+			String name = null;
+			*/
+			BasicDBObject queryDetails = new BasicDBObject();
+			 queryDetails.put("bezeichnung", name);
+			 DBCursor cursorDetails =coll.find(queryDetails);
+			 DBObject oneDetails;
+			 boolean Name=cursorDetails.hasNext();
+			int id= 0;
+			 while(Name)
+			  { 
+			    oneDetails=cursorDetails.next();        
+			     id = (int) oneDetails.get("kid");
+			    
+			  }
+			  return id;  
 	}
 
 }
