@@ -29,13 +29,15 @@ import java.util.Set;
 
 import org.bson.types.ObjectId;
 
-public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
+public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 
 	
 	int kategorieId = 0;
 	
 	
-	
+	public ProduktkategorieMongoDB(){
+		System.out.println("Konstruktor aufruf");
+	}
 	
 	private Produktkategorie createProduktKatObject(DBCursor rs) throws SQLException
 	{
@@ -122,7 +124,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
 			String name = null;
 			*/
 			BasicDBObject queryDetails = new BasicDBObject();
-			 queryDetails.put("kid", idString);
+			 queryDetails.put("_id", idString);
 			 DBCursor cursorDetails =coll.find(queryDetails);
 			 DBObject oneDetails;
 			 boolean Name=cursorDetails.hasNext();
@@ -153,13 +155,14 @@ public class ProduktkategorieMongoDB implements IProduktkategorieMongoDB {
 			
 			DBCollection coll = db.getCollection("produktkategorie");
 			String idString = Integer.toString(id);
+			
 			/*
 			DBObject searchById = new BasicDBObject("kid", new ObjectId(idString));
 			DBObject found = coll.findOne(searchById);
 			String name = null;
 			*/
 			BasicDBObject queryDetails = new BasicDBObject();
-			 queryDetails.put("kid", idString);
+			 queryDetails.put("_id", idString);
 			 DBCursor cursorDetails =coll.find(queryDetails);
 			 DBObject oneDetails;
 			 boolean Name=cursorDetails.hasNext();

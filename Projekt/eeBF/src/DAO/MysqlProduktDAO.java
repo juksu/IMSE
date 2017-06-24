@@ -68,7 +68,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			}
 		}
 	}
-	
+	//Lena
 	public ArrayList<Produkt> searchByCategory(String titel) 
 	{
 		ArrayList<Produkt> SearchByCategory = new ArrayList<Produkt>();
@@ -104,7 +104,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			}
 			return SearchByCategory;
 		}
-
+	//Lena
 	public ArrayList <Produkt> MengePruefen(String titel){
 		ArrayList<Produkt> Search = new ArrayList<Produkt>();
 		try 
@@ -139,7 +139,7 @@ public class MysqlProduktDAO implements IProduktDAO
 			}
 			return Search;
 		}
-	
+	//Lena
 	public ArrayList<Produkt> searchProdukt(String name) 
 	{
 		ArrayList<Produkt> SearchList = new ArrayList<Produkt>();
