@@ -64,6 +64,40 @@ public class ProduktMongoDB implements IProduktDAO {
 				
 
 	}
+	
+	public int MengePruefen(String titel){
+MongoClient mongoClient = null;
+		
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
+			DBCollection coll = db.getCollection("produkt");
+			
+			
+			BasicDBObject query = new BasicDBObject();
+			 query.put("PBezeichnung", titel);
+			 DBCursor cursor =coll.find(query);
+			 DBObject obj;
+			 boolean Titel=cursor.hasNext();
+			int menge= 0;
+			 while(Titel)
+			  { 
+			    obj=cursor.next();        
+			     menge = (int) obj.get("Menge");
+			    
+			  }
+			  return menge;  
+	}
+
+	
+	
 
 	@Override
 	public int getAnzahl() {
@@ -93,7 +127,6 @@ public class ProduktMongoDB implements IProduktDAO {
 	@Override
 	public String getBezeichnung(int id) {
 		MongoClient mongoClient = null;
-		int counter = 0;
 		try
 			{
 				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );

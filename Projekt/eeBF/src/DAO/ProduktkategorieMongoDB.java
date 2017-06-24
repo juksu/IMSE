@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import Model.Produkt;
 import Model.Produktkategorie;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BulkWriteOperation;
@@ -177,12 +178,45 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 			  return name;  
 			
 	}
+	
+	
 //Lena
+	
 	@Override
-	public ArrayList<Produktkategorie> getAllProduktkategorie() {
-		// Wenn du die Methode createProduktkatObject aufrufen musst, dann muss cursor.next() als parameter übergeben werden
-		return null;
-	}
+	public ArrayList<Produktkategorie> getAllProduktkategorie()  {
+		MongoClient mongoClient = null;
+		
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			ArrayList<Produktkategorie> kat = new ArrayList<Produktkategorie>();
+			DBCollection coll = db.getCollection("produktkategorie");
+			DBCursor cursor = coll.find();
+			
+			while(cursor.hasNext()) {
+			
+		
+					try {
+						kat.add(createProduktKatObject(cursor.next()));
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+					return kat;
+			}
+			
+			
+	
+	
+
 
 	@Override
 	public int getIdByName(String name) {

@@ -103,7 +103,7 @@ h1 {
   <option value="-1">-Select Category-</option>
  
   <%
-MysqlProduktkategorieDAO category=new MysqlProduktkategorieDAO();
+ProduktkategorieMongoDB category=new ProduktkategorieMongoDB();
 ArrayList <Produktkategorie> categoryList =new ArrayList<Produktkategorie> ();
 categoryList= category.getAllProduktkategorie();
 for(Produktkategorie produktSuchen: categoryList){		

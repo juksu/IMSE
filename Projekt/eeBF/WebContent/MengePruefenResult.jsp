@@ -39,16 +39,11 @@
 <%@ page import= "java.util.*" %>
 <%
 String lis = request.getParameter("foo");
-MysqlProduktDAO object = new MysqlProduktDAO();
-ArrayList<Produkt> list =new ArrayList<Produkt>();
-list=object.MengePruefen(lis);
+ProduktMongoDB object = new ProduktMongoDB();
+int quantity=object.MengePruefen(lis);
 
 
-for (int i=0;i<list.size();i++)
-          {
-
-              out.println("<li>"+ "<p>"+"Name of Product: "+list.get(i).getName()+"<br>"+
-            		  "Quantity:" +  list.get(i).getQuantity()+"<br>"+"</li>"+"</p>");}
+              out.println("<li>"+ "<p>"+ "Quantity:" +  quantity +"<br>"+"</li>"+"</p>");
               
 
 %>
