@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import Model.Bestellung;
 
@@ -15,24 +14,25 @@ public class MysqlBestellungDAO implements IBestellungDAO
 
 	private String getBestellstatusString( Bestellung order )
 	{
-		String status = "";
-
+		
+		StringBuilder sb = new StringBuilder();
+		
 		if( order.isOrderStateOrdered() )
-			status = "bestellt";
+
+			sb.append( "bestellt" );
 
 		if( order.isOrderStatePaid() )
-			status.concat( ",bezahlt" );
+			sb.append( ",bezahlt" );
 
 		if( order.isOrderStateSending() )
-			status.concat( ",liefernd" );
-
+			sb.append( ",liefernd" );
 		if( order.isOrderStateSent() )
-			status.concat( ",geliefert" );
-
+			sb.append( ",geliefert" );
+			
 		if( order.isOrderStateComplete() )
-			status.concat( ",abgeschlossen" );
+			sb.append( ",abgeschlossen" );
 
-		return status;
+		return sb.toString();
 	}
 
 	@Override
@@ -92,21 +92,14 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		{
 			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 
-//			String query;
-//			if( updateTimestamp )
-////				query = "UPDATE bestellung SET datum=current_timestamp(),bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
-//				query = "UPDATE bestellung SET datum=?,bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
-//			else
-//				query = "UPDATE bestellung SET bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
-
-			String query = "UPDATE bestellung SET datum=?,bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
+			String query = "UPDATE bestellung SET datum=?,bestellstatus=?,paypalTNr=? WHERE oid=?";
 			
 			stmt = conn.prepareStatement( query );
 			stmt.setTimestamp( 1, new Timestamp( order.getDate().getTime() ) );
+
 			stmt.setString( 2, getBestellstatusString( order ) );
 			stmt.setString( 3, order.getPaypalTNr() );
-			stmt.setInt( 4, order.getCustomer().getId() );  // TODO customer mutable?
-			stmt.setInt( 5, order.getId() );
+			stmt.setInt( 4, order.getId() );
 
 			stmt.executeUpdate();
 
