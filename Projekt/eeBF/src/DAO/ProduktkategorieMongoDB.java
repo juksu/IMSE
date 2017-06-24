@@ -39,15 +39,16 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		System.out.println("Konstruktor aufruf");
 	}
 	
-	private Produktkategorie createProduktKatObject(DBCursor rs) throws SQLException
+	private Produktkategorie createProduktKatObject(DBObject obj) throws SQLException
 	{
 		
-		int id = ((ResultSet) rs).getInt("kid");
-		String titel=((ResultSet) rs).getString("bezeichnung");
-		String beschreibung = ((ResultSet) rs).getString("beschreibung");
+		int id = (int) obj.get("_id");
+		String titel=(String) obj.get("bezeichnung");
+		String beschreibung = (String) obj.get("beschreibung");
 		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
 		Produktkategorie pK = new Produktkategorie (id, titel, beschreibung, null);
 		return pK;
+		
 	}	
 	
 	public void createProduktkategorie(String name, String beschreibung) {
@@ -55,7 +56,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		MongoClient mongoClient = null;
 		try
 		{
-			mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );
 		} catch( UnknownHostException e )
 		{
 			e.printStackTrace();
@@ -82,7 +83,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		int counter = 0;
 		try
 			{
-				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );
 			} catch( UnknownHostException e )
 			{
 				e.printStackTrace();
@@ -108,7 +109,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		int counter = 0;
 		try
 			{
-				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );
 			} catch( UnknownHostException e )
 			{
 				e.printStackTrace();
@@ -145,7 +146,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		int counter = 0;
 		try
 			{
-				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );
 			} catch( UnknownHostException e )
 			{
 				e.printStackTrace();
@@ -179,7 +180,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 //Lena
 	@Override
 	public ArrayList<Produktkategorie> getAllProduktkategorie() {
-		// TODO Auto-generated method stub
+		// Wenn du die Methode createProduktkatObject aufrufen musst, dann muss cursor.next() als parameter übergeben werden
 		return null;
 	}
 
@@ -189,7 +190,7 @@ public class ProduktkategorieMongoDB implements IProduktkategorieDAO {
 		
 		try
 			{
-				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.ADMIN );
 			} catch( UnknownHostException e )
 			{
 				e.printStackTrace();
