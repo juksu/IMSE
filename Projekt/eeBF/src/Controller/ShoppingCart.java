@@ -1,7 +1,7 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,7 +49,9 @@ public class ShoppingCart extends HttpServlet {
 //			response.sendRedirect( "Kasse.jsp" );
 			redirect = "Kasse.jsp";
 		else if( request.getParameter( "pay" ) != null )
-			redirect = "Bestellzusammenfassung.jsp";	//TODO sollte natürlich zum Bezahlservice weiterleiten
+		{
+			redirect = placeOrder( request, response );
+		}
 		response.sendRedirect( redirect );
 	}
 
@@ -66,67 +68,105 @@ public class ShoppingCart extends HttpServlet {
 		
 		String redirect = "Einkaufswagen.jsp";
 		
-		if( session == null )
-			redirect = "login";
-		if( session.getAttribute( "user" ) == null )
-			redirect = "login";
-		
-		// TODO test case
-		// User user = new Kunde(2, "mymail", null, null, null, null, 0, null, null, 0, null);
-		User user = (User) session.getAttribute( "user" );
-		
-		// only Kunden can order
-		if( user instanceof Kunde )
+		if( Utils.userLogedInCheck( session ) )
 		{
-			Kunde customer = (Kunde) user;
-			Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
-			IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
-			IProduktDAO ioProduct = GetDAO.getProduktDAO();
-			IBestellpositionDAO ioPos = GetDAO.getBestellpositionDAO();
+			// TODO test case
+			// User user = new Kunde(2, "mymail", null, null, null, null, 0, null, null, 0, null);
+			User user = (User) session.getAttribute( "user" );
 			
-			if( shoppingCart == null )
+			// only Kunden can order
+			if( user instanceof Kunde )
 			{
-				shoppingCart = new Bestellung();
+				Kunde customer = (Kunde) user;
+				Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
+				IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
+				IProduktDAO ioProduct = GetDAO.getProduktDAO();
+				IBestellpositionDAO ioPos = GetDAO.getBestellpositionDAO();
 				
-				shoppingCart.setDate( Calendar.getInstance() );
-				shoppingCart.setOrderStateOrdered( false );
-				shoppingCart.setCustomer( customer );
+				if( shoppingCart == null )
+				{
+					shoppingCart = new Bestellung();
+					
+					shoppingCart.setDate( new Date() );
+					shoppingCart.setOrderStateOrdered( false );
+					shoppingCart.setCustomer( customer );
+					
+					System.out.println( "shoppingCart session created" );
+					
+					System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+					ioOrder.insertBestellung( shoppingCart );
+					System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+				}
 				
-				System.out.println( "shoppingCart session created" );
+				int pid = Integer.parseInt( request.getParameter( "additem" ) );
+				int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
 				
-				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
-				ioOrder.insertBestellung( shoppingCart );
-				System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+				Produkt prod = ioProduct.getProduktById( pid );
+				
+				// TODO catch case if product could not be found in database
+				Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
+				ioPos.insertBestellposition( shoppingCart, newItem );
+				
+				shoppingCart.addItem( newItem );
+				
+				ioOrder.updateBestellung( shoppingCart );
+				
+				// request.setAttribute( "shoppingCart", shoppingCart );
+				session.setAttribute( "shoppingCart", shoppingCart );
 			}
-			
-			int pid = Integer.parseInt( request.getParameter( "additem" ) );
-			int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
-			
-			Produkt prod = ioProduct.getProduktById( pid );
-			
-			// TODO catch case if product could not be found in database
-			Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
-			ioPos.insertBestellposition( shoppingCart, newItem );
-			
-			shoppingCart.addItem( newItem );
-			
-			ioOrder.updateBestellung( shoppingCart, true );
-			
-			
-			
-			// request.setAttribute( "shoppingCart", shoppingCart );
-			session.setAttribute( "shoppingCart", shoppingCart );
+			else 
+				redirect = "index";
 		}
-		else 
-		{
-			redirect = "index";
-		}
-		
-//		response.sendRedirect( redirect );
+		else
+			redirect = "login";
+			
 		return redirect;
 		
 	}
 	
+	public String placeOrder(HttpServletRequest request, HttpServletResponse response )
+	{
+		HttpSession session = request.getSession(false);
+		
+		String redirect = "Bestellzusammenfassung.jsp";
+
+		if( Utils.userLogedInCheck( session ) )
+		{
+			User user = (User) session.getAttribute( "user" );
+			
+			// only Kunden can order
+			if( user instanceof Kunde )
+			{
+				Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );		
+				
+				if( shoppingCart != null )
+				{
+					shoppingCart.setDate( new Date() );
+					shoppingCart.setPaypalTNr( request.getParameter( "paymentdata" ) );
+					shoppingCart.setOrderStateOrdered( true );
+					shoppingCart.setOrderStatePaid( true  );
+					
+					IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
+					ioOrder.updateBestellung( shoppingCart );
+					
+					System.out.println( "order placed" );
+					System.out.println( shoppingCart.getOrderState() );
+					// clear the shoppingcart
+					
+					// TODO reduce lagerbestand
+					
+					session.setAttribute( "shoppingCart", null );
+				}
+			}
+			else
+				redirect = "index";
+		}
+		else
+			redirect = "login";
+		
+		
+		return redirect;
+	}
 	
 
 }
