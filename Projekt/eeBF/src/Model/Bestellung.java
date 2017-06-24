@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 public class Bestellung
 {
@@ -98,7 +98,7 @@ public class Bestellung
 	}
 
 	private int id;
-	private Calendar date;
+	private Date date;
 	private OrderState currentState;
 	private Kunde customer;
 	private ArrayList<Bestellposition> items;
@@ -117,7 +117,7 @@ public class Bestellung
 
 	public Bestellung()
 	{
-		this.date = Calendar.getInstance();
+		this.date = new Date();
 		this.currentState = new OrderState();
 		this.items = new ArrayList<Bestellposition>();
 	}
@@ -132,11 +132,11 @@ public class Bestellung
 		this.id = id;
 	}
 
-	 public Calendar getDate() {
+	 public Date getDate() {
 		 return date;
 	 }
 
-	public void setDate( Calendar date )
+	public void setDate( Date date )
 	{
 		this.date = date;
 	}

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import Model.Bestellung;
 
@@ -43,11 +45,12 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		{
 			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 
-			String query = "INSERT INTO bestellung (bestellstatus, aid) VALUES (?, ?)";
+			String query = "INSERT INTO bestellung (datum, bestellstatus, aid) VALUES (?, ?, ?)";
 
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
-			stmt.setString( 1, getBestellstatusString( order ) );
-			stmt.setInt( 2, order.getCustomer().getId() );
+			stmt.setTimestamp( 1, new Timestamp( order.getDate().getTime() ) );
+			stmt.setString( 2, getBestellstatusString( order ) );
+			stmt.setInt( 3, order.getCustomer().getId() );
 
 			stmt.executeUpdate();
 
@@ -80,7 +83,7 @@ public class MysqlBestellungDAO implements IBestellungDAO
 	}
 
 	@Override
-	public void updateBestellung( Bestellung order, boolean updateTimestamp )
+	public void updateBestellung( Bestellung order )
 	{
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -89,17 +92,21 @@ public class MysqlBestellungDAO implements IBestellungDAO
 		{
 			conn = DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
 
-			String query;
-			if( updateTimestamp )
-				query = "UPDATE bestellung SET datum=current_timestamp(),bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
-			else
-				query = "UPDATE bestellung SET bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
+//			String query;
+//			if( updateTimestamp )
+////				query = "UPDATE bestellung SET datum=current_timestamp(),bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
+//				query = "UPDATE bestellung SET datum=?,bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
+//			else
+//				query = "UPDATE bestellung SET bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
 
+			String query = "UPDATE bestellung SET datum=?,bestellstatus=?,paypalTNr=?,aid=? WHERE oid=?";
+			
 			stmt = conn.prepareStatement( query );
-			stmt.setString( 1, getBestellstatusString( order ) );
-			stmt.setString( 2, order.getPaypalTNr() );
-			stmt.setInt( 3, order.getCustomer().getId() );
-			stmt.setInt( 4, order.getId() );
+			stmt.setTimestamp( 1, new Timestamp( order.getDate().getTime() ) );
+			stmt.setString( 2, getBestellstatusString( order ) );
+			stmt.setString( 3, order.getPaypalTNr() );
+			stmt.setInt( 4, order.getCustomer().getId() );  // TODO customer mutable?
+			stmt.setInt( 5, order.getId() );
 
 			stmt.executeUpdate();
 

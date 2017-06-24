@@ -1,7 +1,7 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -88,7 +88,7 @@ public class ShoppingCart extends HttpServlet {
 			{
 				shoppingCart = new Bestellung();
 				
-				shoppingCart.setDate( Calendar.getInstance() );
+				shoppingCart.setDate( new Date() );
 				shoppingCart.setOrderStateOrdered( false );
 				shoppingCart.setCustomer( customer );
 				
@@ -110,7 +110,7 @@ public class ShoppingCart extends HttpServlet {
 			
 			shoppingCart.addItem( newItem );
 			
-			ioOrder.updateBestellung( shoppingCart, true );
+			ioOrder.updateBestellung( shoppingCart );
 			
 			
 			
