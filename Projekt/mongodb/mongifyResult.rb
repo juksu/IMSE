@@ -19,7 +19,8 @@ table "bestellung" do
 	column "datum", :datetime
 	column "bestellstatus", :string
 	column "paypalTNr", :string
-	column "aid", :integer
+	#~ column "aid", :integer	// mongify export replaced by:
+	column "benutzerkonto", :DBREf( "benutzerkonto", "id" )
 end
 
 table "kunde" do
