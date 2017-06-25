@@ -63,7 +63,7 @@ public class MongodbBestellpositionDAO implements IBestellpositionDAO
 	@Override
 	public void updateBestellposition( Bestellung order, Bestellposition item )
 	{
-		// TODO
+		// TODO low priority since not actually used
 	}
 
 }

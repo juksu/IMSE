@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public abstract class User
 {
-	int id;
+	long id;
 	private String email;
 	private String passwort; //Encryption!
 	Calendar createdate;
@@ -19,12 +19,12 @@ public abstract class User
 		setPasswort(passwort);
 	}
 
-	public int getId() 
+	public long getId() 
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
