@@ -29,10 +29,10 @@ public class MongodbBestellpositionDAO implements IBestellpositionDAO
 		
 		DB db = DBConnection.getMongoDBConnection( mongoClient );
 		
-		DBCollection bestColl = db.getCollection( "bestellung" );
+		DBCollection orderColl = db.getCollection( "bestellung" );
 		BasicDBObject query = new BasicDBObject( "_id", order.getCustomer().getId() );
 		
-		DBObject orderObj = bestColl.findOne( query );
+		DBObject orderObj = orderColl.findOne( query );
 		
 		
 		if( orderObj == null )
@@ -55,7 +55,7 @@ public class MongodbBestellpositionDAO implements IBestellpositionDAO
 		
 		query = new BasicDBObject( "_id", order.getId() );
 		
-		bestColl.update( query, updatedOrderObj );
+		orderColl.update( query, updatedOrderObj );
 
 		mongoClient.close();
 	}

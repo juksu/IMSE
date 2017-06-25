@@ -6,20 +6,25 @@ table "benutzerkonto" do
 	column "usertype", :string
 end
 
-table "bestellposition" do
-	column "posid", :integer
-	column "oid", :integer
-	column "pid", :integer
-	column "menge", :integer
-	column "preisprostueck", :decimal
-end
+# table "bestellposition" do
+#	column "posid", :integer
+#	column "oid", :integer
+#	column "pid", :integer
+#	column "menge", :integer
+#	column "preisprostueck", :decimal
+# end
 
 table "bestellung" do
 	column "oid", :integer
 	column "datum", :datetime
 	column "bestellstatus", :string
 	column "paypalTNr", :string
-	#~ column "aid", :integer	// mongify export replaced by:
+	column "bestellposition" : {
+		column "produkt" :DBREf( "produkt", "id" )
+		column "menge", :integer
+		column "preisprostueck", :decimal
+		}
+	# column "aid", :integer	// mongify export replaced by:
 	column "benutzerkonto", :DBREf( "benutzerkonto", "id" )
 end
 

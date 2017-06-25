@@ -2,7 +2,7 @@ package Model;
 
 public class Bestellposition
 {
-	long posId;
+	int posId;
 	Produkt product;
 	int quantity;
 	float pricePerUnit;
@@ -14,11 +14,11 @@ public class Bestellposition
 		this.pricePerUnit = pricePerUnit;
 	}
 
-	public long getPosId() {
+	public int getPosId() {
 		return posId;
 	}
 
-	public void setPosId(long posId) {
+	public void setPosId(int posId) {
 		this.posId = posId;
 	}
 

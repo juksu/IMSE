@@ -50,8 +50,8 @@ public class MysqlBestellungDAO implements IBestellungDAO
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
 			stmt.setTimestamp( 1, new Timestamp( order.getDate().getTime() ) );
 			stmt.setString( 2, getBestellstatusString( order ) );
-//			stmt.setInt( 3, order.getCustomer().getId() );
-			stmt.setLong( 3, order.getCustomer().getId() );
+			stmt.setInt( 3, order.getCustomer().getId() );
+//			stmt.setLong( 3, order.getCustomer().getId() );
 
 			stmt.executeUpdate();
 
@@ -100,8 +100,8 @@ public class MysqlBestellungDAO implements IBestellungDAO
 
 			stmt.setString( 2, getBestellstatusString( order ) );
 			stmt.setString( 3, order.getPaypalTNr() );
-//			stmt.setInt( 4, order.getId() );
-			stmt.setLong( 4, order.getId() );
+			stmt.setInt( 4, order.getId() );
+//			stmt.setLong( 4, order.getId() );
 
 			stmt.executeUpdate();
 			
