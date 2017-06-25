@@ -97,7 +97,7 @@ public class Bestellung
 		}
 	}
 
-	private int id;
+	private long id;
 	private Date date;
 	private OrderState currentState;
 	private Kunde customer;
@@ -122,12 +122,12 @@ public class Bestellung
 		this.items = new ArrayList<Bestellposition>();
 	}
 
-	public int getId()
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId( int id )
+	public void setId( long id )
 	{
 		this.id = id;
 	}

@@ -2,15 +2,11 @@ package Model;
 
 public class Bestellposition
 {
-	int posId;
+	long posId;
 	Produkt product;
 	int quantity;
 	float pricePerUnit;
-
-	// TODO Preis auch für Bestellposition bzw Bestellung gesamt?
-	// Es kann sich der Preis des Stücks ändern aber wir wollen nach wie vor den
-	// Usprünglichen Handelspreis wissen.
-
+	
 	public Bestellposition(Produkt product, int quantity, float pricePerUnit)
 	{
 		this.product = product;
@@ -18,11 +14,11 @@ public class Bestellposition
 		this.pricePerUnit = pricePerUnit;
 	}
 
-	public int getPosId() {
+	public long getPosId() {
 		return posId;
 	}
 
-	public void setPosId(int posId) {
+	public void setPosId(long posId) {
 		this.posId = posId;
 	}
 

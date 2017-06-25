@@ -19,11 +19,9 @@ public class MongodbBestellungDAO implements IBestellungDAO
 	// todo, the same as in mysql -> merge or have it in Bestellung?
 	private String getBestellstatusString( Bestellung order )
 	{
-		
 		StringBuilder sb = new StringBuilder();
 		
 		if( order.isOrderStateOrdered() )
-
 			sb.append( "bestellt" );
 
 		if( order.isOrderStatePaid() )
@@ -72,7 +70,7 @@ public class MongodbBestellungDAO implements IBestellungDAO
 		DBCollection bestColl = db.getCollection( "bestellung" );
 		BasicDBObject newBestObj = new BasicDBObject("_id", new ObjectId() )
 				.append( "datum", new Date() )
-				.append( "bestellstatus", getBestellstatusString( order) )
+				.append( "bestellstatus", getBestellstatusString( order ) )
 				.append( "paypalTNr", order.getPaypalTNr() )
 				.append( "kunde", new DBRef( "benutzerkonto", kundeObj.get( "_id" ) ) );
 				
@@ -105,6 +103,14 @@ public class MongodbBestellungDAO implements IBestellungDAO
 		
 		BasicDBObject newBestObj = new BasicDBObject();
 		newBestObj.append( "$set", fieldsToUpdate );
+		
+		/**
+		 * TODO
+		 */
+		// parses a hexadecimal string to long
+//		long id = Long.parseLong( "ffs", 16 );
+		// parses the long value back into a hexadecimal string
+//		String _id = Long.toHexString( id );
 		
 		BasicDBObject query = new BasicDBObject( "_id", order.getId() );
 		
