@@ -6,7 +6,9 @@ public class Conf {
 	public static enum database{MYSQL, MONGODB};
 	
 	private static String host = "localhost";
-//	private static database db = database.MYSQL;
+//	private static String host = "www.eebf.at";
+
+	//	private static database db = database.MYSQL;
 	private static database db = database.MONGODB;
 	
 	public static String getHost()
