@@ -1,30 +1,32 @@
 Datum;Uhrzeit;Dauer (in min);Aufgabenbeschreibung;Aktion / Befehl / Kommando;Ergebnis;Verantwortlicher;Anmerkung;
-17.05.2017;13:15;90;Teambesprechung, Projektumsetzung, Aufgabenverteilung;;;Andreas, Roman, Olena, Daniil;;
-17.05.2017;16:00;10;Einrichten Github;;46af6bb;Andreas;;
-23.05.2017;10:00;240;Sich mit eclipse und tomcat rumplagen;;;Andreas;;
-23.05.2017;10:00;30;Altes Projekt auf dem Aufgebaut wird integriert;;8859934;Andreas;;
-24.05.2017;13:00;90;Teambesprechung: Alle Entwicklungsumgebungen einrichten;;;Andreas, Roman, Olena, Daniil;;
-25.05.2017;10:00;180;Teambesprechung: Alle Entwicklungsumgebungen und Datenbanken einrichten;;cd2dc1c;Andreas, Olena, Daniil;Altbekannte Probleme mit Eclipse;
-25.05.2017;14:00;90;sql DDL anpassen, script zum einfachen erstellen der Datenbank entwickelt;;c0a52f6;Andreas;;
-25.05.2017;15:30;210;Viele neue Klassen, groƒÛteils um den Produktbestellungs-Use-Case zu realisieren;;;Andreas;;
-25.05.2017;19:00;15;Datenbankmodel (Kategorie) angepasst um besser der Documentation zu entsprechen;;20d8c14;Andreas;;
-25.05.2017;19:15;45;Mehr Datenbankuser;;7427dd3;Andreas;;
-25.05.2017;20:00;60;Modellieren eines Warenkorbs;;7427dd3;Andreas;;
-25.05.2017;14:00;240;DAO Fuer Produkt geschrieben;;;Daniil;;
-25.05.2017;19:00;90;Adminservlet angepasst;;;Daniil;;
-26.05.2017;10:00;600;Arbeit arbeit arbeit, groƒÛteils um den Use Case Bestellung zu realisieren;;;Andreas;;
-26.05.2017;11:00;300;Produktkategorie erstellen ;;;Daniil;;
-26.05.2017;18:00;60;Produkt erstellen jsp geschrieben;;;Daniil;;
-26.05.2017;13:00;150;ProduktDAO Methoden;;;;;
-26.05.2017;18:00;70;ProduktKAtegorieDAO;;;;;
-27.05.2017;8:30;30;DAO;;;Andreas;;
-27.05.2017;9:00;30;Das &/=â«Î‚¤%! hat sich plƒ¦tzlich einfach dazu entschieden keine Codenavigation mit Ctrl zu machen;Lƒ¦sche .metadata in Workspace (alles muss neu eingerichtet werden);;Andreas;&/=â«Î‚¤%! Eclipse;
-27.05.2017;10:30;45;Bestellposition DAO;;;Andreas;;
-27.05.2017;13:00;180;Gruppentreffen, Fehlerbehebung;;;;;
-27.05.2017;18:00;120;Adminservlet erweitert um Produkterstellen;;;;;
-27.05.2017;10:00;240;SortByKeywordJSP, ListOfSortedProductsServlet, ListOfSortedProductsJSP;;;;;Olena
-28.05.2017;10:00;240;Suche von Produkten mit Lager ID ;;;Daniil;;
-28.05.2017;11:00;260;SearchByCategoryJSP, SearchByCategoryServlet, ListOfSortByCategoryJSP;;;;;Olena
-29.05.2017;11:00;120;Lagestand korriegieren gemacht;;;Daniil;;
-29.05.2017;12:00;200;Verfuegbarkeit pruefen UseCAse;;;;;Olena
-30.05.2017;21:00;60;Aenderungen an Servlets nach den Aenderungen im Datenbank vorgenommen;;;Daniil;;
+17.05.17;13:15;90;Teambesprechung, Projektumsetzung, Aufgabenverteilung;;;Andreas, Roman, Olena, Daniil;;
+17.05.17;16:00;10;Einrichten Github;;46af6bb;Andreas;;
+23.05.17;10:00;240;Sich mit eclipse und tomcat rumplagen;;;Andreas;;
+23.05.17;10:00;30;Altes Projekt auf dem Aufgebaut wird integriert;;8859934;Andreas;;
+24.05.17;13:00;90;Teambesprechung: Alle Entwicklungsumgebungen einrichten;;;Andreas, Roman, Olena, Daniil;;
+25.05.17;10:00;180;Teambesprechung: Alle Entwicklungsumgebungen und Datenbanken einrichten;;cd2dc1c;Andreas, Olena, Daniil;Altbekannte Probleme mit Eclipse;
+25.05.17;14:00;90;sql DDL anpassen, script zum einfachen erstellen der Datenbank entwickelt;;c0a52f6;Andreas;;
+25.05.17;15:30;210;Viele neue Klassen, groº_teils um den Produktbestellungs-Use-Case zu realisieren;;;Andreas;;
+25.05.17;19:00;15;Datenbankmodel (Kategorie) angepasst um besser der Documentation zu entsprechen;;20d8c14;Andreas;;
+25.05.17;19:15;45;Mehr Datenbankuser;;7427dd3;Andreas;;
+25.05.17;20:00;60;Modellieren eines Warenkorbs;;7427dd3;Andreas;;
+25.05.17;14:00;240;DAO Fuer Produkt geschrieben;;;Daniil;;
+25.05.17;19:00;90;Adminservlet angepasst;;;Daniil;;
+26.05.17;10:00;600;Arbeit arbeit arbeit, groº_teils um den Use Case Bestellung zu realisieren;;;Andreas;;
+26.05.17;11:00;300;Produktkategorie erstellen ;;;Daniil;;
+26.05.17;18:00;60;Produkt erstellen jsp geschrieben;;;Daniil;;
+26.05.17;13:00;150;ProduktDAO Methoden;;;Daniil;;
+26.05.17;18:00;70;ProduktKAtegorieDAO;;;Daniil;;
+27.05.17;08:30;30;DAO;;;Andreas;;
+27.05.17;09:00;30;Das &/=â‡Ë__%! hat sich plº_tzlich einfach dazu entschieden keine Codenavigation mit Ctrl zu machen;Lº_sche .metadata in Workspace (alles muss neu eingerichtet werden);;Andreas;&/=â‡Ë__%! Eclipse;
+27.05.17;10:30;45;Bestellposition DAO;;;Andreas;;
+27.05.17;13:00;180;Gruppentreffen, Fehlerbehebung;;;;;
+27.05.17;18:00;120;Adminservlet erweitert um Produkterstellen;;;Daniil;;
+27.05.17;10:00;240;SortByKeywordJSP, ListOfSortedProductsServlet, ListOfSortedProductsJSP;;;;;Olena
+28.05.17;10:00;240;Suche von Produkten mit Lager ID ;;;Daniil;;
+28.05.17;11:00;260;SearchByCategoryJSP, SearchByCategoryServlet, ListOfSortByCategoryJSP;;;;;Olena
+29.05.17;11:00;180;Lagestand korriegieren gemacht;;;Daniil;;
+29.05.17;12:00;200;Verfuegbarkeit pruefen UseCAse;;;;;Olena
+30.05.17;21:00;60;Aenderungen an Servlets nach den Aenderungen im Datenbank vorgenommen;;;Daniil;;
+24.06.17;15:00;120;Produktkategorie DAO fuer mongoDB erstellt;;;Daniil;;
+24.06.17;20:00;90;alle Produkte aus dem mongoDB holen;;;Daniil;;
