@@ -28,7 +28,7 @@ ul.a {
 <%@ page import= "java.util.*" %>
 <%
 String lis = request.getParameter("foo");
-MysqlProduktDAO object = new MysqlProduktDAO();
+ProduktMongoDB object = new ProduktMongoDB();
 ArrayList<Produkt> list =new ArrayList<Produkt>();
 list=object.searchProdukt(lis);
 

@@ -6,15 +6,17 @@ public class Produkt {
 	private String description;
 	private float price;
 	private int quantity;
+	private String category;
 	private Lager storage;
 	
-	public Produkt(int id, String name, String description, float price, int quantity, Lager storage) {
+	public Produkt(int id, String name, String description, float price, int quantity, String category, Lager storage) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
+		this.category= category;
 		this.storage = storage;
 	}
 
@@ -26,6 +28,14 @@ public class Produkt {
 		this.id = id;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -33,7 +43,7 @@ public class Produkt {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getDescription() {
 		return description;
 	}

@@ -26,14 +26,15 @@ public class MysqlProduktDAO implements IProduktDAO
 		String beschreibung = rs.getString("PBeschreibung");
 		float price = rs.getFloat("preis");
 		int quantity = rs.getInt("menge");
+		String category = rs.getString("produktkategorie");
 		//int sid = rs.getInt(columnIndex)
 		
 		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
-		Produkt p = new Produkt (id, name, beschreibung,price, quantity, null);
+		Produkt p = new Produkt (id, name, beschreibung,price, quantity, category, null);
 		return p;
 	}	
 
-	public void createProdukt(int id, String name, String description, int preis, int quantity, int lagerid)
+	public void createProdukt(int id, String name, String description, int preis, int quantity, String produktkategorie, int lagerid)
 	{
 		try 
 		{
