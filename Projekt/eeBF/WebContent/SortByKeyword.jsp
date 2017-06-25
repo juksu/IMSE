@@ -112,7 +112,7 @@
            
 <%  
 
-MysqlProduktDAO object = new MysqlProduktDAO();
+ProduktMongoDB object = new ProduktMongoDB();
 ArrayList<Produkt> list =new ArrayList<Produkt>();
 list=object.getAllProdukten();
 

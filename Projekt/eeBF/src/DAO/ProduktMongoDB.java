@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.*;
 
 import javax.swing.text.Document;
 
@@ -16,7 +17,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
+
 
 import Model.Produkt;
 import Model.Produktkategorie;
@@ -30,14 +31,15 @@ public class ProduktMongoDB implements IProduktDAO {
 		String beschreibung = (String) obj.get("PBeschreibung");
 		Float price = (Float) obj.get("preis");
 		int quantity = (int) obj.get("Menge");
+		String produktkategorie = (String) obj.get("produktkategorie");
 		// TODO Oberkategorie für jetzt null (jede Kategorie ist die Wurzel)
-		Produkt p = new Produkt (id, name, beschreibung, price, quantity, null);
+		Produkt p = new Produkt (id, name, beschreibung, price, quantity, produktkategorie, null);
 		return p;
 	}	
 	
 	
 	@Override
-	public void createProdukt(int id, String name, String description, int price, int quantity, int lagerid) {
+	public void createProdukt(int id, String name, String description, int price, int quantity, String produktkategorie, int lagerid) {
 		MongoClient mongoClient = null;
 		try
 		{
@@ -63,6 +65,81 @@ public class ProduktMongoDB implements IProduktDAO {
 		mongoClient.close();
 				
 
+	}
+	
+	
+	public ArrayList<Produkt> searchByCategory(String titel)  {
+MongoClient mongoClient = null;
+		
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
+			DBCollection coll = db.getCollection("produkt");
+			
+			
+			BasicDBObject query = new BasicDBObject();
+			 query.put("produktkategorie", titel);
+			 DBCursor cursor =coll.find(query);
+			
+			 boolean Titel=cursor.hasNext();
+			 ArrayList<Produkt> produkt = new ArrayList<Produkt>();
+			 while(Titel)
+			  { 
+					try {
+						produkt.add(createProduktObject(cursor.next()));
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+					return produkt;
+			}
+	
+	public ArrayList<Produkt> searchProdukt(String name) 
+	{
+MongoClient mongoClient = null;
+		
+		try
+			{
+				mongoClient = DBConnection.getMongoClient( DBConnection.userTypes.CUSTOMER );
+			} catch( UnknownHostException e )
+			{
+				e.printStackTrace();
+			}
+				
+			DB db = DBConnection.getMongoDBConnection( mongoClient );
+			
+			DBCollection coll = db.getCollection("produkt");
+			BasicDBObject query = new BasicDBObject();
+			query.put("PBezeichnung", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+			 DBCursor cursor =coll.find(query);
+				
+			 boolean Titel=cursor.hasNext();
+			 ArrayList<Produkt> produkt = new ArrayList<Produkt>();
+			 while(Titel)
+			  { 
+					try {
+						produkt.add(createProduktObject(cursor.next()));
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+					return produkt;
+			}
+			
+			
+		
+		
 	}
 	
 	public int MengePruefen(String titel){

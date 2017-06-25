@@ -62,8 +62,8 @@ public class AdminFunctions extends UserFunctions
 		getProduktkategorieDAO().createProduktkategorie(name, "");
 	}
 	
-	public void erstelleProdukt(Integer id, String bezeichnung, String beschreibung, int preis, int menge, int lagerid){
-		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, preis, menge, lagerid);
+	public void erstelleProdukt(Integer id, String bezeichnung, String beschreibung, int preis, int menge, String produktkategorie, int lagerid){
+		getProduktDAO().createProdukt(id , bezeichnung, beschreibung, preis, menge, produktkategorie, lagerid);
 	}
 
 	public String accountAendern(String email, String pw_old, String pw_new, String pw_new2)

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import Model.*;
 
 public interface IProduktDAO {
-	public void createProdukt(int id, String name, String description, int price, int quantity, int lagerid);
+	public void createProdukt(int id, String name, String description, int price, int quantity, String produktkategorie, int lagerid);
 	public int getAnzahl();
 	//public String getName(int id);
 	public String getBezeichnung(int id);
