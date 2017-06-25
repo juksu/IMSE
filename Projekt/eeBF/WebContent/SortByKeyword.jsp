@@ -129,7 +129,7 @@ for (int i=0;i<list.size();i++)
 						"<form action='ShoppingCart' method='post'>" +
 						"<input type='text' name='itemquantity' size='2' value='1'/>" +
 						"<button name='additem' type='submit' value='" + 
-						list.get(i).getId() + 
+						list.get(i).getId() +
 						"'>Produkt in Einkaufswagen legen</button>" + 
 						"</form>");}
               

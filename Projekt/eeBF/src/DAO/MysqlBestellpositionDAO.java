@@ -26,7 +26,8 @@ public class MysqlBestellpositionDAO implements IBestellpositionDAO
 			stmt = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
 //			stmt.setInt( 1, order.getId() );
 			stmt.setLong( 1, order.getId() );			
-			stmt.setInt( 2, item.getProduct().getId() );
+//			stmt.setInt( 2, item.getProduct().getId() );
+			stmt.setLong( 2, item.getProduct().getId() );
 			stmt.setInt( 3, item.getQuantity() );
 			stmt.setFloat( 4, item.getPricePerUnit() );
 

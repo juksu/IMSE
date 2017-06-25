@@ -201,7 +201,7 @@ MongoClient mongoClient = null;
 	}
 
 	@Override
-	public void newMenge(int pid, int newmenge) {
+	public void newMenge(long pid, int newmenge) {
 		// TODO Auto-generated method stub
 
 	}

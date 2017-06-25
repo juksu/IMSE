@@ -266,7 +266,8 @@ public class MysqlUserDAO implements IUserDAO
 				+ " Passwort=? where aid=?");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
-				ps.setInt(3, user.getId());	
+//				ps.setInt(3, user.getId());	
+				ps.setLong(3, user.getId());	
 				ps.execute();
 				ps.close();	
 			PreparedStatement psC = conn.prepareStatement
@@ -279,7 +280,8 @@ public class MysqlUserDAO implements IUserDAO
 				psC.setString(5, user.getOrt());
 				psC.setString(6, user.getStrasse());
 				psC.setInt(7, user.getHausnummer());
-				psC.setInt(8, user.getId());
+//				psC.setInt(8, user.getId());
+				psC.setLong(8, user.getId());
 				psC.execute();
 				psC.close();	
 		} 
@@ -312,7 +314,8 @@ public class MysqlUserDAO implements IUserDAO
 				+ " Passwort=? where aid=?");
 				ps.setString(1, user.getEmail());
 				ps.setString(2, user.getPasswort());
-				ps.setInt(3, user.getId());	
+//				ps.setInt(3, user.getId());
+				ps.setLong(3, user.getId());	
 				ps.execute();
 				ps.close();	
 		} 
@@ -340,7 +343,8 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement("update benutzerkonto set isInvalid=? where aid=?");
 			ps.setBoolean(1, invalid);
-			ps.setInt(2, user.getId());
+//			ps.setInt(2, user.getId());
+			ps.setLong(2, user.getId());
 			ps.executeUpdate();
 			ps.close();	
 		} 
@@ -812,7 +816,8 @@ public class MysqlUserDAO implements IUserDAO
 			conn = openConnection();
 			PreparedStatement ps = conn.prepareStatement("update benutzerkonto set Passwort=?"+" where aid=?");
 			ps.setString(1, user.getPasswort());
-			ps.setInt(2, user.getId());
+//			ps.setInt(2, user.getId());
+			ps.setLong(2, user.getId());
 			ps.executeUpdate();
 			ps.close();	
 		} 
@@ -820,7 +825,7 @@ public class MysqlUserDAO implements IUserDAO
 		{
 			System.out.println("MYSQLUser, New User Creation failed");
 			e.printStackTrace();
-		} 
+		}
 		finally
 		{
 			try 

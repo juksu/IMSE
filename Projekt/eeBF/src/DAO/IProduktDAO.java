@@ -13,7 +13,7 @@ public interface IProduktDAO {
 	public ArrayList<Produkt> getAllProdukten();
 	public ArrayList<Produkt> getAllProduktenByLagerId(int id);
 	
-	public void newMenge(int pid, int newmenge);
+	public void newMenge(long pid, int newmenge);
 	public Produkt getProduktById( int id );
 	
 	

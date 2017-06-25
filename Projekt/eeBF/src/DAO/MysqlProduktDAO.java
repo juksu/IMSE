@@ -319,7 +319,7 @@ public class MysqlProduktDAO implements IProduktDAO
 		return ProduktList;
 	}
 	
-	public void newMenge(int id, int menge)
+	public void newMenge(long id, int menge)
 	{
 		try 
 		{
@@ -330,7 +330,8 @@ public class MysqlProduktDAO implements IProduktDAO
 				
 				//ps.setInt(1, id);
 				ps.setInt(1, menge);
-				ps.setInt(2, id);
+//				ps.setInt(2, id);
+				ps.setLong(2, id);
 				
 				ps.execute();
 				ps.close();
