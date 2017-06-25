@@ -11,8 +11,7 @@ public class GetDAO {
 			case MYSQL :
 				return new MysqlBestellpositionDAO();
 			case MONGODB :
-//				return new MongodbBestellpositionDAO();	//TODO
-				return null;
+				return new MongodbBestellpositionDAO();
 			default : 
 				return null;
 		}
@@ -25,8 +24,7 @@ public class GetDAO {
 			case MYSQL :
 				return new MysqlBestellungDAO();
 			case MONGODB :
-//				return new MongodbBestellungDAO();	//TODO
-				return null;
+				return new MongodbBestellungDAO();
 			default : 
 				return null;
 		}
@@ -41,7 +39,7 @@ public class GetDAO {
 				return new MysqlProduktDAO();
 			case MONGODB :
 //				return new MongodbProduktDAO();;	//TODO
-				return null;
+				return new MysqlProduktDAO();
 			default : 
 				return null;
 		}
@@ -55,7 +53,7 @@ public class GetDAO {
 				return new MysqlProduktkategorieDAO();
 			case MONGODB :
 //				return new MongodbProduktkategorieDAO();;	//TODO
-				return null;
+				return new MysqlProduktkategorieDAO();
 			default : 
 				return null;
 		}
@@ -69,7 +67,7 @@ public class GetDAO {
 				return new MysqlUserDAO();
 			case MONGODB :
 //				return new MongodbUserDAO();;	//TODO
-				return null;
+				return new MysqlUserDAO();
 			default : 
 				return null;
 		}

@@ -3,8 +3,6 @@ package DAO;
 import java.net.UnknownHostException;
 import java.util.Date;
 
-import org.bson.types.ObjectId;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -41,7 +39,6 @@ public class MongodbBestellungDAO implements IBestellungDAO
 	@Override
 	public void insertBestellung( Bestellung order )
 	{
-		
 		MongoClient mongoClient = null;
 		try
 		{
@@ -55,31 +52,27 @@ public class MongodbBestellungDAO implements IBestellungDAO
 		
 		// Maybe MongodbUserDAO could help?
 		// TODO: is the custumer id the id in database - it is true for mysql but now also for mongodb
-//		DBCollection kundeColl = db.getCollection( "benutzerkonto" );
-//		BasicDBObject query = new BasicDBObject( "_id", order.getCustomer().getId() );
-		// there should be only one custumer with the id
-//		DBObject kundeObj =  kundeColl.findOne( query );
+		DBCollection kundeColl = db.getCollection( "benutzerkonto" );
+		BasicDBObject query = new BasicDBObject( "aid", order.getCustomer().getId() );
+//		 there should be only one custumer with the id
+		DBObject kundeObj =  kundeColl.findOne( query );
 		
-//		if( kundeObj == null )
-//		{
-//			System.err.println( "InsertBestellung: customer does not exist" );
-//			mongoClient.close();
-//			return; 
-//		}
+		if( kundeObj == null )
+		{
+			System.err.println( "InsertBestellung: customer does not exist" );
+			mongoClient.close();
+			return; 
+		} 
+		order.setId( IDHelper.getUniqueBestellungID() );
 		
 		DBCollection bestColl = db.getCollection( "bestellung" );
-		BasicDBObject newBestObj = new BasicDBObject("_id", new ObjectId() )
-				.append( "datum", new Date() )
+		BasicDBObject newBestObj = new BasicDBObject()
+				.append( "oid", order.getId() )
+				.append( "datum", order.getDate() )
 				.append( "bestellstatus", getBestellstatusString( order ) )
 				.append( "paypalTNr", order.getPaypalTNr() )
-				.append( "kunde", new DBRef( "benutzerkonto", Long.toHexString( order.getCustomer().getId() ) ) );
-		
-		// TODO 
-		Long.parseLong( "ff", 16 );
-		System.out.println( Long.parseLong( newBestObj.get( "_id" ).toString(), 16 ) );
-		// set the new ObjectId also in the order
-		order.setId( Long.parseLong( newBestObj.get( "_id" ).toString(), 16 ) );
-		
+				.append( "kunde", new DBRef( "benutzerkonto", kundeObj.get( "_id" ) ) );
+				
 		bestColl.insert( newBestObj );
 		mongoClient.close();
 	}
@@ -109,15 +102,7 @@ public class MongodbBestellungDAO implements IBestellungDAO
 		BasicDBObject newBestObj = new BasicDBObject();
 		newBestObj.append( "$set", fieldsToUpdate );
 		
-		/**
-		 * TODO
-		 */
-		// parses a hexadecimal string to long
-//		long id = Long.parseLong( "ffs", 16 );
-		// parses the long value back into a hexadecimal string
-//		String _id = Long.toHexString( id );
-		
-		BasicDBObject query = new BasicDBObject( "_id", Long.toHexString( order.getId() ) );
+		BasicDBObject query = new BasicDBObject().append( "oid", order.getId() );
 		
 		bestColl.update( query, newBestObj );
 

@@ -32,7 +32,6 @@ public class ShoppingCart extends HttpServlet {
      */
     public ShoppingCart() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -70,8 +69,6 @@ public class ShoppingCart extends HttpServlet {
 		
 		if( Utils.userLogedInCheck( session ) )
 		{
-			// TODO test case
-			// User user = new Kunde(2, "mymail", null, null, null, null, 0, null, null, 0, null);
 			User user = (User) session.getAttribute( "user" );
 			
 			// only Kunden can order
@@ -111,9 +108,6 @@ public class ShoppingCart extends HttpServlet {
 						ioOrder.insertBestellung( shoppingCart );
 						System.out.println( "shoppingCart id = " + shoppingCart.getId() );
 					}
-					
-					
-					
 					
 					
 					// TODO catch case if product could not be found in database

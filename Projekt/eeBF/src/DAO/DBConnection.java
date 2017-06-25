@@ -42,7 +42,7 @@ class DBConnection {
 				dbPassword = "Tombstone";
 				break;
 			case CUSTOMER :
-				dbUser = "eeBF_Kunde";
+				dbUser = "eeBF_Kunde";		// NOTIZE: eeBF_Kunde has readwrite role but this seem not to be sufficient for mongodb jar files
 				dbPassword = "Silverado";
 				break;
 			case USER :
@@ -96,7 +96,7 @@ class DBConnection {
 		// get client
 		mongoClient = new MongoClient(new ServerAddress( host, port ), 
 				Arrays.asList(credential));
-		
+
 		return mongoClient;
 	}
 	
@@ -106,9 +106,9 @@ class DBConnection {
 		if( mongoClient == null )
 			throw( new NullPointerException() );
 
-		String collection = "eebf";
+		String dbs = "eebf";
 		
 		// get database from client
-		return mongoClient.getDB( collection );
+		return mongoClient.getDB( dbs );
 	}
 }

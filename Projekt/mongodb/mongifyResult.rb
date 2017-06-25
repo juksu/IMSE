@@ -25,7 +25,7 @@ table "bestellung" do
 		column "preisprostueck", :decimal
 		}
 	# column "aid", :integer	// mongify export replaced by:
-	column "benutzerkonto", :DBREf( "benutzerkonto", "id" )
+	column "benutzerkonto", :DBREf( "benutzerkonto", "_id" )
 end
 
 table "kunde" do
