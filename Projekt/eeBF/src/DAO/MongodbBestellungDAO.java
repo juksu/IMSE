@@ -17,7 +17,8 @@ public class MongodbBestellungDAO implements IBestellungDAO
 	// todo, the same as in mysql -> merge or have it in Bestellung?
 	private String getBestellstatusString( Bestellung order )
 	{
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("[");
+		
 		
 		if( order.isOrderStateOrdered() )
 			sb.append( "bestellt" );
@@ -33,6 +34,8 @@ public class MongodbBestellungDAO implements IBestellungDAO
 		if( order.isOrderStateComplete() )
 			sb.append( ",abgeschlossen" );
 
+		sb.append("]");
+		
 		return sb.toString();
 	}
 	
