@@ -31,6 +31,15 @@
 	<%-- 		<c:out value="${shoppingCart.getId()}" /> --%>
 			
 			<c:choose>
+				<c:when test="${quantityError == 'true'}">
+					<div class="warning">
+						Konnte das Produkt nicht Hinzufügen. 
+						Die Angegebene Menge übertrifft den Lagerbestand
+					</div>
+				</c:when>
+			</c:choose>
+			
+			<c:choose>
 				<c:when test="${not empty shoppingCart.getItems()}">
 					<table class="shoppingcart">
 						<thead>

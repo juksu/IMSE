@@ -77,42 +77,56 @@ public class ShoppingCart extends HttpServlet {
 			// only Kunden can order
 			if( user instanceof Kunde )
 			{
-				Kunde customer = (Kunde) user;
-				Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
-				IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
-				IProduktDAO ioProduct = GetDAO.getProduktDAO();
-				IBestellpositionDAO ioPos = GetDAO.getBestellpositionDAO();
-				
-				if( shoppingCart == null )
-				{
-					shoppingCart = new Bestellung();
-					
-					shoppingCart.setDate( new Date() );
-					shoppingCart.setOrderStateOrdered( false );
-					shoppingCart.setCustomer( customer );
-					
-					System.out.println( "shoppingCart session created" );
-					
-					System.out.println( "shoppingCart id = " + shoppingCart.getId() );
-					ioOrder.insertBestellung( shoppingCart );
-					System.out.println( "shoppingCart id = " + shoppingCart.getId() );
-				}
-				
 				int pid = Integer.parseInt( request.getParameter( "additem" ) );
 				int quantity = Integer.parseInt( request.getParameter( "itemquantity" ) );
 				
+				IProduktDAO ioProduct = GetDAO.getProduktDAO();
 				Produkt prod = ioProduct.getProduktById( pid );
 				
-				// TODO catch case if product could not be found in database
-				Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
-				ioPos.insertBestellposition( shoppingCart, newItem );
-				
-				shoppingCart.addItem( newItem );
-				
-				ioOrder.updateBestellung( shoppingCart );
-				
-				// request.setAttribute( "shoppingCart", shoppingCart );
-				session.setAttribute( "shoppingCart", shoppingCart );
+				if( quantity > prod.getQuantity() )
+				{
+					System.out.println( "quantity to high" );
+					session.setAttribute( "quantityError", true );
+				}
+				else
+				{
+					session.setAttribute( "quantityError", false );
+					Kunde customer = (Kunde) user;
+					Bestellung shoppingCart = (Bestellung) session.getAttribute( "shoppingCart" );
+					IBestellungDAO ioOrder = GetDAO.getBestellungDAO();
+					
+					IBestellpositionDAO ioPos = GetDAO.getBestellpositionDAO();
+					
+					if( shoppingCart == null )
+					{
+						shoppingCart = new Bestellung();
+						
+						shoppingCart.setDate( new Date() );
+						shoppingCart.setOrderStateOrdered( false );
+						shoppingCart.setCustomer( customer );
+						
+						System.out.println( "shoppingCart session created" );
+						
+						System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+						ioOrder.insertBestellung( shoppingCart );
+						System.out.println( "shoppingCart id = " + shoppingCart.getId() );
+					}
+					
+					
+					
+					
+					
+					// TODO catch case if product could not be found in database
+					Bestellposition newItem = new Bestellposition( prod, quantity, prod.getPrice() );
+					ioPos.insertBestellposition( shoppingCart, newItem );
+					
+					shoppingCart.addItem( newItem );
+					
+					ioOrder.updateBestellung( shoppingCart );
+					
+					// request.setAttribute( "shoppingCart", shoppingCart );
+					session.setAttribute( "shoppingCart", shoppingCart );
+				}
 			}
 			else 
 				redirect = "index";
@@ -151,10 +165,20 @@ public class ShoppingCart extends HttpServlet {
 					
 					System.out.println( "order placed" );
 					System.out.println( shoppingCart.getOrderState() );
-					// clear the shoppingcart
 					
-					// TODO reduce lagerbestand
-					
+					// update the warehousequantity
+					for( Bestellposition item : shoppingCart.getItems() )
+					{
+						Produkt prod = item.getProduct();
+						int newProdQuantity = prod.getQuantity() - item.getQuantity();
+						prod.setQuantity( newProdQuantity );
+						
+						IProduktDAO prodDAO = GetDAO.getProduktDAO();
+						prodDAO.newMenge( prod.getId(), newProdQuantity );
+						
+					}
+
+					// clear the shoppingcart	
 					session.setAttribute( "shoppingCart", null );
 				}
 			}
