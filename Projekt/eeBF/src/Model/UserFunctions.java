@@ -14,7 +14,7 @@ public abstract class UserFunctions
 	public UserFunctions(User user)
 	{
 		this.user = user;
-		this.produktkategorieDAO = new MysqlProduktkategorieDAO();
+		this.produktkategorieDAO = new ProduktkategorieMongoDB();
 		this.produktDAO = new MysqlProduktDAO();
 		this.userDAO = new MysqlUserDAO();
 	}

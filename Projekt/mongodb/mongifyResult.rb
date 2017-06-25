@@ -55,6 +55,7 @@ table "produkt" do
 	column "PBeschreibung", :string
 	column "Menge", :integer
 	column "sid", :integer
+	column "produktkategorie", :DBREf( "produktkategorie", "bezeichnung" )
 end
 
 table "produktkategorie" do
@@ -64,8 +65,4 @@ table "produktkategorie" do
 	column "oberkategorie", :integer
 end
 
-table "zuordnung" do
-	column "pid", :integer
-	column "kid", :integer
-end
 

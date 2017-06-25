@@ -99,6 +99,7 @@ public class MysqlProduktkategorieDAO implements IProduktkategorieDAO
 		
 	}
 	
+	//Lena
 	public ArrayList<Produktkategorie> getAllProduktkategorie() 
 	{
 		ArrayList<Produktkategorie> ProduktList = new ArrayList<Produktkategorie>();

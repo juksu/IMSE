@@ -17,7 +17,7 @@ public class MysqlUserDAO implements IUserDAO
 	
 	private Connection openConnection() throws SQLException, ClassNotFoundException
 	{
-    	return DBConnection.getMySQLConnection( DBConnection.userTypes.CUSTOMER );
+    	return DBConnection.getMySQLConnection( DBConnection.userTypes.ADMIN );
 	}
 	
 	public User loadUser(int id) 
